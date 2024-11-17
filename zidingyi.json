@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "rules": [
     {
       "domain_suffix": [
@@ -22,7 +22,9 @@
         "a4k.net",
         "fikfap.com",
         "je51.com",
-        "wiki.metacubex.one"
+        "wiki.metacubex.one",
+        "wnacg.com",
+        "sing-box.sagernet.org"
       ]
     }
   ]
