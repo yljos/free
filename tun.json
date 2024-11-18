@@ -11,10 +11,6 @@
             "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
             "external_ui_download_detour": "proxy",
             "default_mode": "rule"
-        },
-        "cache_file": {
-            "enabled": true,
-            "store_fakeip": true
         }
     },
     "dns": {
@@ -36,12 +32,13 @@
         ],
         "rules": [
             {
-                "rule_set": "geosite-category-ads-all",
-                "server": "dns_block"
-            },
-            {
                 "outbound": "any",
                 "server": "dns_direct",
+                "disable_cache": true
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "server": "dns_block",
                 "disable_cache": true
             },
             {
@@ -70,8 +67,17 @@
     },
     "inbounds": [
         {
+            "type": "mixed",
+            "tag": "mixed-in",
+            "listen": "0.0.0.0",
+            "listen_port": 12138,
+            "sniff": true,
+            "users": []
+        },
+        {
             "type": "tun",
-            "address": "172.19.0.1/30",
+            "tag": "tun-in",
+            "inet4_address": "172.19.0.1/30",
             "mtu": 9000,
             "auto_route": true,
             "strict_route": true,
@@ -85,13 +91,6 @@
                     "server_port": 12138
                 }
             }
-        },
-        {
-            "type": "mixed",
-            "listen": "0.0.0.0",
-            "listen_port": 12138,
-            "sniff": true,
-            "users": []
         }
     ],
     "outbounds": [
@@ -365,23 +364,6 @@
         "final": "match",
         "rules": [
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "outbound": "dns-out"
-            },
-            {
-                "rule_set": "geosite-category-ads-all",
-                "outbound": "block"
-            },
-            {
                 "clash_mode": "direct",
                 "outbound": "direct"
             },
@@ -390,10 +372,19 @@
                 "outbound": "GLOBAL"
             },
             {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            },
+            {
+                "rule_set": "geosite-category-ads-all",
+                "outbound": "block"
+            },
+            {
                 "domain": [
                     "clash.razord.top",
                     "yacd.metacubex.one",
-                    "yacd.haishan.me"
+                    "yacd.haishan.me",
+                    "d.metacubex.one"
                 ],
                 "ip_cidr": [
                     "103.206.40.0/22",
@@ -550,7 +541,7 @@
                 "tag": "zidingyi",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/huaihuaidehuaihuai/mihomo/raw/refs/heads/main/zidingyi.srs",
+                "url": "https://github.com/huaihuaidehuaihuai/free/raw/refs/heads/main/zidingyi.srs",
                 "download_detour": "proxy"
             },
             {
