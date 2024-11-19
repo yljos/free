@@ -234,7 +234,7 @@ proxy-groups:
       - DIRECT
     use:
       - main
-  - name: google
+  - name: openai
     type: select
     proxies:
       - United States_main
