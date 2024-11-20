@@ -175,7 +175,7 @@
             "default": "America"
         },
         {
-            "tag": "Facebook",
+            "tag": "FaceBook",
             "type": "selector",
             "outbounds": [
                 "HongKong",
@@ -185,7 +185,19 @@
                 "America"
             ],
             "default": "America"
-        },
+        }, 
+        {
+            "tag": "OpenAi",
+            "type": "selector",
+            "outbounds": [
+                "HongKong",
+                "TaiWan",
+                "Singapore",
+                "Japan",
+                "America"
+            ],
+            "default": "America"
+        },        
         {
             "tag": "BiliBili",
             "type": "selector",
@@ -448,9 +460,10 @@
                 "outbound": "direct"
             },
             {
-                "rule_set": "geosite-pikpak",
-                "outbound": "Singapore"
+                "rule_set": "geosite-openai",
+                "outbound": "OpenAi"
             },
+            
             {
                 "rule_set": [
                     "geosite-unionpay",
@@ -503,7 +516,7 @@
                     "geoip-facebook",
                     "geosite-facebook"
                 ],
-                "outbound": "Facebook"
+                "outbound": "FaceBook"
             },
             {
                 "rule_set": "geosite-bilibili",
@@ -543,6 +556,14 @@
                 "url": "https://mirror.ghproxy.com/https://github.com/huai12138/free/raw/refs/heads/main/zidingyi.srs",
                 "download_detour": "direct"
             },
+            {
+                "tag": "geosite-openai",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/openai.srs",
+                "download_detour": "direct"
+            },
+
             {
                 "tag": "geosite-youtube",
                 "type": "remote",
