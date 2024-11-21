@@ -465,7 +465,8 @@
                     "geosite-speedtest",
                     "geosite-wikimedia",
                     "geosite-steam",
-                    "zidingyi"
+                    "zidingyi",
+                    "geosite-openwrt"
                 ],
                 "outbound": "proxy"
             },
@@ -527,6 +528,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-openwrt",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/openwrt.srs",
                 "download_detour": "direct"
             },
             {
