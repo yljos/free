@@ -69,7 +69,8 @@
         {
             "type": "tun",
             "tag": "tun-in",
-            "inet4_address": "172.19.0.1/30",
+            "interface_name": "sing-box",
+            "address": "172.19.0.1/30",
             "mtu": 9000,
             "auto_route": true,
             "sniff": true,
@@ -421,6 +422,13 @@
                     "yacd.metacubex.one",
                     "yacd.haishan.me",
                     "d.metacubex.one"
+                ],
+                "ip_cidr": [
+                    "35.212.250.103"
+                ],
+                "domain_suffix": [
+                    "suckless.top",
+                    "www.huai.ink"
                 ],
                 "outbound": "direct"
             },
