@@ -107,7 +107,7 @@
             ]
         },
         {
-            "tag": "match",
+            "tag": "final",
             "type": "selector",
             "outbounds": [
                 "auto",
@@ -261,14 +261,6 @@
             "default": "HongKong"
         },
         {
-            "tag": "China",
-            "type": "selector",
-            "outbounds": [
-                "direct",
-                "proxy"
-            ]
-        },
-        {
             "tag": "HongKong",
             "type": "urltest",
             "outbounds": [
@@ -379,7 +371,7 @@
     ],
     "route": {
         "auto_detect_interface": true,
-        "final": "match",
+        "final": "final",
         "rules": [
             {
                 "inbound": "mixed-in",
@@ -447,33 +439,108 @@
             },
             {
                 "rule_set": [
-                    "geosite-unionpay",
-                    "geosite-jd",
-                    "geosite-meituan",
+                    "geosite-unionpay"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "rule_set": [
+                    "geosite-jd"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "rule_set": [
+                    "geosite-meituan"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "rule_set": [
                     "geosite-alibaba"
                 ],
                 "outbound": "direct"
             },
             {
                 "rule_set": [
-                    "geosite-github",
-                    "geosite-adguard",
-                    "geosite-apkpure",
-                    "geosite-docker",
-                    "geosite-javdb",
-                    "geosite-tmdb",
-                    "geosite-reddit",
-                    "geosite-speedtest",
-                    "geosite-wikimedia",
-                    "geosite-steam",
-                    "zidingyi",
+                    "geosite-github"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-adguard"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-apkpure"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-docker"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-javdb"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-tmdb"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-reddit"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-speedtest"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-wikimedia"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "geosite-steam"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
+                    "zidingyi"
+                ],
+                "outbound": "proxy"
+            },
+            {
+                "rule_set": [
                     "geosite-openwrt"
                 ],
                 "outbound": "proxy"
             },
             {
                 "rule_set": [
-                    "geosite-youtube",
+                    "geosite-youtube"
+                ],
+                "outbound": "Google"
+            },
+            {
+                "rule_set": [
                     "geoip-google",
                     "geosite-google"
                 ],
@@ -501,11 +568,15 @@
                 "outbound": "FaceBook"
             },
             {
-                "rule_set": "geosite-bilibili",
+                "rule_set": [
+                    "geosite-bilibili"
+                ],
                 "outbound": "BiliBili"
             },
             {
-                "rule_set": "geosite-tiktok",
+                "rule_set": [
+                    "geosite-tiktok"
+                ],
                 "outbound": "TikTok"
             },
             {
@@ -517,10 +588,16 @@
             },
             {
                 "rule_set": [
+                    "geosite-microsoft"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "rule_set": [
                     "geoip-cn",
                     "geosite-cn"
                 ],
-                "outbound": "China"
+                "outbound": "direct"
             }
         ],
         "rule_set": [
@@ -529,6 +606,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-microsoft",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
                 "download_detour": "direct"
             },
             {
