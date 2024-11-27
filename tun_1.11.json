@@ -426,6 +426,12 @@
                 "outbound": "PikPak_download"
             },
             {
+                "domain_suffix": [
+                    "plex.tv"
+                ],
+                "outbound": "proxy"
+            },
+            {
                 "ip_is_private": true,
                 "outbound": "direct"
             },
