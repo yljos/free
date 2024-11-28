@@ -118,7 +118,7 @@
             ]
         },
         {
-            "tag": "match",
+            "tag": "final",
             "type": "selector",
             "outbounds": [
                 "auto",
@@ -398,7 +398,7 @@
     ],
     "route": {
         "auto_detect_interface": true,
-        "final": "match",
+        "final": "final",
         "rules": [
             {
                 "clash_mode": "direct",
