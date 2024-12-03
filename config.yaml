@@ -19,6 +19,11 @@ external-ui: ui
 external-ui-name: metacubexd
 global-client-fingerprint: chrome
 external-ui-url: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  geo-auto-update: false
+  geo-update-interval: 24
 sniffer:
   enable: true
   sniff: # TLS 和 QUIC 默认如果不配置 ports 默认嗅探 443
@@ -512,6 +517,15 @@ rule-providers:
     proxy: DIRECT
     behavior: classical
     format: yaml
+  microsoft:
+    type: http
+    path: ./rules/microsoft.mrs
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs"
+    interval: 600
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+
   openai:
     type: http
     path: ./rules/openai.mrs
@@ -746,6 +760,7 @@ rules:
   - RULE-SET,pikpak,pikpak
   - RULE-SET,unionpay,DIRECT
   - RULE-SET,alibaba,DIRECT
+  - RULE-SET,microsoft,DIRECT
   - RULE-SET,meituan,DIRECT
   - RULE-SET,jd,DIRECT
   - RULE-SET,adguard,proxy
