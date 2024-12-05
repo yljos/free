@@ -13,8 +13,6 @@ profile:
   store-selected: true
 external-controller: 0.0.0.0:9090
 secret: "101300"
-# authentication:
-# - "huai:1107530255"
 external-ui: ui
 external-ui-name: metacubexd
 global-client-fingerprint: chrome
@@ -159,6 +157,7 @@ dns:
     - +.pvp.net
     - "*.huaihuaidehuaihuai.top"
     - "*.huai.ink"
+    - "*.suckless.top"
 
   nameserver:
     - https://223.5.5.5/dns-query
