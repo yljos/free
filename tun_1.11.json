@@ -1,9 +1,5 @@
 {
-  "log": {
-    "disabled": false,
-    "level": "info",
-    "timestamp": true
-  },
+  "log": { "disabled": false, "level": "info", "timestamp": true },
   "dns": {
     "servers": [
       { "tag": "dns_proxy", "address": "https://8.8.8.8/dns-query", "detour": "proxy" },
@@ -45,7 +41,6 @@
     { "type": "direct", "tag": "direct" },
     { "tag": "auto", "type": "urltest", "outbounds": ["HongKong", "TaiWan", "Singapore", "Japan", "America"], "url": "http://www.gstatic.com/generate_204", "interval": "100s", "tolerance": 50 },
     { "tag": "proxy", "type": "selector", "outbounds": ["auto", "HongKong", "TaiWan", "Singapore", "Japan", "America", "direct", "{all}"], "default": "auto", "filter": [{ "action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效"] }] },
-
     { "tag": "Google", "type": "selector", "outbounds": ["HongKong", "TaiWan", "Singapore", "Japan", "America"], "default": "Singapore" },
     { "tag": "PikPak_download", "type": "selector", "outbounds": ["HongKong", "TaiWan", "Singapore", "Japan", "America", "direct"], "default": "direct" },
     { "tag": "PikPak", "type": "selector", "outbounds": ["HongKong", "TaiWan", "Singapore", "Japan", "America"], "default": "Singapore" },
@@ -62,7 +57,6 @@
     { "tag": "Singapore", "type": "urltest", "outbounds": ["{all}"], "url": "http://www.gstatic.com/generate_204", "interval": "100s", "tolerance": 50, "filter": [{ "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] }] },
     { "tag": "Japan", "type": "urltest", "outbounds": ["{all}"], "url": "http://www.gstatic.com/generate_204", "interval": "100s", "tolerance": 50, "filter": [{ "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] }] },
     { "tag": "America", "type": "urltest", "outbounds": ["{all}"], "url": "http://www.gstatic.com/generate_204", "interval": "100s", "tolerance": 50, "filter": [{ "action": "include", "keywords": ["🇺🇸|US|美国|美|United States"] }] },
-
     { "tag": "final", "type": "selector", "outbounds": ["auto", "HongKong", "TaiWan", "Singapore", "Japan", "America", "direct"], "default": "direct", "filter": [{ "action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效"] }] }
   ],
   "route": {
@@ -370,9 +364,7 @@
     "auto_detect_interface": true
   },
   "experimental": {
-    "cache_file": {
-      "enabled": true
-    },
+    "cache_file": { "enabled": true },
     "clash_api": {
       "external_controller": "0.0.0.0:9090",
       "external_ui": "ui",
