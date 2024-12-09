@@ -13,13 +13,15 @@ profile:
   store-selected: true
 external-controller: 0.0.0.0:9090
 secret: "101300"
+# authentication:
+# - "huai:1107530255"
 external-ui: ui
 external-ui-name: metacubexd
 global-client-fingerprint: chrome
-external-ui-url: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://ghp.ci/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 geox-url:
-  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  geoip: "https://ghp.ci/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://ghp.ci/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   geo-auto-update: false
   geo-update-interval: 24
 sniffer:
@@ -503,7 +505,7 @@ rule-providers:
   zidingyi:
     type: http
     path: ./rules/zidingyi.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/huaihuaidehuaihuai/free/refs/heads/main/zidingyi.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/huaihuaidehuaihuai/free/refs/heads/main/zidingyi.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -511,7 +513,7 @@ rule-providers:
   pikpak_download:
     type: http
     path: ./rules/pikpak_download.yaml
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/huaihuaidehuaihuai/free/refs/heads/main/pikpak_download.yaml"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/huaihuaidehuaihuai/free/refs/heads/main/pikpak_download.yaml"
     interval: 600
     proxy: DIRECT
     behavior: classical
@@ -519,7 +521,7 @@ rule-providers:
   microsoft:
     type: http
     path: ./rules/microsoft.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -528,7 +530,7 @@ rule-providers:
   openai:
     type: http
     path: ./rules/openai.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -536,7 +538,7 @@ rule-providers:
   pikpak:
     type: http
     path: ./rules/pikpak.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -544,7 +546,7 @@ rule-providers:
   unionpay:
     type: http
     path: ./rules/unionpay.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -552,7 +554,7 @@ rule-providers:
   alibaba:
     type: http
     path: ./rules/alibaba.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -560,7 +562,7 @@ rule-providers:
   meituan:
     type: http
     path: ./rules/meituan.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -568,7 +570,7 @@ rule-providers:
   jd:
     type: http
     path: ./rules/jd.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/jd.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/jd.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -576,7 +578,7 @@ rule-providers:
   adguard:
     type: http
     path: ./rules/adguard.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adguard.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adguard.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -584,7 +586,7 @@ rule-providers:
   tmdb:
     type: http
     path: ./rules/tmdb.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tmdb.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tmdb.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -592,7 +594,7 @@ rule-providers:
   docker:
     type: http
     path: ./rules/docker.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/docker.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/docker.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -600,7 +602,7 @@ rule-providers:
   reddit:
     type: http
     path: ./rules/reddit.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -608,7 +610,7 @@ rule-providers:
   speedtest:
     type: http
     path: ./rules/speedtest.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -616,7 +618,7 @@ rule-providers:
   wikimedia:
     type: http
     path: ./rules/wikimedia.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -624,7 +626,7 @@ rule-providers:
   javdb:
     type: http
     path: ./rules/javdb.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javdb.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javdb.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -632,7 +634,7 @@ rule-providers:
   apkpure:
     type: http
     path: ./rules/apkpure.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apkpure.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apkpure.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -640,7 +642,7 @@ rule-providers:
   steam:
     type: http
     path: ./rules/steam.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -648,7 +650,7 @@ rule-providers:
   tiktok:
     type: http
     path: ./rules/tiktok.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -656,7 +658,7 @@ rule-providers:
   github:
     type: http
     path: ./rules/github.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -664,7 +666,7 @@ rule-providers:
   youtube:
     type: http
     path: ./rules/youtube.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -672,7 +674,7 @@ rule-providers:
   google-ip:
     type: http
     path: ./rules/google-ip.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs"
     interval: 600
     proxy: DIRECT
     behavior: ipcidr
@@ -680,7 +682,7 @@ rule-providers:
   google:
     type: http
     path: ./rules/google.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -689,7 +691,7 @@ rule-providers:
   telegram-ip:
     type: http
     path: ./rules/telegram-ip.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs"
     interval: 600
     proxy: DIRECT
     behavior: ipcidr
@@ -697,7 +699,7 @@ rule-providers:
   telegram:
     type: http
     path: ./rules/telegram.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -706,7 +708,7 @@ rule-providers:
   netflix-ip:
     type: http
     path: ./rules/netflix-ip.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs"
     interval: 600
     proxy: DIRECT
     behavior: ipcidr
@@ -714,7 +716,7 @@ rule-providers:
   netflix:
     type: http
     path: ./rules/netflix.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -722,7 +724,7 @@ rule-providers:
   twitter-ip:
     type: http
     path: ./rules/twitter-ip.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs"
     interval: 600
     proxy: DIRECT
     behavior: ipcidr
@@ -730,7 +732,7 @@ rule-providers:
   twitter:
     type: http
     path: ./rules/twitter.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
@@ -739,7 +741,7 @@ rule-providers:
   cn-ip:
     type: http
     path: ./rules/cn-ip.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs"
     interval: 600
     proxy: DIRECT
     behavior: ipcidr
@@ -747,7 +749,7 @@ rule-providers:
   cn:
     type: http
     path: ./rules/cn.mrs
-    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs"
     interval: 600
     proxy: DIRECT
     behavior: domain
