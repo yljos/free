@@ -71,7 +71,7 @@
       {
         "domain": ["clash.razord.top", "yacd.metacubex.one", "yacd.haishan.me", "d.metacubex.one"],
         "ip_cidr": "35.212.250.103",
-        "domain_suffix": ["suckless.top", "www.huai.ink"],
+        "domain_suffix": ["suckless.top", "huai.ink","huaihuaidehuaihuai.top"],
         "outbound": "direct"
       },
       { "domain_keyword": ["dl-z01a-", "dl-a10z-", "dl-a10b-"], "outbound": "PikPak_download" },
