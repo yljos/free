@@ -68,7 +68,7 @@
       { "clash_mode": "direct", "outbound": "direct" },
       { "clash_mode": "global", "outbound": "GLOBAL" },
       { "protocol": "dns", "action": "hijack-dns" },
-      { "rule_set": "geosite-category-ads-all", "action": "reject", "method": "default" },
+      { "rule_set": ["geosite-category-ads-all","geosite-csdn"], "action": "reject", "method": "default" },
       {
         "domain": ["clash.razord.top", "yacd.metacubex.one", "yacd.haishan.me", "d.metacubex.one"],
         "ip_cidr": "35.212.250.103",
@@ -113,6 +113,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "geosite-csdn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/csdn.srs",
         "download_detour": "download"
       },
       {
