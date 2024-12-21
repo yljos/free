@@ -1,6 +1,5 @@
 {
   "log": {
-    "disabled": false,
     "level": "info",
     "timestamp": true
   },
@@ -52,19 +51,17 @@
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "sing-box",
-      "address": "172.19.0.1/30",
       "mtu": 9000,
+      "address": "172.19.0.1/30",
       "auto_route": true,
-      "sniff": true,
-      "endpoint_independent_nat": false,
       "stack": "system",
       "platform": {
         "http_proxy": {
-          "enabled": false,
           "server": "0.0.0.0",
           "server_port": 12138
         }
-      }
+      },
+      "sniff": true
     },
     {
       "type": "mixed",
@@ -89,7 +86,7 @@
         "America"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50
     },
     {
@@ -269,7 +266,7 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50,
       "filter": [
         {
@@ -287,7 +284,7 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50,
       "filter": [
         {
@@ -305,7 +302,7 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50,
       "filter": [
         {
@@ -323,7 +320,7 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50,
       "filter": [
         {
@@ -341,7 +338,7 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m",
+      "interval": "1m0s",
       "tolerance": 50,
       "filter": [
         {
@@ -402,9 +399,7 @@
         "action": "hijack-dns"
       },
       {
-        "rule_set": [
-          "geosite-category-ads-all"
-        ],
+        "rule_set": "geosite-category-ads-all",
         "action": "reject",
         "method": "default"
       },
@@ -415,12 +410,12 @@
           "yacd.haishan.me",
           "d.metacubex.one"
         ],
-        "ip_cidr": "35.212.250.103",
         "domain_suffix": [
           "suckless.top",
           "huai.ink",
           "huaihuaidehuaihuai.top"
         ],
+        "ip_cidr": "35.212.250.103",
         "outbound": "direct"
       },
       {
