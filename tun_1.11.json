@@ -41,6 +41,11 @@
       {
         "rule_set": "geosite-geolocation-!cn",
         "server": "dns_proxy"
+      },
+      {
+        "rule_set": "geosite-category-ads-all",
+        "action": "reject",
+        "method": "default"
       }
     ],
     "final": "dns_proxy",
