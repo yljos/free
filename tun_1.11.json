@@ -91,8 +91,8 @@
         "America"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50
+      "interval": "60s",
+      "tolerance": 20
     },
     {
       "tag": "proxy",
@@ -271,8 +271,8 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50,
+      "interval": "60s",
+      "tolerance": 20,
       "filter": [
         {
           "action": "include",
@@ -289,8 +289,8 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50,
+      "interval": "60s",
+      "tolerance": 20,
       "filter": [
         {
           "action": "include",
@@ -307,8 +307,8 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50,
+      "interval": "60s",
+      "tolerance": 20,
       "filter": [
         {
           "action": "include",
@@ -325,8 +325,8 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50,
+      "interval": "60s",
+      "tolerance": 20,
       "filter": [
         {
           "action": "include",
@@ -343,8 +343,8 @@
         "{all}"
       ],
       "url": "http://www.gstatic.com/generate_204",
-      "interval": "1m0s",
-      "tolerance": 50,
+      "interval": "60s",
+      "tolerance": 20,
       "filter": [
         {
           "action": "include",
