@@ -49,7 +49,7 @@
       }
     ],
     "final": "dns_proxy",
-    "strategy": "ipv4_only"
+    "strategy": "prefer_ipv6"
   },
   "inbounds": [
     {
@@ -58,8 +58,8 @@
       "interface_name": "sing-box",
       "mtu": 9000,
       "address": [
-        "172.19.0.1/30"
-        
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
       ],
       "auto_route": true,
       "stack": "system",
@@ -388,7 +388,7 @@
       {
         "inbound": "mixed-in",
         "action": "resolve",
-        "strategy": "prefer_ipv4"
+        "strategy": "prefer_ipv6"
       },
       {
         "inbound": "mixed-in",
