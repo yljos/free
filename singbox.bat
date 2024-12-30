@@ -1,7 +1,7 @@
 @echo off
 
 :: 设置下载地址和保存路径
-set download_url=http://10.10.10.21:9999/config.json
+set download_url=http://nas:9999/config.json
 set save_path=d:\sing-box
 set sing_box_path=d:\sing-box\sing-box.exe
 
