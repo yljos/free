@@ -149,6 +149,18 @@
       "default": "Singapore"
     },
     {
+      "tag": "Steam",
+      "type": "selector",
+      "outbounds": [
+        "HongKong",
+        "TaiWan",
+        "Singapore",
+        "Japan",
+        "America"
+      ],
+      "default": "HongKong"
+    },
+    {
       "tag": "PikPak_download",
       "type": "selector",
       "outbounds": [
@@ -508,7 +520,7 @@
       },
       {
         "rule_set": "geosite-steam",
-        "outbound": "proxy"
+        "outbound": "Steam"
       },
       {
         "rule_set": "zidingyi",
