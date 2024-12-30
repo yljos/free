@@ -8,13 +8,13 @@
       {
         "tag": "dns_proxy",
         "address": "https://8.8.8.8/dns-query",
-        "strategy": "prefer_ipv6",
+        "strategy": "prefer_ipv4",
         "detour": "proxy"
       },
       {
         "tag": "dns_direct",
         "address": "https://223.5.5.5/dns-query",
-        "strategy": "prefer_ipv6",
+        "strategy": "prefer_ipv4",
         "detour": "direct"
       }
     ],
@@ -51,7 +51,7 @@
       }
     ],
     "final": "dns_proxy",
-    "strategy": "prefer_ipv6"
+    "strategy": "prefer_ipv4"
   },
   "inbounds": [
     {
@@ -60,8 +60,7 @@
       "interface_name": "sing-box",
       "mtu": 9000,
       "address": [
-        "172.19.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.19.0.1/30"
       ],
       "auto_route": true,
       "stack": "system",
@@ -401,7 +400,7 @@
           "tun-in"
         ],
         "action": "resolve",
-        "strategy": "prefer_ipv6"
+        "strategy": "prefer_ipv4"
       },
       {
         "inbound": [
@@ -428,12 +427,6 @@
         "method": "default"
       },
       {
-        "domain": [
-          "clash.razord.top",
-          "yacd.metacubex.one",
-          "yacd.haishan.me",
-          "d.metacubex.one"
-        ],
         "domain_suffix": [
           "suckless.top",
           "huai.ink",
@@ -451,7 +444,10 @@
         "outbound": "PikPak_download"
       },
       {
-        "domain_suffix": "plex.tv",
+        "domain_suffix": [
+          "plex.tv",
+          "cloudflare.com"
+        ],
         "outbound": "proxy"
       },
       {
