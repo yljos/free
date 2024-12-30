@@ -7,3 +7,4 @@ chown root:root sing-box && \
 chmod +x sing-box && \
 rm LICENSE && rm *.tar.gz
 /etc/init.d/sing-box restart
+echo "sing-box updated"
