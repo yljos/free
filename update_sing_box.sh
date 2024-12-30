@@ -6,5 +6,5 @@ tar zxvf *.tar.gz --strip-components=1 && \
 chown root:root sing-box && \
 chmod +x sing-box && \
 rm LICENSE && rm *.tar.gz
-/etc/init.d/sing-box restart
+/etc/init.d/sing-box stop && /etc/init.d/sing-box start
 echo "sing-box updated"
