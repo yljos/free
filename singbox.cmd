@@ -1,17 +1,16 @@
 @echo off
 
-:: 设置 web.txt 文件路径
+:: 设置文件路径
 set web_file=d:\sing-box\web.txt
+set save_path=d:\sing-box
+set sing_box_path=d:\sing-box\sing-box.exe
 
-:: 检查文件是否存在
-if not exist "%web_file%" (
-    echo 文件 %web_file% 不存在！
-    exit /b
-)
+:: 从 web.txt 文件中读取下载地址
+for /f "tokens=*" %%i in (%web_file%) do set download_url=%%i
 
-:: 读取并打印文件内容
-echo 正在读取 %web_file% 的内容：
-for /f "tokens=*" %%i in (%web_file%) do (
-    echo %%i
-)
-pause
+:: 使用 PowerShell 下载文件
+powershell -Command "Invoke-WebRequest '%download_url%' -OutFile '%save_path%\config.json'"
+
+:: 启动 sing-box 程序，指定完整路径
+"%sing_box_path%" -D "%save_path%" run -c config.json
+
