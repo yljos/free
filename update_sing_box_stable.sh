@@ -1,0 +1,11 @@
+#!/bin/sh
+cd /usr/bin && \
+curl -LO $(curl -s https://api.github.com/repos/SagerNet/sing-box/releases | \
+jq -r '.[] | select(.prerelease == false and .draft == false) | .assets[] | select(.name | contains("linux-amd64")).browser_download_url' | head -n 1) && \
+tar zxvf *.tar.gz --strip-components=1 && \
+chown root:root sing-box && \
+chmod +x sing-box && \
+rm LICENSE && rm *.tar.gz
+/etc/init.d/sing-box stop && /etc/init.d/sing-box start
+echo "sing-box 更新到最新稳定版"
+
