@@ -8,13 +8,15 @@
       {
         "tag": "dns_proxy",
         "address": "https://8.8.8.8/dns-query",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
+        "address_strategy": "ipv4_only",
         "detour": "proxy"
       },
       {
         "tag": "dns_direct",
         "address": "https://223.5.5.5/dns-query",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
+        "address_strategy": "ipv4_only",
         "detour": "direct"
       }
     ],
@@ -25,14 +27,6 @@
         "disable_cache": true
       },
       {
-        "rule_set": "geosite-cn",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": "geoip-cn",
-        "server": "dns_direct"
-      },
-      {
         "clash_mode": "direct",
         "server": "dns_direct"
       },
@@ -41,17 +35,32 @@
         "server": "dns_proxy"
       },
       {
-        "rule_set": "geosite-geolocation-!cn",
-        "server": "dns_proxy"
-      },
-      {
         "rule_set": "geosite-category-ads-all",
         "action": "reject",
         "method": "default"
+      },
+      {
+        "rule_set": "geosite-geolocation-cn",
+        "server": "dns_direct"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
+        "server": "dns_proxy",
+        "client_subnet": "114.114.114.114/24"
       }
     ],
     "final": "dns_proxy",
-    "strategy": "prefer_ipv4"
+    "strategy": "ipv4_only"
   },
   "inbounds": [
     {
@@ -84,6 +93,21 @@
       "tag": "direct"
     },
     {
+      "tag": "download",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "filter": [
+        {
+          "action": "include",
+          "keywords": [
+            "🇸🇬|SG|sg|新加坡|狮|Singapore"
+          ]
+        }
+      ]
+    },
+    {
       "tag": "auto",
       "type": "urltest",
       "outbounds": [
@@ -110,27 +134,12 @@
         "direct",
         "{all}"
       ],
-      "default": "auto",
+      "default": "Singapore",
       "filter": [
         {
           "action": "exclude",
           "keywords": [
             "Traffic|Expire|地址|剩余|过期|时间|有效"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "download",
-      "type": "selector",
-      "outbounds": [
-        "{all}"
-      ],
-      "filter": [
-        {
-          "action": "include",
-          "keywords": [
-            "🇸🇬|SG|sg|新加坡|狮|Singapore"
           ]
         }
       ]
@@ -400,7 +409,7 @@
           "tun-in"
         ],
         "action": "resolve",
-        "strategy": "prefer_ipv4"
+        "strategy": "ipv4_only"
       },
       {
         "inbound": [
@@ -586,6 +595,13 @@
       }
     ],
     "rule_set": [
+      {
+        "type": "remote",
+        "tag": "geosite-geolocation-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "download"
+      },
       {
         "tag": "geosite-category-ads-all",
         "type": "remote",
