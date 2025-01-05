@@ -404,6 +404,15 @@
   "route": {
     "rules": [
       {
+        "source_ip_cidr": [
+          "10.0.0.28",
+          "10.0.0.13",
+          "10.0.0.14",
+          "10.0.0.18"
+        ],
+        "outbound": "direct"
+      },
+      {
         "inbound": [
           "mixed-in",
           "tun-in"
