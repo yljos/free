@@ -40,6 +40,10 @@
         "method": "default"
       },
       {
+        "rule_set": "geosite-xiaomi",
+        "server": "dns_direct"
+      },
+      {
         "rule_set": "geosite-geolocation-cn",
         "server": "dns_direct"
       },
@@ -445,6 +449,10 @@
         "method": "default"
       },
       {
+        "rule_set": "geosite-xiaomi",
+        "outbound": "direct"
+      },
+      {
         "domain_suffix": [
           "suckless.top",
           "huai.ink",
@@ -609,6 +617,13 @@
         "tag": "geosite-geolocation-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "download"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-xiaomi",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/xiaomi.srs",
         "download_detour": "download"
       },
       {
