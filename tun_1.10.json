@@ -24,6 +24,10 @@
         "address_resolver": "dns_resolver",
         "strategy": "ipv4_only",
         "detour": "direct"
+      },
+      {
+        "tag": "dns_block",
+        "address": "rcode://refused"
       }
     ],
     "rules": [
@@ -42,8 +46,7 @@
       },
       {
         "rule_set": "geosite-category-ads-all",
-        "action": "reject",
-        "method": "default"
+        "server": "dns_block"
       },
       {
         "rule_set": "geosite-xiaomi",
@@ -69,8 +72,7 @@
         "client_subnet": "114.114.114.114/24"
       }
     ],
-    "final": "dns_proxy",
-    "strategy": "ipv4_only"
+    "final": "dns_proxy"
   },
   "inbounds": [
     {
@@ -88,19 +90,30 @@
           "server": "::",
           "server_port": 12138
         }
-      }
+      },
+      "sniff": true,
+      "sniff_override_destination": false
     },
     {
       "type": "mixed",
       "tag": "mixed-in",
       "listen": "::",
-      "listen_port": 12138
+      "listen_port": 12138,
+      "sniff": true
     }
   ],
   "outbounds": [
     {
       "type": "direct",
       "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
     },
     {
       "tag": "download",
@@ -435,21 +448,6 @@
         "outbound": "direct"
       },
       {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "action": "resolve",
-        "strategy": "ipv4_only"
-      },
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "action": "sniff"
-      },
-      {
         "clash_mode": "direct",
         "outbound": "direct"
       },
@@ -459,12 +457,11 @@
       },
       {
         "protocol": "dns",
-        "action": "hijack-dns"
+        "outbound": "dns-out"
       },
       {
         "rule_set": "geosite-category-ads-all",
-        "action": "reject",
-        "method": "default"
+        "outbound": "block"
       },
       {
         "rule_set": "geosite-xiaomi",
