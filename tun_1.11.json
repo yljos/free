@@ -108,6 +108,12 @@
           "keywords": [
             "🇸🇬|SG|sg|新加坡|狮|Singapore"
           ]
+        },
+        {
+          "action": "exclude",
+          "keywords": [
+            "HY2"
+          ]
         }
       ]
     },
@@ -342,6 +348,12 @@
           "action": "include",
           "keywords": [
             "🇸🇬|SG|sg|新加坡|狮|Singapore"
+          ]
+        },
+        {
+          "action": "exclude",
+          "keywords": [
+            "HY2"
           ]
         }
       ]
