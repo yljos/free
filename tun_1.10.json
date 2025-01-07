@@ -141,7 +141,6 @@
       "type": "urltest",
       "outbounds": [
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -156,7 +155,6 @@
       "outbounds": [
         "auto",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America",
@@ -168,7 +166,7 @@
         {
           "action": "exclude",
           "keywords": [
-            "Traffic|Expire|地址|剩余|过期|时间|有效"
+            "Traffic|Expire|地址|剩余|过期|时间|有效|TW|tw|台湾|臺灣|台|Taiwan"
           ]
         }
       ]
@@ -177,8 +175,8 @@
       "tag": "Google",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -189,8 +187,8 @@
       "tag": "Steam",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -201,8 +199,8 @@
       "tag": "PikPak_download",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America",
@@ -214,8 +212,8 @@
       "tag": "PikPak",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -226,8 +224,8 @@
       "tag": "Telegram",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -238,8 +236,8 @@
       "tag": "Twitter",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -250,8 +248,8 @@
       "tag": "FaceBook",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -262,8 +260,8 @@
       "tag": "OpenAi",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -274,6 +272,7 @@
       "tag": "BiliBili",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "direct",
         "HongKong",
         "TaiWan"
@@ -284,8 +283,8 @@
       "tag": "TikTok",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -296,8 +295,8 @@
       "tag": "Netflix",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America"
@@ -308,8 +307,8 @@
       "tag": "GLOBAL",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America",
@@ -331,24 +330,6 @@
           "action": "include",
           "keywords": [
             "🇭🇰|HK|HK|hk|香港|港|HongKong"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "TaiWan",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "http://www.gstatic.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20,
-      "filter": [
-        {
-          "action": "include",
-          "keywords": [
-            "🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"
           ]
         }
       ]
@@ -417,9 +398,9 @@
       "tag": "final",
       "type": "selector",
       "outbounds": [
+        "proxy",
         "auto",
         "HongKong",
-        "TaiWan",
         "Singapore",
         "Japan",
         "America",
