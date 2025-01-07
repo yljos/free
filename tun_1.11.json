@@ -914,7 +914,7 @@
       "external_controller": "0.0.0.0:9090",
       "external_ui": "ui",
       "secret": "101300",
-      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_url": "https://github.com/MetaCubeX/yacd/archive/gh-pages.zip",
       "external_ui_download_detour": "download",
       "default_mode": "rule"
     }
