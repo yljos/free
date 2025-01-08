@@ -274,8 +274,7 @@
       "outbounds": [
         "proxy",
         "direct",
-        "HongKong",
-        "TaiWan"
+        "HongKong"
       ],
       "default": "direct"
     },
@@ -329,7 +328,7 @@
         {
           "action": "include",
           "keywords": [
-            "🇭🇰|HK|HK|hk|香港|港|HongKong"
+            "🇭🇰|HK|HK|hk|香港|HongKong"
           ]
         }
       ]
@@ -371,7 +370,7 @@
         {
           "action": "include",
           "keywords": [
-            "🇯🇵|JP|jp|日本|日|Japan"
+            "🇯🇵|JP|jp|日本|Japan"
           ]
         }
       ]
@@ -389,7 +388,7 @@
         {
           "action": "include",
           "keywords": [
-            "🇺🇸|US|美国|美|United States"
+            "🇺🇸|US|美国|United States"
           ]
         }
       ]
@@ -612,7 +611,7 @@
         "type": "remote",
         "tag": "geosite-geolocation-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-cn.srs",
         "download_detour": "download"
       },
       {
