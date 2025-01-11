@@ -16,7 +16,7 @@
         "address": "https://dns.google/dns-query",
         "address_resolver": "dns_resolver",
         "strategy": "ipv4_only",
-        "detour": "proxy"
+        "detour": "main"
       },
       {
         "tag": "dns_direct",
@@ -137,7 +137,7 @@
       ]
     },
     {
-      "tag": "proxy",
+      "tag": "main",
       "type": "selector",
       "outbounds": [
         "HongKong",
@@ -161,7 +161,7 @@
       "tag": "Google",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -173,7 +173,7 @@
       "tag": "Steam",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -185,7 +185,7 @@
       "tag": "PikPak_download",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -198,7 +198,7 @@
       "tag": "PikPak",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -210,7 +210,7 @@
       "tag": "Telegram",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -222,7 +222,7 @@
       "tag": "Twitter",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -234,7 +234,7 @@
       "tag": "FaceBook",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -246,7 +246,7 @@
       "tag": "OpenAi",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -258,7 +258,7 @@
       "tag": "TikTok",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -270,7 +270,7 @@
       "tag": "Netflix",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -282,7 +282,7 @@
       "tag": "GLOBAL",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -373,7 +373,7 @@
       "tag": "final",
       "type": "selector",
       "outbounds": [
-        "proxy",
+        "main",
         "HongKong",
         "Singapore",
         "Japan",
@@ -436,7 +436,7 @@
           "plex.tv",
           "cloudflare.com"
         ],
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "ip_is_private": true,
@@ -448,7 +448,7 @@
       },
       {
         "rule_set": "geosite-onedrive",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-openai",
@@ -472,39 +472,39 @@
       },
       {
         "rule_set": "geosite-github",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-adguard",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-apkpure",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-docker",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-javdb",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-tmdb",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-reddit",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-speedtest",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-wikimedia",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-steam",
@@ -512,11 +512,11 @@
       },
       {
         "rule_set": "zidingyi",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-openwrt",
-        "outbound": "proxy"
+        "outbound": "main"
       },
       {
         "rule_set": "geosite-youtube",
