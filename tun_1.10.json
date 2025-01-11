@@ -137,23 +137,9 @@
       ]
     },
     {
-      "tag": "auto",
-      "type": "urltest",
-      "outbounds": [
-        "HongKong",
-        "Singapore",
-        "Japan",
-        "America"
-      ],
-      "url": "http://www.gstatic.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20
-    },
-    {
       "tag": "proxy",
       "type": "selector",
       "outbounds": [
-        "auto",
         "HongKong",
         "Singapore",
         "Japan",
@@ -269,16 +255,6 @@
       "default": "Singapore"
     },
     {
-      "tag": "BiliBili",
-      "type": "selector",
-      "outbounds": [
-        "proxy",
-        "direct",
-        "HongKong"
-      ],
-      "default": "direct"
-    },
-    {
       "tag": "TikTok",
       "type": "selector",
       "outbounds": [
@@ -313,7 +289,7 @@
         "America",
         "direct"
       ],
-      "default": "HongKong"
+      "default": "Singapore"
     },
     {
       "tag": "HongKong",
@@ -398,22 +374,13 @@
       "type": "selector",
       "outbounds": [
         "proxy",
-        "auto",
         "HongKong",
         "Singapore",
         "Japan",
         "America",
         "direct"
       ],
-      "default": "direct",
-      "filter": [
-        {
-          "action": "exclude",
-          "keywords": [
-            "Traffic|Expire|地址|剩余|过期|时间|有效"
-          ]
-        }
-      ]
+      "default": "direct"
     }
   ],
   "route": {
@@ -478,6 +445,10 @@
       {
         "rule_set": "geosite-pikpak",
         "outbound": "PikPak"
+      },
+      {
+        "rule_set": "geosite-onedrive",
+        "outbound": "proxy"
       },
       {
         "rule_set": "geosite-openai",
@@ -581,7 +552,7 @@
       },
       {
         "rule_set": "geosite-bilibili",
-        "outbound": "BiliBili"
+        "outbound": "direct"
       },
       {
         "rule_set": "geosite-tiktok",
@@ -640,6 +611,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "geosite-onedrive",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/onedrive.srs",
         "download_detour": "download"
       },
       {
@@ -892,7 +870,7 @@
       "external_controller": "0.0.0.0:9090",
       "external_ui": "ui",
       "secret": "101300",
-      "external_ui_download_url": "https://github.com/MetaCubeX/yacd/archive/gh-pages.zip",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
       "external_ui_download_detour": "download",
       "default_mode": "rule"
     }
