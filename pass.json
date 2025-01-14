@@ -2,7 +2,9 @@
   "version": 2,
   "rules": [
     {
-      "domain_suffix": ["suckless.top", "huai.ink", "huaihuaidehuaihuai.top"]
+      "domain_suffix": ["suckless.top", "huai.ink", "huaihuaidehuaihuai.top"],
+      "source_ip_cidr": ["10.0.0.28", "10.0.0.13", "10.0.0.14", "10.0.0.18"],
+      "ip_cidr": ["35.212.250.103"]
     }
   ]
 }
