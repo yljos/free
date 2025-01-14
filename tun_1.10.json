@@ -80,7 +80,7 @@
       "default": "HongKong"
     },
     {
-      "tag": "PikPak_download",
+      "tag": "PikPak-download",
       "type": "selector",
       "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"],
       "default": "direct"
@@ -181,17 +181,16 @@
   ],
   "route": {
     "rules": [
-      {"source_ip_cidr": ["10.0.0.28", "10.0.0.13", "10.0.0.14", "10.0.0.18"], "outbound": "direct"},
       {"clash_mode": "direct", "outbound": "direct"},
       {"clash_mode": "global", "outbound": "GLOBAL"},
+      {"rule_set": "direct", "outbound": "direct"},
+      {"rule_set": "proxy", "outbound": "main"},
+      {"rule_set": "pikpak-download", "outbound": "PikPak-download"},
+      {"rule_set": "geosite-pikpak", "outbound": "PikPak"},
       {"protocol": "dns", "outbound": "dns-out"},
       {"rule_set": "geosite-category-ads-all", "outbound": "block"},
       {"rule_set": "geosite-xiaomi", "outbound": "direct"},
-      {"domain_suffix": ["suckless.top", "huai.ink", "huaihuaidehuaihuai.top"], "ip_cidr": "35.212.250.103", "outbound": "direct"},
-      {"domain_keyword": ["dl-z01a-", "dl-a10z-", "dl-a10b-"], "outbound": "PikPak_download"},
-      {"domain_suffix": ["plex.tv", "cloudflare.com"], "outbound": "main"},
       {"ip_is_private": true, "outbound": "direct"},
-      {"rule_set": "geosite-pikpak", "outbound": "PikPak"},
       {"rule_set": "geosite-onedrive", "outbound": "main"},
       {"rule_set": "geosite-openai", "outbound": "OpenAi"},
       {"rule_set": "geosite-unionpay", "outbound": "direct"},
@@ -208,7 +207,6 @@
       {"rule_set": "geosite-speedtest", "outbound": "main"},
       {"rule_set": "geosite-wikimedia", "outbound": "main"},
       {"rule_set": "geosite-steam", "outbound": "Steam"},
-      {"rule_set": "zidingyi", "outbound": "main"},
       {"rule_set": "geosite-openwrt", "outbound": "main"},
       {"rule_set": "geosite-youtube", "outbound": "Google"},
       {"rule_set": ["geoip-google", "geosite-google"], "outbound": "Google"},
@@ -272,10 +270,24 @@
         "download_detour": "download"
       },
       {
-        "tag": "zidingyi",
+        "tag": "proxy",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/huai12138/free/raw/refs/heads/main/zidingyi.srs",
+        "url": "https://github.com/huai12138/free/raw/refs/heads/main/proxy.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "direct",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/huai12138/free/raw/refs/heads/main/direct.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "pikpak-download",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/huai12138/free/raw/refs/heads/main/pikpak-download.srs",
         "download_detour": "download"
       },
       {
