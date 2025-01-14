@@ -172,11 +172,11 @@ dns:
   nameserver:
     - "https://dns.google/dns-query#proxy"
   nameserver-policy:
-    "rule-set:zidingyi": "https://dns.google/dns-query#proxy"
+    "rule-set:proxy": "https://dns.google/dns-query#proxy"
     "rule-set:bilibili": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:onedrive": "https://dns.google/dns-query#proxy"
     "rule-set:openai": "https://dns.google/dns-query#openai"
-    "rule-set:pikpak_download": "https://dns.alidns.com/dns-query#pikpak_download"
+    "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#pikpak-download"
     "rule-set:pikpak": "https://dns.google/dns-query#pikpak"
     "rule-set:unionpay": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:alibaba": "https://dns.alidns.com/dns-query#DIRECT"
@@ -363,7 +363,7 @@ proxy-groups:
       - Japan_spare
       - DIRECT
 
-  - name: pikpak_download
+  - name: pikpak-download
     type: select
     proxies:
       - DIRECT
@@ -464,19 +464,19 @@ proxy-groups:
     tolerance: 50
 
 rule-providers:
-  zidingyi:
+  proxy:
     type: http
-    path: ./rules/zidingyi.mrs
-    url: "https://raw.githubusercontent.com/huai12138/free/refs/heads/main/zidingyi.mrs"
+    path: ./rules/proxy.mrs
+    url: "https://raw.githubusercontent.com/huai12138/free/refs/heads/main/proxy.mrs"
     interval: 86400
     proxy: Singapore_main
     behavior: domain
     format: mrs
 
-  pikpak_download:
+  pikpak-download:
     type: http
-    path: ./rules/pikpak_download.yaml
-    url: "https://raw.githubusercontent.com/huai12138/free/refs/heads/main/pikpak_download.yaml"
+    path: ./rules/pikpak-download.yaml
+    url: "https://raw.githubusercontent.com/huai12138/free/refs/heads/main/pikpak-download.yaml"
     interval: 86400
     proxy: Singapore_main
     behavior: classical
@@ -761,11 +761,11 @@ rule-providers:
     format: mrs
 
 rules:
-  - RULE-SET,zidingyi,proxy
+  - RULE-SET,proxy,proxy
   - RULE-SET,bilibili,DIRECT
   - RULE-SET,onedrive,proxy
   - RULE-SET,openai,openai
-  - RULE-SET,pikpak_download,pikpak_download
+  - RULE-SET,pikpak-download,pikpak-download
   - RULE-SET,pikpak,pikpak
   - RULE-SET,unionpay,DIRECT
   - RULE-SET,alibaba,DIRECT
