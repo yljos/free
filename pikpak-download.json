@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_keyword": [
+        "dl-z01a-",
+        "dl-a10z-",
+        "dl-a10b-"
+      ]
+    }
+  ]
+}
