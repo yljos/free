@@ -6,7 +6,7 @@
   "dns": {
     "servers": [
       {"tag": "dns_resolver", "address": "223.5.5.5", "strategy": "ipv4_only", "detour": "direct"},
-      {"tag": "dns_proxy", "address": "https://dns.google/dns-query", "address_resolver": "dns_resolver", "strategy": "ipv4_only", "detour": "main"},
+      {"tag": "dns_proxy", "address": "https://cloudflare-dns.com/dns-query", "address_resolver": "dns_resolver", "strategy": "ipv4_only", "detour": "main"},
       {"tag": "dns_direct", "address": "https://dns.alidns.com/dns-query", "address_resolver": "dns_resolver", "strategy": "ipv4_only", "detour": "direct"},
       {"tag": "dns_block", "address": "rcode://refused"}
     ],
@@ -137,7 +137,7 @@
       "tag": "HongKong",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇭🇰|HK|HK|hk|香港|HongKong"]}]
@@ -146,7 +146,7 @@
       "tag": "Singapore",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 20,
       "filter": [
@@ -158,7 +158,7 @@
       "tag": "Japan",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇯🇵|JP|jp|日本|Japan"]}]
@@ -167,7 +167,7 @@
       "tag": "America",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇺🇸|US|美国|United States"]}]
