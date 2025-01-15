@@ -23,7 +23,7 @@ if ! curl -o /etc/sing-box/config.json "$url"; then
 fi
 
 # 删除 ui 目录（如果存在），并忽略错误
-rm -rf /usr/share/sing-box/ui
+rm -rf /usr/share/sing-box/ui && rm -rf /usr/share/sing-box/cache.db
 
 
 /etc/init.d/sing-box start
