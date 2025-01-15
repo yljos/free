@@ -183,7 +183,8 @@
     "rules": [
       {"clash_mode": "direct", "outbound": "direct"},
       {"clash_mode": "global", "outbound": "GLOBAL"},
-      {"rule_set": "direct", "outbound": "direct"},
+      {"rule_set": "pass-ip", "outbound": "direct"},
+      {"rule_set": ["direct", "direct-ip"], "outbound": "direct"},
       {"rule_set": "proxy", "outbound": "main"},
       {"rule_set": "pikpak-download", "outbound": "PikPak-download"},
       {"rule_set": "geosite-pikpak", "outbound": "PikPak"},
@@ -281,6 +282,20 @@
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/huai12138/free/raw/refs/heads/main/direct.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "direct-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/huai12138/free/raw/refs/heads/main/direct-ip.srs",
+        "download_detour": "download"
+      },
+      {
+        "tag": "pass-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/huai12138/free/raw/refs/heads/main/pass-ip.srs",
         "download_detour": "download"
       },
       {
