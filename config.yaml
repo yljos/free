@@ -1,7 +1,7 @@
 mixed-port: 12138
 allow-lan: true
 mode: rule
-log-level: info
+log-level: warning
 ipv6: false
 udp: true
 geodata-mode: true
@@ -216,7 +216,7 @@ proxy-providers:
         - 'clash verge'
     health-check:
       enable: true
-      url: https://cp.cloudflare.com
+      url: http://www.gstatic.com/generate_204
       interval: 300
       lazy: true
 
@@ -337,7 +337,7 @@ proxy-groups:
     use:
       - main
     type: load-balance
-    url: https://cp.cloudflare.com
+    url: http://www.gstatic.com/generate_204
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -347,7 +347,7 @@ proxy-groups:
     use:
       - main
     type: load-balance
-    url: https://cp.cloudflare.com
+    url: http://www.gstatic.com/generate_204
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -357,7 +357,7 @@ proxy-groups:
     use:
       - main
     type: load-balance
-    url: https://cp.cloudflare.com
+    url: http://www.gstatic.com/generate_204
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -367,7 +367,7 @@ proxy-groups:
     use:
       - main
     type: load-balance
-    url: https://cp.cloudflare.com
+    url: http://www.gstatic.com/generate_204
     interval: 60
     lazy: true
     strategy: consistent-hashing
