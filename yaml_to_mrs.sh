@@ -28,7 +28,7 @@ fi
 OUTPUT_FILE="${INPUT_FILE%.*}.mrs"
 
 # 执行转换（替换为你的具体命令）
-mihomo convert-ruleset "$RULESET_DESC" yaml "$INPUT_FILE" "$OUTPUT_FILE"
+./mihomo convert-ruleset "$RULESET_DESC" yaml "$INPUT_FILE" "$OUTPUT_FILE"
 
 echo "转换完成：$OUTPUT_FILE"
 
