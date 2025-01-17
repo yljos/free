@@ -1,0 +1,685 @@
+mixed-port: 12138
+allow-lan: true
+mode: rule
+log-level: warning
+ipv6: false
+udp: true
+geodata-mode: true
+unified-delay: false
+tcp-concurrent: true
+enable-process: true
+profile:
+  store-fake-ip: true
+  store-selected: true
+external-controller: 0.0.0.0:9090
+secret: '101300'
+external-ui: ui
+#external-ui-name: yacd
+global-client-fingerprint: chrome
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+sniffer:
+  enable: true
+  sniff:
+    # TLS 和 QUIC 默认如果不配置 ports 默认嗅探 443
+    QUIC:
+      ports: [443]
+
+    TLS:
+      ports: [443, 8443]
+
+    # 默认嗅探 80
+    HTTP:
+      # 需要嗅探的端口
+      ports: [80, 8080-8880]
+      # 可覆盖 sniffer.override-destination
+      override-destination: true
+  skip-domain:
+    - 'Mijia Cloud'
+    - 'dlg.io.mi.com'
+    - '+.apple.com'
+    - '*.baidu.com'
+  force-domain:
+    - 'google.com'
+tun:
+  enable: true
+  device: mihomo
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: false
+dns:
+  enable: true
+  listen: '127.0.0.1:1053'
+  ipv6: false
+  #  enhanced-mode: redir-host
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    # Local Development & Testing
+    - '*.lan'
+    - '*.local'
+    - '*.localhost'
+    - '*.test'
+    - '*.example'
+    - '*.invalid'
+    - '*.localdomain'
+    - '*.home.arpa'
+
+    # NTP Services
+    - '*.time.edu.cn'
+    - '*.ntp.org.cn'
+    - '+.pool.ntp.org'
+    - 'time.*.com'
+    - 'time.*.gov'
+    - 'time.*.edu.cn'
+    - 'time.*.apple.com'
+    - 'time[1-7].*.com'
+    - 'ntp.*.com'
+    - 'ntp[1-7].*.com'
+    - 'time1.cloud.tencent.com'
+
+    # Music Services
+    - 'music.163.com'
+    - '*.music.163.com'
+    - '*.126.net'
+    - 'musicapi.taihe.com'
+    - 'music.taihe.com'
+    - 'songsearch.kugou.com'
+    - 'trackercdn.kugou.com'
+    - '*.kuwo.cn'
+    - 'api-jooxtt.sanook.com'
+    - 'api.joox.com'
+    - 'joox.com'
+    - 'y.qq.com'
+    - '*.y.qq.com'
+    - 'streamoc.music.tc.qq.com'
+    - 'mobileoc.music.tc.qq.com'
+    - 'isure.stream.qqmusic.qq.com'
+    - 'dl.stream.qqmusic.qq.com'
+    - 'aqqmusic.tc.qq.com'
+    - 'amobile.music.tc.qq.com'
+    - '*.xiami.com'
+    - '*.music.migu.cn'
+    - 'music.migu.cn'
+
+    # Gaming Services
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - 'xbox.*.microsoft.com'
+    - 'xnotify.xboxlive.com'
+    - '+.battlenet.com.cn'
+    - '+.wotgame.cn'
+    - '+.wggames.cn'
+    - '+.wowsgame.cn'
+    - '+.wargaming.net'
+    - '*.square-enix.com'
+    - '*.finalfantasyxiv.com'
+    - '*.ffxiv.com'
+    - '*.ff14.sdo.com'
+    - 'ff.dorado.sdo.com'
+    - '+.pvp.net'
+
+    # Microsoft Services
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'msftconnecttest.com'
+    - 'msftncsi.com'
+    - '+.ipv6.microsoft.com'
+
+    # Apple Services
+    - 'mesu.apple.com'
+    - 'swscan.apple.com'
+    - 'swquery.apple.com'
+    - 'swdownload.apple.com'
+    - 'swcdn.apple.com'
+    - 'swdist.apple.com'
+
+    # STUN Services
+    - 'stun.*.*'
+    - 'stun.*.*.*'
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - 'lens.l.google.com'
+    - 'stun.l.google.com'
+
+    # Router Services
+    - 'heartbeat.belkin.com'
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    - '*.router.asus.com'
+
+    # Tencent Services
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
+
+    # Other Services
+    - 'proxy.golang.org'
+    - '*.mcdn.bilivideo.cn'
+    - '+.media.dssott.com'
+    - '*.huaihuaidehuaihuai.top'
+    - '*.huai.ink'
+    - '*.suckless.top'
+  default-nameserver:
+    - 114.114.114.114
+    - 223.5.5.5
+  proxy-server-nameserver:
+    - 114.114.114.114
+    - 223.5.5.5
+  nameserver:
+    - 'https://cloudflare-dns.com/dns-query#proxy'
+  nameserver-policy:
+    'rule-set:proxy': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:bilibili': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:onedrive': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:openai': 'https://cloudflare-dns.com/dns-query#OpenAi'
+    'rule-set:pikpak-download': 'https://dns.alidns.com/dns-query#PikPak-Download'
+    'rule-set:pikpak': 'https://cloudflare-dns.com/dns-query#PikPak'
+    'rule-set:unionpay': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:alibaba': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:meituan': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:jd': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:adguard': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:tmdb': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:docker': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:reddit': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:speedtest': 'https://cloudflare-dns.com/dns-query#SpeedTest'
+    'rule-set:wikimedia': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:javdb': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:apkpure': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:steam': 'https://cloudflare-dns.com/dns-query#Steam'
+    'rule-set:tiktok': 'https://cloudflare-dns.com/dns-query#TikTok'
+    'rule-set:github': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:youtube': 'https://cloudflare-dns.com/dns-query#Google'
+    'rule-set:google': 'https://cloudflare-dns.com/dns-query#Google'
+    'rule-set:telegram': 'https://cloudflare-dns.com/dns-query#Telegram'
+    'rule-set:netflix': 'https://cloudflare-dns.com/dns-query#Netflix'
+    'rule-set:twitter': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:microsoft': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:cn': 'https://dns.alidns.com/dns-query#DIRECT'
+
+proxies:
+
+proxy-groups:
+  - name: proxy
+    type: select
+    include-all-proxies: true
+    proxies:
+      - Singapore
+      - Hong Kong
+      - United States
+      - Japan
+      - DIRECT
+    exclude-filter: '(?i)^(tw|tai|hy|kg)'
+  - name: Google
+    type: select
+    proxies:
+      - Singapore
+      - Hong Kong
+      - proxy
+      - United States
+      - Japan
+      - DIRECT
+
+  - name: OpenAi
+    type: select
+    proxies:
+      - Singapore
+      - United States
+      - Hong Kong
+      - proxy
+      - Japan
+      - DIRECT
+
+  - name: Final
+    type: select
+    proxies:
+      - DIRECT
+      - Hong Kong
+      - Singapore
+      - United States
+      - Japan
+      - proxy
+
+  - name: TikTok
+    type: select
+    proxies:
+      - Japan
+      - proxy
+      - Hong Kong
+      - Singapore
+      - United States
+      - DIRECT
+
+  - name: Telegram
+    type: select
+    proxies:
+      - Singapore
+      - proxy
+      - United States
+      - Hong Kong
+      - Japan
+      - DIRECT
+
+  - name: Steam
+    type: select
+    proxies:
+      - Hong Kong
+      - proxy
+      - Singapore
+      - United States
+      - Japan
+      - DIRECT
+
+  - name: Netflix
+    type: select
+    proxies:
+      - Singapore
+      - proxy
+      - Hong Kong
+      - United States
+      - Japan
+      - DIRECT
+
+  - name: PikPak
+    type: select
+    proxies:
+      - Singapore
+      - proxy
+      - Hong Kong
+      - United States
+      - Japan
+      - DIRECT
+
+  - name: PikPak-Download
+    type: select
+    proxies:
+      - DIRECT
+      - Singapore
+      - proxy
+      - Hong Kong
+      - United States
+      - Japan
+
+  - name: SpeedTest
+    type: select
+    proxies:
+      - proxy
+      - Hong Kong
+      - Singapore
+      - United States
+      - Japan
+      - DIRECT
+
+  - name: Hong Kong
+    filter: '(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$'
+    include-all-proxies: true
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 60
+    lazy: true
+    strategy: consistent-hashing
+
+  - name: Japan
+    filter: '(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$'
+    include-all-proxies: true
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 60
+    lazy: true
+    strategy: consistent-hashing
+
+  - name: United States
+    filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$'
+    include-all-proxies: true
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 60
+    lazy: true
+    strategy: consistent-hashing
+
+  - name: Singapore
+    filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$'
+    include-all-proxies: true
+    type: load-balance
+    url: http://www.gstatic.com/generate_204
+    interval: 60
+    lazy: true
+    strategy: consistent-hashing
+
+rule-providers:
+  adguard:
+    type: http
+    path: ./rules/adguard.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adguard.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  alibaba:
+    type: http
+    path: ./rules/alibaba.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  apkpure:
+    type: http
+    path: ./rules/apkpure.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apkpure.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  bilibili:
+    type: http
+    path: ./rules/bilibili.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  cn-ip:
+    type: http
+    path: ./rules/cn-ip.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: ipcidr
+    format: mrs
+
+  cn:
+    type: http
+    path: ./rules/cn.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  docker:
+    type: http
+    path: ./rules/docker.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/docker.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  github:
+    type: http
+    path: ./rules/github.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  google-ip:
+    type: http
+    path: ./rules/google-ip.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: ipcidr
+    format: mrs
+
+  google:
+    type: http
+    path: ./rules/google.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  javdb:
+    type: http
+    path: ./rules/javdb.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javdb.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  jd:
+    type: http
+    path: ./rules/jd.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/jd.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  meituan:
+    type: http
+    path: ./rules/meituan.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  microsoft:
+    type: http
+    path: ./rules/microsoft.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  netflix-ip:
+    type: http
+    path: ./rules/netflix-ip.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: ipcidr
+    format: mrs
+
+  netflix:
+    type: http
+    path: ./rules/netflix.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  onedrive:
+    type: http
+    path: ./rules/onedrive.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  openai:
+    type: http
+    path: ./rules/openai.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  pikpak-download:
+    type: http
+    path: ./rules/pikpak-download.yaml
+    url: 'https://raw.githubusercontent.com/huai12138/free/refs/heads/main/pikpak-download.yaml'
+    interval: 86400
+    proxy: Singapore
+    behavior: classical
+    format: yaml
+
+  pikpak:
+    type: http
+    path: ./rules/pikpak.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  proxy:
+    type: http
+    path: ./rules/proxy.mrs
+    url: 'https://raw.githubusercontent.com/huai12138/free/refs/heads/main/proxy.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  reddit:
+    type: http
+    path: ./rules/reddit.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  speedtest:
+    type: http
+    path: ./rules/speedtest.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  steam:
+    type: http
+    path: ./rules/steam.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  telegram-ip:
+    type: http
+    path: ./rules/telegram-ip.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: ipcidr
+    format: mrs
+
+  telegram:
+    type: http
+    path: ./rules/telegram.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  tiktok:
+    type: http
+    path: ./rules/tiktok.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  tmdb:
+    type: http
+    path: ./rules/tmdb.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tmdb.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  twitter-ip:
+    type: http
+    path: ./rules/twitter-ip.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: ipcidr
+    format: mrs
+
+  twitter:
+    type: http
+    path: ./rules/twitter.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  unionpay:
+    type: http
+    path: ./rules/unionpay.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  wikimedia:
+    type: http
+    path: ./rules/wikimedia.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+  youtube:
+    type: http
+    path: ./rules/youtube.mrs
+    url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs'
+    interval: 86400
+    proxy: Singapore
+    behavior: domain
+    format: mrs
+
+rules:
+  - RULE-SET,proxy,proxy
+  - RULE-SET,bilibili,DIRECT
+  - RULE-SET,onedrive,proxy
+  - RULE-SET,openai,OpenAi
+  - RULE-SET,pikpak-download,PikPak-Download
+  - RULE-SET,pikpak,PikPak
+  - RULE-SET,unionpay,DIRECT
+  - RULE-SET,alibaba,DIRECT
+  - RULE-SET,meituan,DIRECT
+  - RULE-SET,jd,DIRECT
+  - RULE-SET,adguard,proxy
+  - RULE-SET,tmdb,proxy
+  - RULE-SET,docker,proxy
+  - RULE-SET,reddit,proxy
+  - RULE-SET,speedtest,SpeedTest
+  - RULE-SET,wikimedia,proxy
+  - RULE-SET,javdb,proxy
+  - RULE-SET,apkpure,proxy
+  - RULE-SET,steam,Steam
+  - RULE-SET,tiktok,TikTok
+  - RULE-SET,github,proxy
+  - RULE-SET,youtube,Google
+  - RULE-SET,google,Google
+  - RULE-SET,google-ip,Google
+  - RULE-SET,telegram,Telegram
+  - RULE-SET,telegram-ip,Telegram
+  - RULE-SET,netflix,Netflix
+  - RULE-SET,netflix-ip,Netflix
+  - RULE-SET,twitter,proxy
+  - RULE-SET,twitter-ip,proxy
+  - RULE-SET,microsoft,DIRECT
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,cn-ip,DIRECT
+  - MATCH,Final
