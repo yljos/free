@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # 检查 web.txt 是否存在
 if [[ ! -f "web.txt" ]]; then
