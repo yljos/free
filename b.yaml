@@ -170,11 +170,11 @@ dns:
     - 114.114.114.114
     - 223.5.5.5
   nameserver:
-    - 'https://cloudflare-dns.com/dns-query#proxy'
+    - 'https://cloudflare-dns.com/dns-query#Proxy'
   nameserver-policy:
-    'rule-set:proxy': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:proxy': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:bilibili': 'https://dns.alidns.com/dns-query#DIRECT'
-    'rule-set:onedrive': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:onedrive': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:openai': 'https://cloudflare-dns.com/dns-query#OpenAi'
     'rule-set:pikpak-download': 'https://dns.alidns.com/dns-query#PikPak-Download'
     'rule-set:pikpak': 'https://cloudflare-dns.com/dns-query#PikPak'
@@ -182,29 +182,29 @@ dns:
     'rule-set:alibaba': 'https://dns.alidns.com/dns-query#DIRECT'
     'rule-set:meituan': 'https://dns.alidns.com/dns-query#DIRECT'
     'rule-set:jd': 'https://dns.alidns.com/dns-query#DIRECT'
-    'rule-set:adguard': 'https://cloudflare-dns.com/dns-query#proxy'
-    'rule-set:tmdb': 'https://cloudflare-dns.com/dns-query#proxy'
-    'rule-set:docker': 'https://cloudflare-dns.com/dns-query#proxy'
-    'rule-set:reddit': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:adguard': 'https://cloudflare-dns.com/dns-query#Proxy'
+    'rule-set:tmdb': 'https://cloudflare-dns.com/dns-query#Proxy'
+    'rule-set:docker': 'https://cloudflare-dns.com/dns-query#Proxy'
+    'rule-set:reddit': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:speedtest': 'https://cloudflare-dns.com/dns-query#SpeedTest'
-    'rule-set:wikimedia': 'https://cloudflare-dns.com/dns-query#proxy'
-    'rule-set:javdb': 'https://cloudflare-dns.com/dns-query#proxy'
-    'rule-set:apkpure': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:wikimedia': 'https://cloudflare-dns.com/dns-query#Proxy'
+    'rule-set:javdb': 'https://cloudflare-dns.com/dns-query#Proxy'
+    'rule-set:apkpure': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:steam': 'https://cloudflare-dns.com/dns-query#Steam'
     'rule-set:tiktok': 'https://cloudflare-dns.com/dns-query#TikTok'
-    'rule-set:github': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:github': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:youtube': 'https://cloudflare-dns.com/dns-query#Google'
     'rule-set:google': 'https://cloudflare-dns.com/dns-query#Google'
     'rule-set:telegram': 'https://cloudflare-dns.com/dns-query#Telegram'
     'rule-set:netflix': 'https://cloudflare-dns.com/dns-query#Netflix'
-    'rule-set:twitter': 'https://cloudflare-dns.com/dns-query#proxy'
+    'rule-set:twitter': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:microsoft': 'https://dns.alidns.com/dns-query#DIRECT'
     'rule-set:cn': 'https://dns.alidns.com/dns-query#DIRECT'
 
 proxies:
 
 proxy-groups:
-  - name: proxy
+  - name: Proxy
     type: select
     include-all-proxies: true
     proxies:
@@ -219,7 +219,7 @@ proxy-groups:
     proxies:
       - Singapore
       - Hong Kong
-      - proxy
+      - Proxy
       - United States
       - Japan
       - DIRECT
@@ -230,7 +230,7 @@ proxy-groups:
       - Singapore
       - United States
       - Hong Kong
-      - proxy
+      - Proxy
       - Japan
       - DIRECT
 
@@ -242,13 +242,13 @@ proxy-groups:
       - Singapore
       - United States
       - Japan
-      - proxy
+      - Proxy
 
   - name: TikTok
     type: select
     proxies:
       - Japan
-      - proxy
+      - Proxy
       - Hong Kong
       - Singapore
       - United States
@@ -258,7 +258,7 @@ proxy-groups:
     type: select
     proxies:
       - Singapore
-      - proxy
+      - Proxy
       - United States
       - Hong Kong
       - Japan
@@ -268,7 +268,7 @@ proxy-groups:
     type: select
     proxies:
       - Hong Kong
-      - proxy
+      - Proxy
       - Singapore
       - United States
       - Japan
@@ -278,7 +278,7 @@ proxy-groups:
     type: select
     proxies:
       - Singapore
-      - proxy
+      - Proxy
       - Hong Kong
       - United States
       - Japan
@@ -288,7 +288,7 @@ proxy-groups:
     type: select
     proxies:
       - Singapore
-      - proxy
+      - Proxy
       - Hong Kong
       - United States
       - Japan
@@ -299,7 +299,7 @@ proxy-groups:
     proxies:
       - DIRECT
       - Singapore
-      - proxy
+      - Proxy
       - Hong Kong
       - United States
       - Japan
@@ -307,7 +307,7 @@ proxy-groups:
   - name: SpeedTest
     type: select
     proxies:
-      - proxy
+      - Proxy
       - Hong Kong
       - Singapore
       - United States
@@ -649,9 +649,9 @@ rule-providers:
     format: mrs
 
 rules:
-  - RULE-SET,proxy,proxy
+  - RULE-SET,proxy,Proxy
   - RULE-SET,bilibili,DIRECT
-  - RULE-SET,onedrive,proxy
+  - RULE-SET,onedrive,Proxy
   - RULE-SET,openai,OpenAi
   - RULE-SET,pikpak-download,PikPak-Download
   - RULE-SET,pikpak,PikPak
@@ -659,17 +659,17 @@ rules:
   - RULE-SET,alibaba,DIRECT
   - RULE-SET,meituan,DIRECT
   - RULE-SET,jd,DIRECT
-  - RULE-SET,adguard,proxy
-  - RULE-SET,tmdb,proxy
-  - RULE-SET,docker,proxy
-  - RULE-SET,reddit,proxy
+  - RULE-SET,adguard,Proxy
+  - RULE-SET,tmdb,Proxy
+  - RULE-SET,docker,Proxy
+  - RULE-SET,reddit,Proxy
   - RULE-SET,speedtest,SpeedTest
-  - RULE-SET,wikimedia,proxy
-  - RULE-SET,javdb,proxy
-  - RULE-SET,apkpure,proxy
+  - RULE-SET,wikimedia,Proxy
+  - RULE-SET,javdb,Proxy
+  - RULE-SET,apkpure,Proxy
   - RULE-SET,steam,Steam
   - RULE-SET,tiktok,TikTok
-  - RULE-SET,github,proxy
+  - RULE-SET,github,Proxy
   - RULE-SET,youtube,Google
   - RULE-SET,google,Google
   - RULE-SET,google-ip,Google
@@ -677,8 +677,8 @@ rules:
   - RULE-SET,telegram-ip,Telegram
   - RULE-SET,netflix,Netflix
   - RULE-SET,netflix-ip,Netflix
-  - RULE-SET,twitter,proxy
-  - RULE-SET,twitter-ip,proxy
+  - RULE-SET,twitter,Proxy
+  - RULE-SET,twitter-ip,Proxy
   - RULE-SET,microsoft,DIRECT
   - RULE-SET,cn,DIRECT
   - RULE-SET,cn-ip,DIRECT
