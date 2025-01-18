@@ -186,86 +186,37 @@ dns:
 proxies:
 
 proxy-groups:
-  - name: Proxy
-    type: select
-    include-all-proxies: true
-    proxies: [Singapore, Hong Kong, United States, Japan, DIRECT]
-    exclude-filter: '(?i)^(tw|tai|hy|kg)'
-  - name: Google
-    type: select
-    proxies: [Singapore, Hong Kong, Proxy, United States, Japan, DIRECT]
+  - {name: Proxy, type: select, include-all-proxies: true, proxies: [Singapore, Hong Kong, TaiWan, United States, Japan, DIRECT]}
 
-  - name: OpenAi
-    type: select
-    proxies: [Singapore, United States, Hong Kong, Proxy, Japan, DIRECT]
+  - {name: Google, type: select, proxies: [Singapore, Proxy, Hong Kong, TaiWan, United States, Japan, DIRECT]}
 
-  - name: Final
-    type: select
-    proxies: [DIRECT, Hong Kong, Singapore, United States, Japan, Proxy]
+  - {name: OpenAi, type: select, proxies: [Singapore, Proxy, United States, TaiWan, Hong Kong, Japan, DIRECT]}
 
-  - name: TikTok
-    type: select
-    proxies: [Japan, Proxy, Hong Kong, Singapore, United States, DIRECT]
+  - {name: Final, type: select, proxies: [DIRECT, Proxy, Hong Kong, Singapore, TaiWan, United States, Japan]}
 
-  - name: Telegram
-    type: select
-    proxies: [Singapore, Proxy, United States, Hong Kong, Japan, DIRECT]
+  - {name: Telegram, type: select, proxies: [Singapore, Proxy, United States, TaiWan, Hong Kong, Japan, DIRECT]}
 
-  - name: Steam
-    type: select
-    proxies: [Hong Kong, Proxy, Singapore, United States, Japan, DIRECT]
+  - {name: TikTok, type: select, proxies: [Japan, Proxy, Singapore, Hong Kong, TaiWan, United States, DIRECT]}
 
-  - name: Netflix
-    type: select
-    proxies: [Singapore, Proxy, Hong Kong, United States, Japan, DIRECT]
+  - {name: Steam, type: select, proxies: [Hong Kong, Proxy, Singapore, TaiWan, United States, Japan, DIRECT]}
 
-  - name: PikPak
-    type: select
-    proxies: [Singapore, Proxy, Hong Kong, United States, Japan, DIRECT]
+  - {name: Netflix, type: select, proxies: [Singapore, Proxy, Hong Kong, TaiWan, United States, Japan, DIRECT]}
 
-  - name: PikPak-Download
-    type: select
-    proxies: [DIRECT, Singapore, Proxy, Hong Kong, United States, Japan]
+  - {name: PikPak, type: select, proxies: [Singapore, Proxy, Hong Kong, TaiWan, United States, Japan, DIRECT]}
 
-  - name: SpeedTest
-    type: select
-    proxies: [Proxy, Hong Kong, Singapore, United States, Japan, DIRECT]
+  - {name: PikPak-Download, type: select, proxies: [DIRECT, Proxy, Singapore, TaiWan, Hong Kong, United States, Japan]}
 
-  - name: Hong Kong
-    filter: '(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$'
-    include-all-proxies: true
-    type: load-balance
-    url: https://cp.cloudflare.com
-    interval: 60
-    lazy: true
-    strategy: consistent-hashing
+  - {name: SpeedTest, type: select, proxies: [Proxy, Hong Kong, Singapore, TaiWan, United States, Japan, DIRECT]}
 
-  - name: Japan
-    filter: '(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$'
-    include-all-proxies: true
-    type: load-balance
-    url: https://cp.cloudflare.com
-    interval: 60
-    lazy: true
-    strategy: consistent-hashing
+  - {name: TaiWan, filter: '(?i)^(?=.*(台湾|tw|taiwan|tai wan))(?!.*(香港|日|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
 
-  - name: United States
-    filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$'
-    include-all-proxies: true
-    type: load-balance
-    url: https://cp.cloudflare.com
-    interval: 60
-    lazy: true
-    strategy: consistent-hashing
+  - {name: Hong Kong, filter: '(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
 
-  - name: Singapore
-    filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$'
-    include-all-proxies: true
-    type: load-balance
-    url: https://cp.cloudflare.com
-    interval: 60
-    lazy: true
-    strategy: consistent-hashing
+  - {name: Japan, filter: '(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
+
+  - {name: United States, filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
+
+  - {name: Singapore, filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
 
 rule-providers:
   adguard:
