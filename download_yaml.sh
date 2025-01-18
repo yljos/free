@@ -9,5 +9,5 @@ decoded_url=$(echo "$encoded_url" | python -c "import sys, urllib.parse; print(u
 
 
 # 使用 curl 下载并保存为 a.yaml
-curl -o a.yaml "$decoded_url"
+curl -A "sing-box" -o a.yaml "$decoded_url"
 
