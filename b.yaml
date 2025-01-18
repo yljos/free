@@ -19,27 +19,9 @@ global-client-fingerprint: chrome
 external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
 sniffer:
   enable: true
-  sniff:
-    # TLS 和 QUIC 默认如果不配置 ports 默认嗅探 443
-    QUIC:
-      ports: [443]
-
-    TLS:
-      ports: [443, 8443]
-
-    # 默认嗅探 80
-    HTTP:
-      # 需要嗅探的端口
-      ports: [80, 8080-8880]
-      # 可覆盖 sniffer.override-destination
-      override-destination: true
-  skip-domain:
-    - 'Mijia Cloud'
-    - 'dlg.io.mi.com'
-    - '+.apple.com'
-    - '*.baidu.com'
-  force-domain:
-    - 'google.com'
+  sniff: {QUIC: {ports: [443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}
+  skip-domain: ['Mijia Cloud', 'dlg.io.mi.com', '+.apple.com', '*.baidu.com']
+  force-domain: ['google.com']
 tun:
   enable: true
   device: mihomo
@@ -207,118 +189,53 @@ proxy-groups:
   - name: Proxy
     type: select
     include-all-proxies: true
-    proxies:
-      - Singapore
-      - Hong Kong
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Singapore, Hong Kong, United States, Japan, DIRECT]
     exclude-filter: '(?i)^(tw|tai|hy|kg)'
   - name: Google
     type: select
-    proxies:
-      - Singapore
-      - Hong Kong
-      - Proxy
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Singapore, Hong Kong, Proxy, United States, Japan, DIRECT]
 
   - name: OpenAi
     type: select
-    proxies:
-      - Singapore
-      - United States
-      - Hong Kong
-      - Proxy
-      - Japan
-      - DIRECT
+    proxies: [Singapore, United States, Hong Kong, Proxy, Japan, DIRECT]
 
   - name: Final
     type: select
-    proxies:
-      - DIRECT
-      - Hong Kong
-      - Singapore
-      - United States
-      - Japan
-      - Proxy
+    proxies: [DIRECT, Hong Kong, Singapore, United States, Japan, Proxy]
 
   - name: TikTok
     type: select
-    proxies:
-      - Japan
-      - Proxy
-      - Hong Kong
-      - Singapore
-      - United States
-      - DIRECT
+    proxies: [Japan, Proxy, Hong Kong, Singapore, United States, DIRECT]
 
   - name: Telegram
     type: select
-    proxies:
-      - Singapore
-      - Proxy
-      - United States
-      - Hong Kong
-      - Japan
-      - DIRECT
+    proxies: [Singapore, Proxy, United States, Hong Kong, Japan, DIRECT]
 
   - name: Steam
     type: select
-    proxies:
-      - Hong Kong
-      - Proxy
-      - Singapore
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Hong Kong, Proxy, Singapore, United States, Japan, DIRECT]
 
   - name: Netflix
     type: select
-    proxies:
-      - Singapore
-      - Proxy
-      - Hong Kong
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Singapore, Proxy, Hong Kong, United States, Japan, DIRECT]
 
   - name: PikPak
     type: select
-    proxies:
-      - Singapore
-      - Proxy
-      - Hong Kong
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Singapore, Proxy, Hong Kong, United States, Japan, DIRECT]
 
   - name: PikPak-Download
     type: select
-    proxies:
-      - DIRECT
-      - Singapore
-      - Proxy
-      - Hong Kong
-      - United States
-      - Japan
+    proxies: [DIRECT, Singapore, Proxy, Hong Kong, United States, Japan]
 
   - name: SpeedTest
     type: select
-    proxies:
-      - Proxy
-      - Hong Kong
-      - Singapore
-      - United States
-      - Japan
-      - DIRECT
+    proxies: [Proxy, Hong Kong, Singapore, United States, Japan, DIRECT]
 
   - name: Hong Kong
     filter: '(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$'
     include-all-proxies: true
     type: load-balance
-    url: http://www.gstatic.com/generate_204
+    url: https://cp.cloudflare.com
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -327,7 +244,7 @@ proxy-groups:
     filter: '(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$'
     include-all-proxies: true
     type: load-balance
-    url: http://www.gstatic.com/generate_204
+    url: https://cp.cloudflare.com
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -336,7 +253,7 @@ proxy-groups:
     filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$'
     include-all-proxies: true
     type: load-balance
-    url: http://www.gstatic.com/generate_204
+    url: https://cp.cloudflare.com
     interval: 60
     lazy: true
     strategy: consistent-hashing
@@ -345,7 +262,7 @@ proxy-groups:
     filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$'
     include-all-proxies: true
     type: load-balance
-    url: http://www.gstatic.com/generate_204
+    url: https://cp.cloudflare.com
     interval: 60
     lazy: true
     strategy: consistent-hashing
