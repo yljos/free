@@ -8,7 +8,9 @@ geodata-mode: true
 unified-delay: false
 tcp-concurrent: true
 enable-process: true
-profile: [{store-fake-ip: true, store-selected: true}]
+profile:
+  store_fake_ip: true
+  store_selected: true
 external-controller: 0.0.0.0:9090
 secret: '101300'
 external-ui: ui
@@ -83,39 +85,160 @@ proxy-groups:
   - {name: United States, filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
   - {name: Singapore, filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com, interval: 60, lazy: true, strategy: consistent-hashing}
 rule-providers:
-  adguard: {type: http, path: ./rules/adguard.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adguard.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  alibaba: {type: http, path: ./rules/alibaba.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  apkpure: {type: http, path: ./rules/apkpure.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apkpure.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  bilibili: {type: http, path: ./rules/bilibili.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  cn-ip: {type: http, path: ./rules/cn-ip.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs', interval: 86400, proxy: Singapore, behavior: ipcidr, format: mrs}
-  cn: {type: http, path: ./rules/cn.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  docker: {type: http, path: ./rules/docker.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/docker.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  github: {type: http, path: ./rules/github.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  google-ip: {type: http, path: ./rules/google-ip.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs', interval: 86400, proxy: Singapore, behavior: ipcidr, format: mrs}
-  google: {type: http, path: ./rules/google.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  javdb: {type: http, path: ./rules/javdb.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javdb.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  jd: {type: http, path: ./rules/jd.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/jd.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  meituan: {type: http, path: ./rules/meituan.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  microsoft: {type: http, path: ./rules/microsoft.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  netflix-ip: {type: http, path: ./rules/netflix-ip.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs', interval: 86400, proxy: Singapore, behavior: ipcidr, format: mrs}
-  netflix: {type: http, path: ./rules/netflix.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  onedrive: {type: http, path: ./rules/onedrive.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  openai: {type: http, path: ./rules/openai.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  pikpak-download: {type: http, path: ./rules/pikpak-download.yaml, url: 'https://raw.githubusercontent.com/huai12138/free/refs/heads/main/pikpak-download.yaml', interval: 86400, proxy: Singapore, behavior: classical, format: yaml}
-  pikpak: {type: http, path: ./rules/pikpak.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  proxy: {type: http, path: ./rules/proxy.mrs, url: 'https://raw.githubusercontent.com/huai12138/free/refs/heads/main/proxy.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  reddit: {type: http, path: ./rules/reddit.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  speedtest: {type: http, path: ./rules/speedtest.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  steam: {type: http, path: ./rules/steam.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  telegram-ip: {type: http, path: ./rules/telegram-ip.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs', interval: 86400, proxy: Singapore, behavior: ipcidr, format: mrs}
-  telegram: {type: http, path: ./rules/telegram.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  tiktok: {type: http, path: ./rules/tiktok.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  tmdb: {type: http, path: ./rules/tmdb.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tmdb.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  twitter-ip: {type: http, path: ./rules/twitter-ip.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs', interval: 86400, proxy: Singapore, behavior: ipcidr, format: mrs}
-  twitter: {type: http, path: ./rules/twitter.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  unionpay: {type: http, path: ./rules/unionpay.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  wikimedia: {type: http, path: ./rules/wikimedia.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
-  youtube: {type: http, path: ./rules/youtube.mrs, url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs', interval: 86400, proxy: Singapore, behavior: domain, format: mrs}
+  defaults: &defaults
+    type: http
+    interval: 86400
+    proxy: Singapore
+    behavior: classical
+    format: yaml
+
+  domain-defaults: &domain-defaults
+    <<: *defaults
+    behavior: domain
+    format: mrs
+
+  ipcidr-defaults: &ipcidr-defaults
+    <<: *defaults
+    behavior: ipcidr
+    format: mrs
+    
+  classical-defaults: &classical-defaults
+    <<: *defaults
+    behavior: classical
+    format: yaml
+
+  adguard:
+    <<: *domain-defaults
+    path: ./rules/adguard.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/adguard.mrs
+  alibaba:
+    <<: *domain-defaults
+    path: ./rules/alibaba.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/alibaba.mrs
+  apkpure:
+    <<: *domain-defaults
+    path: ./rules/apkpure.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/apkpure.mrs
+  bilibili:
+    <<: *domain-defaults
+    path: ./rules/bilibili.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili.mrs
+  cn:
+    <<: *domain-defaults
+    path: ./rules/cn.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cn.mrs
+  cn-ip:
+    <<: *ipcidr-defaults
+    path: ./rules/cn-ip.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs
+  docker:
+    <<: *domain-defaults
+    path: ./rules/docker.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/docker.mrs
+  github:
+    <<: *domain-defaults
+    path: ./rules/github.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/github.mrs
+  google:
+    <<: *domain-defaults
+    path: ./rules/google.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/google.mrs
+  google-ip:
+    <<: *ipcidr-defaults
+    path: ./rules/google-ip.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs
+  javdb:
+    <<: *domain-defaults
+    path: ./rules/javdb.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/javdb.mrs
+  jd:
+    <<: *domain-defaults
+    path: ./rules/jd.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/jd.mrs
+  meituan:
+    <<: *domain-defaults
+    path: ./rules/meituan.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/meituan.mrs
+  microsoft:
+    <<: *domain-defaults
+    path: ./rules/microsoft.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft.mrs
+  netflix:
+    <<: *domain-defaults
+    path: ./rules/netflix.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/netflix.mrs
+  netflix-ip:
+    <<: *ipcidr-defaults
+    path: ./rules/netflix-ip.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs
+  onedrive:
+    <<: *domain-defaults
+    path: ./rules/onedrive.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/onedrive.mrs
+  openai:
+    <<: *domain-defaults
+    path: ./rules/openai.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs
+  pikpak:
+    <<: *domain-defaults
+    path: ./rules/pikpak.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs
+  pikpak-download:
+    <<: *classical-defaults
+    path: ./rules/pikpak-download.yaml
+    url: https://raw.githubusercontent.com/huai12138/free/refs/heads/main/pikpak-download.yaml
+  proxy:
+    <<: *domain-defaults
+    path: ./rules/proxy.mrs
+    url: https://raw.githubusercontent.com/huai12138/free/refs/heads/main/proxy.mrs
+  reddit:
+    <<: *domain-defaults
+    path: ./rules/reddit.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs
+  speedtest:
+    <<: *domain-defaults
+    path: ./rules/speedtest.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs
+  steam:
+    <<: *domain-defaults
+    path: ./rules/steam.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam.mrs
+  telegram:
+    <<: *domain-defaults
+    path: ./rules/telegram.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/telegram.mrs
+  telegram-ip:
+    <<: *ipcidr-defaults
+    path: ./rules/telegram-ip.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs
+  tiktok:
+    <<: *domain-defaults
+    path: ./rules/tiktok.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tiktok.mrs
+  tmdb:
+    <<: *domain-defaults
+    path: ./rules/tmdb.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tmdb.mrs
+  twitter:
+    <<: *domain-defaults
+    path: ./rules/twitter.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/twitter.mrs
+  twitter-ip:
+    <<: *ipcidr-defaults
+    path: ./rules/twitter-ip.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs
+  unionpay:
+    <<: *domain-defaults
+    path: ./rules/unionpay.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/unionpay.mrs
+  wikimedia:
+    <<: *domain-defaults
+    path: ./rules/wikimedia.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs
+  youtube:
+    <<: *domain-defaults
+    path: ./rules/youtube.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs
 
 rules:
   - RULE-SET,proxy,Proxy
