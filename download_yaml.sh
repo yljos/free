@@ -13,10 +13,10 @@ if [ -z "$url_part" ]; then
 fi
 
 # 解码 URL (如果需要可以取消注释)
-# decoded_url=$(echo "$encoded_url" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
+decoded_url=$(echo "$url_part" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
 
 # 使用 curl 下载并保存为 a.yaml
-if curl -f -A "clash verge" -o a.yaml "$url_part"; then
+if curl -f -A "clash verge" -o a.yaml "$decoded_url"; then
     echo "成功下载配置文件到 a.yaml"
 else
     echo "错误: 下载失败，请检查 URL 是否有效"
