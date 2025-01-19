@@ -12,7 +12,7 @@ if [ -z "$url_part" ]; then
 fi
 
 # 拼接最终的 URL，并添加额外的查询参数
-final_url="http://10.0.0.21:5000/config/$url_part&emoji=0&ua=sing-box"
+final_url="http://nas:5000/config/$url_part&emoji=0&ua=sing-box"
 
 # 使用 curl 下载 config.json 文件，并处理错误
 if ! curl -o /etc/sing-box/config.json "$final_url"; then
