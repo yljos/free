@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # 使用 cat 读取整个 web.txt 文件内容
-encoded_url=$(cat web.txt)
+url_part=$(curl -s http://nas/web.txt)
 
 
 # 解码 URL
-decoded_url=$(echo "$encoded_url" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
+# decoded_url=$(echo "$encoded_url" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
 
 
 # 使用 curl 下载并保存为 a.yaml
-curl -A "clash verge" -o a.yaml "$decoded_url"
+curl -A "clash verge" -o a.yaml "$url_part"
 
