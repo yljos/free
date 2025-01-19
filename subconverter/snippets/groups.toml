@@ -1,0 +1,99 @@
+[[custom_groups]]
+name = "Proxy"
+type = "select"
+rule = ["[]Singapore", "[]Hong Kong", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT",".*"]
+
+[[custom_groups]]
+name = "Google"
+type = "select"
+rule = ["[]Singapore", "[]Proxy", "[]Hong Kong", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "OpenAi"
+type = "select"
+rule = ["[]Singapore", "[]Proxy", "[]United States", "[]TaiWan", "[]Hong Kong", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "Final"
+type = "select"
+rule = ["[]DIRECT", "[]Proxy", "[]Hong Kong", "[]Singapore", "[]TaiWan", "[]United States", "[]Japan"]
+
+[[custom_groups]]
+name = "Telegram"
+type = "select"
+rule = ["[]Singapore", "[]Proxy", "[]United States", "[]TaiWan", "[]Hong Kong", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "TikTok"
+type = "select"
+rule = ["[]Japan", "[]Proxy", "[]Singapore", "[]Hong Kong", "[]TaiWan", "[]United States", "[]DIRECT"]
+
+[[custom_groups]]
+name = "Steam"
+type = "select"
+rule = ["[]Hong Kong", "[]Proxy", "[]Singapore", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "Netflix"
+type = "select"
+rule = ["[]Singapore", "[]Proxy", "[]Hong Kong", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "PikPak"
+type = "select"
+rule = ["[]Singapore", "[]Proxy", "[]Hong Kong", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "PikPak-Download"
+type = "select"
+rule = ["[]DIRECT", "[]Proxy", "[]Singapore", "[]TaiWan", "[]Hong Kong", "[]United States", "[]Japan"]
+
+[[custom_groups]]
+name = "SpeedTest"
+type = "select"
+rule = ["[]Proxy", "[]Hong Kong", "[]Singapore", "[]TaiWan", "[]United States", "[]Japan", "[]DIRECT"]
+
+[[custom_groups]]
+name = "TaiWan"
+type = "load-balance"
+rule = ["(?i)^(?=.*(台湾|tw|taiwan|tai wan))(?!.*(香港|日|韩|新|美)).*$"]
+url = "https://cp.cloudflare.com"
+interval = 60
+lazy = true
+strategy = "consistent-hashing"
+
+[[custom_groups]]
+name = "Hong Kong"
+type = "load-balance"
+rule = ["(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$"]
+url = "https://cp.cloudflare.com"
+interval = 60
+lazy = true
+strategy = "consistent-hashing"
+
+[[custom_groups]]
+name = "Japan"
+type = "load-balance"
+rule = ["(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$"]
+url = "https://cp.cloudflare.com"
+interval = 60
+lazy = true
+strategy = "consistent-hashing"
+
+[[custom_groups]]
+name = "United States"
+type = "load-balance"
+rule = ["(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$"]
+url = "https://cp.cloudflare.com"
+interval = 60
+lazy = true
+strategy = "consistent-hashing"
+
+[[custom_groups]]
+name = "Singapore"
+type = "load-balance"
+rule = ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$"]
+url = "https://cp.cloudflare.com"
+interval = 60
+lazy = true
+strategy = "consistent-hashing"
