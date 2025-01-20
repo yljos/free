@@ -4,7 +4,7 @@ mode: rule
 log-level: warning
 ipv6: false
 udp: true
-geodata-mode: true
+geodata-mode: false
 unified-delay: false
 tcp-concurrent: true
 enable-process: true
