@@ -7,7 +7,7 @@ url_part=$(curl -s http://nas/singbox.txt)
 
 # 检查 URL 内容是否为空
 if [ -z "$url_part" ]; then
-  echo "Error: web.txt 文件内容为空。"
+  echo "Error: singbox.txt文件内容为空。"
   exit 1
 fi
 # 解码 URL (如果需要可以取消注释)
@@ -27,4 +27,5 @@ rm -rf /usr/share/sing-box/ui && rm -rf /usr/share/sing-box/cache.db
 
 /etc/init.d/sing-box start
 
-echo "sing-box config.json 已更新。"
+echo "sing-box 配置已更新。"
+
