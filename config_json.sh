@@ -10,9 +10,11 @@ if [ -z "$url_part" ]; then
   echo "Error: web.txt 文件内容为空。"
   exit 1
 fi
-
+# 解码 URL (如果需要可以取消注释)
+decoded_url=$(echo "$url_part" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
 # 拼接最终的 URL，并添加额外的查询参数
-final_url="http://nas:5000/config/$url_part&emoji=0&ua=sing-box"
+final_url="http://nas:5000/config/$decoded_url&emoji=0&ua=sing-box"
+echo "最终 URL: $final_url"
 
 # 使用 curl 下载 config.json 文件，并处理错误
 if ! curl -o /etc/sing-box/config.json "$final_url"; then
@@ -26,4 +28,3 @@ rm -rf /usr/share/sing-box/ui && rm -rf /usr/share/sing-box/cache.db
 /etc/init.d/sing-box start
 
 echo "sing-box config.json 已更新。"
-
