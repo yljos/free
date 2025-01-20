@@ -4,7 +4,7 @@
 set -e
 
 # 使用 curl 读取 web.txt 文件内容
-url_part=$(curl -s http://nas/web.txt)
+url_part=$(curl -s http://nas/clash.txt)
 
 # 检查 URL 是否为空
 if [ -z "$url_part" ]; then
