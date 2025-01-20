@@ -3,7 +3,7 @@
 /etc/init.d/sing-box stop
 
 # 从远程 URL 获取 web.txt 文件内容
-url_part=$(curl -s http://nas/web.txt)
+url_part=$(curl -s http://nas/singbox.txt)
 
 # 检查 URL 内容是否为空
 if [ -z "$url_part" ]; then
