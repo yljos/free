@@ -57,7 +57,7 @@ rule = ["[]Proxy", "[]Hong Kong", "[]Singapore", "[]TaiWan", "[]United States", 
 name = "TaiWan"
 type = "load-balance"
 rule = ["(?i)^(?=.*(台湾|tw|taiwan|tai wan))(?!.*(香港|日|韩|新|美)).*$"]
-url = "https://cp.cloudflare.com"
+url = "https://cp.cloudflare.com/generate_204"
 interval = 60
 lazy = true
 strategy = "consistent-hashing"
@@ -66,7 +66,7 @@ strategy = "consistent-hashing"
 name = "Hong Kong"
 type = "load-balance"
 rule = ["(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$"]
-url = "https://cp.cloudflare.com"
+url = "https://cp.cloudflare.com/generate_204"
 interval = 60
 lazy = true
 strategy = "consistent-hashing"
@@ -75,7 +75,7 @@ strategy = "consistent-hashing"
 name = "Japan"
 type = "load-balance"
 rule = ["(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$"]
-url = "https://cp.cloudflare.com"
+url = "https://cp.cloudflare.com/generate_204"
 interval = 60
 lazy = true
 strategy = "consistent-hashing"
@@ -84,7 +84,7 @@ strategy = "consistent-hashing"
 name = "United States"
 type = "load-balance"
 rule = ["(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$"]
-url = "https://cp.cloudflare.com"
+url = "https://cp.cloudflare.com/generate_204"
 interval = 60
 lazy = true
 strategy = "consistent-hashing"
@@ -93,7 +93,7 @@ strategy = "consistent-hashing"
 name = "Singapore"
 type = "load-balance"
 rule = ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$"]
-url = "https://cp.cloudflare.com"
+url = "https://cp.cloudflare.com/generate_204"
 interval = 60
 lazy = true
 strategy = "consistent-hashing"
