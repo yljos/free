@@ -139,7 +139,7 @@
       "tag": "HongKong",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com/generate_204",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇭🇰|HK|HK|hk|香港|HongKong"]}]
@@ -148,7 +148,7 @@
       "tag": "Singapore",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com/generate_204",
       "interval": "60s",
       "tolerance": 20,
       "filter": [
@@ -160,7 +160,7 @@
       "tag": "Japan",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com/generate_204",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇯🇵|JP|jp|日本|Japan"]}]
@@ -169,7 +169,7 @@
       "tag": "America",
       "type": "urltest",
       "outbounds": ["{all}"],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "https://cp.cloudflare.com/generate_204",
       "interval": "60s",
       "tolerance": 20,
       "filter": [{"action": "include", "keywords": ["🇺🇸|US|美国|United States"]}]
