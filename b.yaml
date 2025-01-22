@@ -65,7 +65,7 @@ dns:
     'rule-set:microsoft': 'https://dns.alidns.com/dns-query#DIRECT'
     'rule-set:cn': 'https://dns.alidns.com/dns-query#DIRECT'
 
-proxies:
+proxies: []
 
 proxy-groups:
   - {name: Proxy, type: select, include-all-proxies: true, proxies: [Singapore, Hong Kong, TaiWan, United States, Japan, DIRECT]}
