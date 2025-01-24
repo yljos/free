@@ -101,7 +101,7 @@ rule-providers:
     <<: *defaults
     behavior: ipcidr
     format: mrs
-    
+
   classical-defaults: &classical-defaults
     <<: *defaults
     behavior: classical
