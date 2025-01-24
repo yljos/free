@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).parent
 OUTPUT_FOLDER = BASE_DIR / 'outputs'
 TEMPLATE_PATH = BASE_DIR / 'template' / 'b.yaml'
 HEADERS_CACHE_PATH = OUTPUT_FOLDER / 'headers_cache.json'
-TEMP_YAML_PATH = OUTPUT_FOLDER / 'temp.yaml'  # 新增: 临时YAML文件路径
+TEMP_YAML_PATH = OUTPUT_FOLDER / 'temp.yaml'  # 临时YAML文件路径
 
 # 不应转发的 header 列表
 EXCLUDED_HEADERS = {
@@ -48,7 +48,6 @@ def save_headers_cache(url, headers):
         else:
             cache = {}
         
-        # 过滤掉不需要的 headers
         filtered_headers = {k: v for k, v in headers.items() 
                           if k not in EXCLUDED_HEADERS}
         
@@ -78,41 +77,53 @@ def get_headers_cache(url):
 
 def fetch_yaml(url):
     """获取 YAML 内容并缓存到本地"""
-    headers = {'User-Agent': USER_AGENT}
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    
-    # 保存headers
-    save_headers_cache(url, response.headers)
-    
-    # 保存YAML到临时文件
-    with open(TEMP_YAML_PATH, 'w', encoding='utf-8') as f:
-        f.write(response.text)
-    
-    return TEMP_YAML_PATH
+    try:
+        headers = {'User-Agent': USER_AGENT}
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        
+        save_headers_cache(url, response.headers)
+        
+        # 如果临时文件存在，先删除
+        if TEMP_YAML_PATH.exists():
+            TEMP_YAML_PATH.unlink()
+            
+        with open(TEMP_YAML_PATH, 'w', encoding='utf-8') as f:
+            f.write(response.text)
+        
+        return TEMP_YAML_PATH
+    except Exception as e:
+        if TEMP_YAML_PATH.exists():
+            TEMP_YAML_PATH.unlink()
+        raise
 
 def process_yaml_content(yaml_path):
     """处理本地YAML文件"""
-    with open(yaml_path, 'r', encoding='utf-8') as f:
-        input_data = yaml.load(f)
-    
-    if not isinstance(input_data, dict):
-        raise ValueError('YAML内容必须是有效的字典格式')
-    
-    proxies = input_data.get('proxies', [])
-    if not proxies:
-        raise ValueError('YAML文件中未找到有效的proxies配置')
-    
-    with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
-        template_data = yaml.load(f)
-    
-    template_data['proxies'] = proxies
-    
-    output_path = OUTPUT_FOLDER / 'Mitce.yaml'
-    with open(output_path, 'w', encoding='utf-8') as f:
-        yaml.dump(template_data, f)
-    
-    return output_path
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            input_data = yaml.load(f)
+        
+        if not isinstance(input_data, dict):
+            raise ValueError('YAML内容必须是有效的字典格式')
+        
+        proxies = input_data.get('proxies', [])
+        if not proxies:
+            raise ValueError('YAML文件中未找到有效的proxies配置')
+        
+        with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
+            template_data = yaml.load(f)
+        
+        template_data['proxies'] = proxies
+        
+        output_path = OUTPUT_FOLDER / 'Mitce.yaml'
+        with open(output_path, 'w', encoding='utf-8') as f:
+            yaml.dump(template_data, f)
+        
+        return output_path
+    finally:
+        # 清理临时文件
+        if yaml_path.exists() and yaml_path == TEMP_YAML_PATH:
+            yaml_path.unlink()
 
 @app.route('/<path:yaml_url>')
 def process_yaml(yaml_url):
@@ -130,11 +141,9 @@ def process_yaml(yaml_url):
         # 获取YAML内容并保存到临时文件
         try:
             temp_yaml_path = fetch_yaml(yaml_url)
+            output_path = process_yaml_content(temp_yaml_path)
         except requests.exceptions.RequestException as e:
             return f'下载文件失败: {str(e)}', 400
-        
-        # 处理本地YAML文件
-        output_path = process_yaml_content(temp_yaml_path)
         
         # 获取缓存的headers
         cached_headers = get_headers_cache(yaml_url)
@@ -142,9 +151,9 @@ def process_yaml(yaml_url):
         # 创建响应
         response = send_file(
             output_path,
-            mimetype='application/yaml',  # 添加正确的 MIME 类型
+            mimetype='application/yaml',
             as_attachment=True,
-            download_name='Mitce.yaml'  # 确保文件名包含 .yaml 扩展名
+            download_name='Mitce.yaml'
         )
         
         # 设置基本响应头
@@ -153,7 +162,7 @@ def process_yaml(yaml_url):
         # 转发缓存的headers
         if cached_headers:
             for header, value in cached_headers.items():
-                if header not in EXCLUDED_HEADERS:  # 再次检查排除的headers
+                if header not in EXCLUDED_HEADERS:
                     response.headers[header] = value
         
         return response
