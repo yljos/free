@@ -53,133 +53,24 @@
     {"type": "direct", "tag": "direct"},
     {"type": "block", "tag": "block"},
     {"type": "dns", "tag": "dns-out"},
-    {
-      "tag": "download",
-      "type": "selector",
-      "outbounds": ["{all}"],
-      "filter": [
-        {"action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"]},
-        {"action": "exclude", "keywords": ["HY2"]}
-      ]
-    },
-    {
-      "tag": "main",
-      "type": "selector",
-      "outbounds": ["HongKong", "Singapore", "Japan", "America", "direct", "{all}"],
-      "default": "Singapore",
-      "filter": [{"action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效|TW|tw|台湾|臺灣|台|Taiwan|KR"]}]
-    },
-    {
-      "tag": "Google",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "Steam",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "HongKong"
-    },
-    {
-      "tag": "PikPak-download",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"],
-      "default": "direct"
-    },
-    {
-      "tag": "PikPak",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "Telegram",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "Twitter",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "America"
-    },
-    {
-      "tag": "FaceBook",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "America"
-    },
-    {
-      "tag": "OpenAi",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "TikTok",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Japan"
-    },
-    {
-      "tag": "Netflix",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "GLOBAL",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"],
-      "default": "Singapore"
-    },
-    {
-      "tag": "HongKong",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "url": "https://cp.cloudflare.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20,
-      "filter": [{"action": "include", "keywords": ["🇭🇰|HK|HK|hk|香港|HongKong"]}]
-    },
-    {
-      "tag": "Singapore",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "url": "https://cp.cloudflare.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20,
-      "filter": [
-        {"action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"]},
-        {"action": "exclude", "keywords": ["HY2"]}
-      ]
-    },
-    {
-      "tag": "Japan",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "url": "https://cp.cloudflare.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20,
-      "filter": [{"action": "include", "keywords": ["🇯🇵|JP|jp|日本|Japan"]}]
-    },
-    {
-      "tag": "America",
-      "type": "urltest",
-      "outbounds": ["{all}"],
-      "url": "https://cp.cloudflare.com/generate_204",
-      "interval": "60s",
-      "tolerance": 20,
-      "filter": [{"action": "include", "keywords": ["🇺🇸|US|美国|United States"]}]
-    },
-    {
-      "tag": "final",
-      "type": "selector",
-      "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"],
-      "default": "direct"
-    }
+    {"tag": "download", "type": "selector", "outbounds": ["{all}"], "filter": [{"action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"]}]},
+    {"tag": "main", "type": "selector", "outbounds": ["HongKong", "Singapore", "Japan", "America", "direct", "{all}"], "default": "Singapore", "filter": [{"action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效|TW|tw|台湾|臺灣|台|Taiwan|KR"]}]},
+    {"tag": "Google", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
+    {"tag": "Steam", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "HongKong"},
+    {"tag": "PikPak-download", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"], "default": "direct"},
+    {"tag": "PikPak", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
+    {"tag": "Telegram", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
+    {"tag": "Twitter", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "America"},
+    {"tag": "FaceBook", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "America"},
+    {"tag": "OpenAi", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
+    {"tag": "TikTok", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Japan"},
+    {"tag": "Netflix", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
+    {"tag": "GLOBAL", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"], "default": "Singapore"},
+    {"tag": "HongKong", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com/generate_204", "interval": "60s", "tolerance": 20, "filter": [{"action": "include", "keywords": ["🇭🇰|HK|HK|hk|香港|HongKong"]}]},
+    {"tag": "Singapore", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com/generate_204", "interval": "60s", "tolerance": 20, "filter": [{"action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"]}]},
+    {"tag": "Japan", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com/generate_204", "interval": "60s", "tolerance": 20, "filter": [{"action": "include", "keywords": ["🇯🇵|JP|jp|日本|Japan"]}]},
+    {"tag": "America", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com/generate_204", "interval": "60s", "tolerance": 20, "filter": [{"action": "include", "keywords": ["🇺🇸|US|美国|United States"]}]},
+    {"tag": "final", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"], "default": "direct"}
   ],
   "route": {
     "rules": [
