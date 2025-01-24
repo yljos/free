@@ -27,7 +27,7 @@ dns:
   enable: true
   listen: '127.0.0.1:1053'
   ipv6: false
-  #  enhanced-mode: redir-host
+  # enhanced-mode: redir-host
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
   fake-ip-filter-mode: blacklist
@@ -101,7 +101,7 @@ rule-providers:
     <<: *defaults
     behavior: ipcidr
     format: mrs
-    
+
   classical-defaults: &classical-defaults
     <<: *defaults
     behavior: classical
