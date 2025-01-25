@@ -1,5 +1,16 @@
-mixed-port: 12138
+port: 7890 # HTTP(S) 代理服务器端口
+socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 12138 # HTTP(S) 和 SOCKS 代理混合端口
+redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
+# Transparent proxy server port for Linux (TProxy TCP and TProxy UDP)
+tproxy-port: 7893
 allow-lan: true
+bind-address: '*'
+#  find-process-mode has 3 values:always, strict, off
+#  - always, 开启，强制匹配所有进程
+#  - strict, 默认，由 mihomo 判断是否开启
+#  - off, 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: off
 mode: rule
 log-level: warning
 ipv6: false
@@ -13,6 +24,11 @@ profile:
   store_selected: true
 external-controller: 0.0.0.0:9090
 secret: '101300'
+authentication: # http,socks 入口的验证用户名，密码
+  - 'huai:12138password'
+skip-auth-prefixes: # 设置跳过验证的 IP 段
+  - 10.0.0.0/24 # 仅允许 10.0.0.1-10.0.0.255
+
 external-ui: ui
 #external-ui-name: yacd
 global-client-fingerprint: chrome
@@ -27,7 +43,7 @@ dns:
   enable: true
   listen: '127.0.0.1:1053'
   ipv6: false
-  # enhanced-mode: redir-host
+  #  enhanced-mode: redir-host
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
   fake-ip-filter-mode: blacklist
