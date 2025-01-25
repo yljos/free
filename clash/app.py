@@ -5,6 +5,10 @@ from urllib.parse import unquote
 from pathlib import Path
 import json
 from datetime import datetime, timedelta
+from filelock import FileLock
+import logging
+import os
+import threading
 
 app = Flask(__name__)
 
@@ -18,6 +22,7 @@ OUTPUT_FOLDER = BASE_DIR / 'outputs'
 TEMPLATE_PATH = BASE_DIR / 'template' / 'b.yaml'
 HEADERS_CACHE_PATH = OUTPUT_FOLDER / 'headers_cache.json'
 TEMP_YAML_PATH = OUTPUT_FOLDER / 'temp.yaml'  # 临时YAML文件路径
+TEMP_YAML_LOCK = OUTPUT_FOLDER / 'temp.yaml.lock'
 
 # 不应转发的 header 列表
 EXCLUDED_HEADERS = {
@@ -38,6 +43,9 @@ OUTPUT_FOLDER.mkdir(exist_ok=True)
 yaml = YAML()
 yaml.preserve_quotes = True
 yaml.indent(mapping=2, sequence=4, offset=2)
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def save_headers_cache(url, headers):
     """保存请求头缓存，每个URL只保留最新的一条记录"""
@@ -77,25 +85,52 @@ def get_headers_cache(url):
 
 def fetch_yaml(url):
     """获取 YAML 内容并缓存到本地"""
+    lock = FileLock(TEMP_YAML_LOCK)
+    temp_path = TEMP_YAML_PATH.with_suffix('.tmp')
+    
     try:
-        headers = {'User-Agent': USER_AGENT}
-        response = requests.get(url, headers=headers, timeout=30)
-        response.raise_for_status()
-        
-        save_headers_cache(url, response.headers)
-        
-        # 如果临时文件存在，先删除
-        if TEMP_YAML_PATH.exists():
-            TEMP_YAML_PATH.unlink()
+        with lock:
+            headers = {'User-Agent': USER_AGENT}
+            response = requests.get(url, headers=headers, timeout=30)
+            response.raise_for_status()
             
-        with open(TEMP_YAML_PATH, 'w', encoding='utf-8') as f:
-            f.write(response.text)
-        
-        return TEMP_YAML_PATH
-    except Exception as e:
-        if TEMP_YAML_PATH.exists():
-            TEMP_YAML_PATH.unlink()
+            save_headers_cache(url, response.headers)
+            
+            # 使用上下文管理器写入临时文件
+            with open(temp_path, 'w', encoding='utf-8') as f:
+                f.write(response.text)
+            
+            # 验证文件写入是否成功
+            if not temp_path.exists() or os.path.getsize(temp_path) == 0:
+                raise IOError("临时文件写入失败")
+                
+            # 验证成功后重命名为最终文件
+            if TEMP_YAML_PATH.exists():
+                TEMP_YAML_PATH.unlink()
+            temp_path.rename(TEMP_YAML_PATH)
+            
+            logger.info(f"成功缓存YAML文件: {url}")
+            return TEMP_YAML_PATH
+            
+    except requests.exceptions.RequestException as e:
+        logger.error(f"下载YAML失败: {str(e)}")
         raise
+    except IOError as e:
+        logger.error(f"文件操作失败: {str(e)}")
+        raise
+    except Exception as e:
+        logger.error(f"缓存YAML过程中出现未知错误: {str(e)}")
+        raise
+    finally:
+        # 清理临时文件
+        try:
+            if temp_path.exists():
+                temp_path.unlink()
+        except Exception as e:
+            logger.warning(f"清理临时文件失败: {str(e)}")
+        
+        if lock.is_locked:
+            lock.release()
 
 def process_yaml_content(yaml_path):
     """处理本地YAML文件"""
@@ -124,6 +159,19 @@ def process_yaml_content(yaml_path):
         # 清理临时文件
         if yaml_path.exists() and yaml_path == TEMP_YAML_PATH:
             yaml_path.unlink()
+
+def cleanup_files(yaml_path, output_path):
+    """清理缓存文件和输出文件"""
+    try:
+        if yaml_path.exists():
+            yaml_path.unlink()
+        if output_path.exists():
+            output_path.unlink()
+        if HEADERS_CACHE_PATH.exists():
+            HEADERS_CACHE_PATH.unlink()
+        logger.info("已清理缓存文件")
+    except Exception as e:
+        logger.error(f"清理缓存文件失败: {str(e)}")
 
 @app.route('/<path:yaml_url>')
 def process_yaml(yaml_url):
@@ -164,6 +212,14 @@ def process_yaml(yaml_url):
             for header, value in cached_headers.items():
                 if header not in EXCLUDED_HEADERS:
                     response.headers[header] = value
+        
+        # 设置定时器在60秒后清理文件
+        timer = threading.Timer(
+            60.0, 
+            cleanup_files, 
+            args=[temp_yaml_path, output_path]
+        )
+        timer.start()
         
         return response
         
