@@ -11,13 +11,13 @@ if [ -z "$url_part" ]; then
   exit 1
 fi
 # 解码 URL (如果需要可以取消注释)
-decoded_url=$(echo "$url_part" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
+# decoded_url=$(echo "$url_part" | python -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
 # 拼接最终的 URL，并添加额外的查询参数
-final_url="http://nas:5000/config/$decoded_url&emoji=0&ua=sing-box"
-echo "最终 URL: $final_url"
+# final_url="http://nas:5000/config/$decoded_url&emoji=0&ua=sing-box"
+echo "最终 URL: $url_part"
 
 # 使用 curl 下载 config.json 文件，并处理错误
-if ! curl -o /etc/sing-box/config.json "$final_url"; then
+if ! curl -o /etc/sing-box/config.json "$url_part"; then
   echo "Error: 下载 config.json 文件失败。"
   exit 1
 fi
