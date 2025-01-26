@@ -60,6 +60,10 @@ def process_subscription(sub_path):
             if (item.get('type') not in ['selector', 'urltest', 'direct', 'block', 'dns'] and 
                 item.get('tag', '') and 
                 item.get('tag') not in seen_tags):
+                # 为 hysteria2 节点添加带宽参数
+                if item.get('type') == 'hysteria2':
+                    item['up_mbps'] = 50
+                    item['down_mbps'] = 300
                 seen_tags.add(item['tag'])
                 node_tags.append(item['tag'])
                 sub_outbounds.append(item)
