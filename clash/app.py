@@ -207,7 +207,7 @@ def process_yaml(yaml_url):
             output_path,
             mimetype='application/yaml',
             as_attachment=True,
-            download_name='Mitce.yaml'
+            download_name='Mitce'
         )
         
         # 设置基本响应头
