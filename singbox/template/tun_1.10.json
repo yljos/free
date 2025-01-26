@@ -54,7 +54,7 @@
     {"type": "block", "tag": "block"},
     {"type": "dns", "tag": "dns-out"},
     {"tag": "download", "type": "selector", "outbounds": ["{all}"], "filter": [{"action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"]}]},
-    {"tag": "main", "type": "selector", "outbounds": ["HongKong", "Singapore", "Japan", "America", "direct", "{all}"], "default": "Singapore", "filter": [{"action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效|TW|tw|台湾|臺灣|台|Taiwan|KR"]}]},
+    {"tag": "main", "type": "selector", "outbounds": ["HongKong", "Singapore", "Japan", "America", "direct", "{all}"], "default": "Singapore", "filter": [{"action": "exclude", "keywords": ["Traffic|Expire|地址|剩余|过期|时间|有效|TW"]}]},
     {"tag": "Google", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "Singapore"},
     {"tag": "Steam", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America"], "default": "HongKong"},
     {"tag": "PikPak-download", "type": "selector", "outbounds": ["main", "HongKong", "Singapore", "Japan", "America", "direct"], "default": "direct"},
