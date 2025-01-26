@@ -28,7 +28,7 @@ authentication: # http,socks 入口的验证用户名，密码
   - 'huai:12138password'
 skip-auth-prefixes: # 设置跳过验证的 IP 段
   - 10.0.0.0/24 # 仅允许 10.0.0.1-10.0.0.255
-
+  - 127.0.0.1/8
 external-ui: ui
 #external-ui-name: yacd
 global-client-fingerprint: chrome

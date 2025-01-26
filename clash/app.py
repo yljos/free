@@ -145,6 +145,12 @@ def process_yaml_content(yaml_path):
         if not proxies:
             raise ValueError('YAML文件中未找到有效的proxies配置')
         
+        # 处理 hysteria2 节点
+        for proxy in proxies:
+            if isinstance(proxy, dict) and proxy.get('type') == 'hysteria2':
+                proxy['up'] = '50'
+                proxy['down'] = '300'
+        
         with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
             template_data = yaml.load(f)
         
