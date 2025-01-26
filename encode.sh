@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # URL编码函数
 encode_url() {
@@ -23,8 +23,13 @@ printf "\n" >> clash.txt
 
 # 验证文件格式
 echo "=== 文件格式检查 ==="
-file singbox.txt
-file clash.txt
+for file in singbox.txt clash.txt; do
+    format=$(file "$file" | grep -o "with \(CRLF\|LF\)" | awk '{print $2}')
+    if [ -z "$format" ]; then
+        format="LF"  # 如果没检测到特定格式，默认为LF
+    fi
+    echo "$file: $format"
+done
 
 # 显示结果
 printf "\n=== Singbox URL ===\n"
