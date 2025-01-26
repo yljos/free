@@ -1,6 +1,6 @@
 #!/bin/bash
 cat 0.txt > temp.txt
-echo -n "http://10.0.0.21:5000/" > singbox.txt
+echo -n "http://nas:5000/" > singbox.txt
 cat temp.txt | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()))">> singbox.txt
 # 使用 tr 命令移除可能的回车符，并使用 echo -n 避免添加换行符
 # echo -n "&app=clashmeta" | tr -d '\r' >> temp.txt 
