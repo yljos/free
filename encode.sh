@@ -1,15 +1,34 @@
 #!/bin/bash
-cat 0.txt > temp.txt
-echo -n "http://nas:5000/" > singbox.txt
-cat temp.txt | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()))">> singbox.txt
-# 使用 tr 命令移除可能的回车符，并使用 echo -n 避免添加换行符
-# echo -n "&app=clashmeta" | tr -d '\r' >> temp.txt 
-# 使用strip()确保移除所有额外的空白字符
-cat temp.txt | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()))" > temp2.txt
-# 添加基础URL并与编码后的内容合并
-echo -n "https://clash.suckless.top:8443/" > clash.txt
-cat temp2.txt >> clash.txt
+
+# URL编码函数
+encode_url() {
+    cat "$1" | tr -d '\r' | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()), end='')"
+}
+
+# 检查源文件
+if [ ! -f "0.txt" ]; then
+    echo "错误：找不到源文件 0.txt"
+    exit 1
+fi
+
+# 生成 singbox URL (使用LF)
+printf "http://nas:5000/" > singbox.txt
+encode_url "0.txt" >> singbox.txt
+printf "\n" >> singbox.txt
+
+# 生成 clash URL (使用LF) 
+printf "https://clash.suckless.top:8443/" > clash.txt
+encode_url "0.txt" >> clash.txt
+printf "\n" >> clash.txt
+
+# 验证文件格式
+echo "=== 文件格式检查 ==="
+file singbox.txt
+file clash.txt
+
+# 显示结果
+printf "\n=== Singbox URL ===\n"
 cat singbox.txt
+printf "\n=== Clash URL ===\n"
 cat clash.txt
-rm temp.txt temp2.txt
 
