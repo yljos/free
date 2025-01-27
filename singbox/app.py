@@ -1,12 +1,10 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, after_this_request
 import requests
 from urllib.parse import unquote
 from pathlib import Path
 import json
 import logging
-import threading
 import uuid
-import time
 
 app = Flask(__name__)
 
@@ -44,10 +42,10 @@ def fetch_subscription(url):
         logger.info(f"成功获取订阅内容并保存到: {temp_path}")
         return temp_path
             
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as error:
         if temp_path.exists():
             temp_path.unlink()
-        logger.error(f"下载订阅失败: {str(e)}")
+        logger.error(f"下载订阅失败: {str(error)}")
         raise
 
 def process_subscription(sub_path):
@@ -144,11 +142,12 @@ def process_subscription(sub_path):
         
         return output_path, node_path
         
-    except Exception as e:
+    except Exception as error:
         if output_path.exists():
             output_path.unlink()
         if node_path.exists():
             node_path.unlink()
+        logger.error(f"处理订阅文件失败: {str(error)}")
         raise
     finally:
         if sub_path.exists():
@@ -169,6 +168,7 @@ def process_subscription_url(sub_url):
         output_path, node_path = process_subscription(temp_path)
         temp_files.extend([output_path, node_path])
         
+        # 准备响应
         response = send_file(
             output_path,
             mimetype='application/json',
@@ -176,16 +176,18 @@ def process_subscription_url(sub_url):
             download_name='config.json'
         )
         
-        # 延迟清理文件
-        threading.Timer(60.0, cleanup_files, args=[temp_files]).start()
+        # 注册清理回调
+        @after_this_request
+        def cleanup_callback(response):
+            cleanup_files(temp_files)
+            return response
+            
         return response
         
-    except Exception as e:
-        # 清理所有临时文件
-        for file in temp_files:
-            if file.exists():
-                file.unlink()
-        return f'处理失败: {str(e)}', 500
+    except Exception as error:
+        # 发生异常时立即清理
+        cleanup_files(temp_files)
+        return f'处理失败: {str(error)}', 500
 
 def cleanup_files(file_paths):
     """清理临时文件"""
@@ -194,8 +196,8 @@ def cleanup_files(file_paths):
             if file_path.exists():
                 file_path.unlink()
                 logger.info(f"清理临时文件: {file_path}")
-        except Exception as e:
-            logger.error(f"清理文件失败 {file_path}: {str(e)}")
+        except Exception as error:
+            logger.error(f"清理文件失败 {file_path}: {str(error)}")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
