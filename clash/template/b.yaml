@@ -1,3 +1,26 @@
+# 锚点定义
+defaults: &defaults
+  type: http
+  interval: 86400
+  proxy: Singapore
+  behavior: classical
+  format: yaml
+
+domain-defaults: &domain-defaults
+  <<: *defaults
+  behavior: domain
+  format: mrs
+
+ipcidr-defaults: &ipcidr-defaults
+  <<: *defaults
+  behavior: ipcidr
+  format: mrs
+
+classical-defaults: &classical-defaults
+  <<: *defaults
+  behavior: classical
+  format: yaml
+
 port: 7890 # HTTP(S) 代理服务器端口
 socks-port: 7891 # SOCKS5 代理端口
 mixed-port: 12138 # HTTP(S) 和 SOCKS 代理混合端口
@@ -39,6 +62,12 @@ sniffer:
   skip-domain: ['Mijia Cloud', 'dlg.io.mi.com', '+.apple.com', '*.baidu.com']
   force-domain: ['google.com']
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: ['any:53'], auto-route: true, auto-detect-interface: true, strict-route: false}
+
+hosts:
+  'openwrt': '10.0.0.1' # 替换为实际的路由器IP地址
+  'nas': '10.0.0.21' # 替换为实际的NAS IP地址
+  'ax6s': '10.0.0.2' # 替换为实际的路由器IP地址
+  'homeassistant.local': '10.0.0.21' # 替换为实际的HomeAssistant IP地址
 dns:
   enable: true
   listen: '127.0.0.1:1053'
@@ -48,12 +77,14 @@ dns:
   fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
   fake-ip-filter-mode: blacklist
   fake-ip-filter: ['+.lan', '+.local', '+.nas', 'localhost.ptlogin2.qq.com', '+.msftconnecttest.com', '+.msftncsi.com', '+.googleapis.com', '+.googleapis.cn', 'alt1-mtalk.google.com', 'alt2-mtalk.google.com', 'alt3-mtalk.google.com', 'alt4-mtalk.google.com', 'alt5-mtalk.google.com', 'alt6-mtalk.google.com', 'alt7-mtalk.google.com', 'alt8-mtalk.google.com', 'mtalk.google.com', '+.huaihuaidehuaihuai.top', '+.huai.ink', '+.suckless.top']
+  use-hosts: false # 启用系统hosts查询
   default-nameserver: [114.114.114.114, 223.5.5.5]
   proxy-server-nameserver: [114.114.114.114, 223.5.5.5]
   nameserver: [https://cloudflare-dns.com/dns-query#Proxy]
   nameserver-policy:
     'rule-set:proxy': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:bilibili': 'https://dns.alidns.com/dns-query#DIRECT'
+    'rule-set:xiaomi': 'https://dns.alidns.com/dns-query#DIRECT'
     'rule-set:onedrive': 'https://cloudflare-dns.com/dns-query#Proxy'
     'rule-set:openai': 'https://cloudflare-dns.com/dns-query#OpenAi'
     'rule-set:pikpak-download': 'https://dns.alidns.com/dns-query#PikPak-Download'
@@ -87,7 +118,6 @@ proxy-groups:
   - {name: Proxy, type: select, include-all-proxies: true, proxies: [Singapore, Hong Kong, TaiWan, United States, Japan, DIRECT]}
   - {name: Google, type: select, proxies: [Singapore, Proxy, Hong Kong, TaiWan, United States, Japan, DIRECT]}
   - {name: OpenAi, type: select, proxies: [Singapore, Proxy, United States, TaiWan, Hong Kong, Japan, DIRECT]}
-  - {name: Final, type: select, proxies: [DIRECT, Proxy, Hong Kong, Singapore, TaiWan, United States, Japan]}
   - {name: Telegram, type: select, proxies: [Singapore, Proxy, United States, TaiWan, Hong Kong, Japan, DIRECT]}
   - {name: TikTok, type: select, proxies: [Japan, Proxy, Singapore, Hong Kong, TaiWan, United States, DIRECT]}
   - {name: Steam, type: select, proxies: [Hong Kong, Proxy, Singapore, TaiWan, United States, Japan, DIRECT]}
@@ -95,34 +125,13 @@ proxy-groups:
   - {name: PikPak, type: select, proxies: [Singapore, Proxy, Hong Kong, TaiWan, United States, Japan, DIRECT]}
   - {name: PikPak-Download, type: select, proxies: [DIRECT, Proxy, Singapore, TaiWan, Hong Kong, United States, Japan]}
   - {name: SpeedTest, type: select, proxies: [Proxy, Hong Kong, Singapore, TaiWan, United States, Japan, DIRECT]}
+  - {name: Final, type: select, proxies: [DIRECT, Proxy, Hong Kong, Singapore, TaiWan, United States, Japan]}
   - {name: TaiWan, filter: '(?i)^(?=.*(台湾|tw|taiwan|tai wan))(?!.*(香港|日|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com/generate_204, interval: 60, lazy: true, strategy: consistent-hashing}
   - {name: Hong Kong, filter: '(?i)^(?=.*(香港|hk|hong))(?!.*(台|日|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com/generate_204, interval: 60, lazy: true, strategy: consistent-hashing}
   - {name: Japan, filter: '(?i)^(?=.*(日本|jp|japan))(?!.*(台|韩|新|美)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com/generate_204, interval: 60, lazy: true, strategy: consistent-hashing}
   - {name: United States, filter: '(?i)^(?=.*(美国|us|united|America))(?!.*(台|韩|新|日)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com/generate_204, interval: 60, lazy: true, strategy: consistent-hashing}
   - {name: Singapore, filter: '(?i)^(?=.*(新加坡|sg|singapore))(?!.*(台|日|美|韩)).*$', include-all-proxies: true, type: load-balance, url: https://cp.cloudflare.com/generate_204, interval: 60, lazy: true, strategy: consistent-hashing}
 rule-providers:
-  defaults: &defaults
-    type: http
-    interval: 86400
-    proxy: Singapore
-    behavior: classical
-    format: yaml
-
-  domain-defaults: &domain-defaults
-    <<: *defaults
-    behavior: domain
-    format: mrs
-
-  ipcidr-defaults: &ipcidr-defaults
-    <<: *defaults
-    behavior: ipcidr
-    format: mrs
-
-  classical-defaults: &classical-defaults
-    <<: *defaults
-    behavior: classical
-    format: yaml
-
   adguard:
     <<: *domain-defaults
     path: ./rules/adguard.mrs
@@ -251,13 +260,22 @@ rule-providers:
     <<: *domain-defaults
     path: ./rules/wikimedia.mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/wikimedia.mrs
+  xiaomi:
+    <<: *domain-defaults
+    path: ./rules/xiaomi.mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaomi.mrs  
   youtube:
     <<: *domain-defaults
     path: ./rules/youtube.mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/youtube.mrs
 
 rules:
+  - SRC-IP-CIDR,10.0.0.18/32,DIRECT # 小爱音响
+  - SRC-IP-CIDR,10.0.0.28/32,DIRECT # 小米智能插座
+  - SRC-IP-CIDR,10.0.0.13/32,DIRECT # 小米电暖器
+  - SRC-IP-CIDR,10.0.0.14/32,DIRECT # 小米小饭煲
   - RULE-SET,proxy,Proxy
+  - RULE-SET,xiaomi,DIRECT
   - RULE-SET,bilibili,DIRECT
   - RULE-SET,onedrive,Proxy
   - RULE-SET,openai,OpenAi
