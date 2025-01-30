@@ -1,0 +1,11 @@
+proxies:
+  - {type: hysteria2, name: HK1-HY2, ports: 1000-2000}
+  - {type: hysteria2, name: HK2-HY2, ports: 3000-4000}
+  - {type: hysteria2, name: HK3-HY2, ports: 5000-6000}
+  - {type: hysteria2, name: HK4-HY2, ports: 7000-8000}
+  - {type: hysteria2, name: HK5-HY2, ports: 9000-10000}
+  - {type: hysteria2, name: TW1-HY2, ports: 1000-2000}
+  - {type: hysteria2, name: TW2-HY2, ports: 3000-4000}
+  - {type: hysteria2, name: TW3-HY2, ports: 5000-6000}
+  - {type: hysteria2, name: TW4-HY2, ports: 7000-8000}
+  - {type: hysteria2, name: TW5-HY2, ports: 9000-10000}

@@ -109,20 +109,35 @@ def fetch_yaml(url):
 def process_yaml_content(yaml_path):
     """处理本地YAML文件"""
     try:
+        # 读取输入的YAML
         with open(yaml_path, 'r', encoding='utf-8') as f:
             input_data = yaml.load(f)
         
         if not isinstance(input_data, dict):
             raise ValueError('YAML内容必须是有效的字典格式')
         
+        # 读取ports配置
+        ports_path = BASE_DIR / 'template' / 'ports.yaml'
+        with open(ports_path, 'r', encoding='utf-8') as f:
+            ports_data = yaml.load(f)
+        
+        ports_config = {proxy['name']: proxy['ports'] 
+                       for proxy in ports_data.get('proxies', [])}
+        
         proxies = input_data.get('proxies', [])
         if not proxies:
             raise ValueError('YAML文件中未找到有效的proxies配置')
         
         for proxy in proxies:
-            if isinstance(proxy, dict) and proxy.get('type') == 'hysteria2':
-                proxy['up'] = '50'
-                proxy['down'] = '300'
+            if isinstance(proxy, dict):
+                if proxy.get('type') == 'hysteria2':
+                    proxy['up'] = '50'
+                    proxy['down'] = '300'
+                    # 检查是否存在匹配的端口配置
+                    if proxy.get('name') in ports_config:
+                        proxy['ports'] = ports_config[proxy['name']]
+                        # 如果存在port字段，删除它
+                        proxy.pop('port', None)
         
         with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
             template_data = yaml.load(f)
