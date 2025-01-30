@@ -97,19 +97,24 @@ def process_yaml_content(yaml_path):
         
         if not isinstance(input_data, dict):
             raise ValueError('YAML内容必须是有效的字典格式')
-        
+            
+        # 读取标准模板
+        with open(config.TEMPLATE_PATH, 'r', encoding='utf-8') as f:
+            template_data = yaml.load(f)
+
         # 读取ports配置
         ports_path = config.BASE_DIR / 'template' / 'ports.yaml'
         with open(ports_path, 'r', encoding='utf-8') as f:
             ports_data = yaml.load(f)
-        
+            
         ports_config = {proxy['name']: proxy['ports'] 
                        for proxy in ports_data.get('proxies', [])}
         
         proxies = input_data.get('proxies', [])
         if not proxies:
             raise ValueError('YAML文件中未找到有效的proxies配置')
-        
+            
+        # 处理代理配置
         for proxy in proxies:
             if isinstance(proxy, dict):
                 if proxy.get('type') == 'hysteria2':
@@ -118,19 +123,23 @@ def process_yaml_content(yaml_path):
                     # 检查是否存在匹配的端口配置
                     if proxy.get('name') in ports_config:
                         proxy['ports'] = ports_config[proxy['name']]
-                        # 如果存在port字段，删除它
                         proxy.pop('port', None)
         
-        with open(config.TEMPLATE_PATH, 'r', encoding='utf-8') as f:
-            template_data = yaml.load(f)
-        
+        # 更新模板中的代理列表
         template_data['proxies'] = proxies
         
+        # 配置YAML输出格式
+        yaml.indent(mapping=2, sequence=4, offset=2)
+        yaml.preserve_quotes = True
+        yaml.width = 4096  # 避免自动换行
+        
+        # 保存处理后的YAML
         output_path = config.OUTPUT_FOLDER / 'Mitce.yaml'
         with open(output_path, 'w', encoding='utf-8') as f:
             yaml.dump(template_data, f)
-        
+            
         return output_path
+        
     except Exception as e:
         logger.error(f"处理YAML内容失败: {str(e)}")
         raise
@@ -193,3 +202,5 @@ def process_yaml(yaml_url):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002, host='0.0.0.0')
+
+
