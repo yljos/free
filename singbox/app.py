@@ -1,20 +1,12 @@
 from flask import Flask, send_file, after_this_request
 import requests
 from urllib.parse import unquote
-from pathlib import Path
 import json
 import logging
 import uuid
+from config import USER_AGENT, BASE_DIR, OUTPUT_FOLDER, TEMPLATE_PATH
 
 app = Flask(__name__)
-
-# 常量定义
-USER_AGENT = 'sing-box'
-
-# 使用 Path 对象处理路径
-BASE_DIR = Path(__file__).parent
-OUTPUT_FOLDER = BASE_DIR / 'outputs'
-TEMPLATE_PATH = BASE_DIR / 'template' / 'tun_1.10.json'
 
 # 确保输出目录存在
 OUTPUT_FOLDER.mkdir(exist_ok=True)
@@ -59,6 +51,17 @@ def process_subscription(sub_path):
         with open(sub_path, 'r', encoding='utf-8') as f:
             sub_data = json.load(f)
 
+        # 读取 ports.json
+        ports_file = BASE_DIR / 'template' / 'ports.json'
+        ports_map = {}
+        if ports_file.exists():
+            with open(ports_file, 'r', encoding='utf-8') as f:
+                ports_data = json.load(f)
+                # 创建端口映射字典 {(type, tag): server_ports}
+                for node in ports_data.get('outbounds', []):
+                    if 'type' in node and 'tag' in node and 'server_ports' in node:
+                        ports_map[(node['type'], node['tag'])] = node['server_ports']
+
         # 2. 提取节点标签并保存到 node.json
         node_tags = []
         seen_tags = set()
@@ -72,6 +75,17 @@ def process_subscription(sub_path):
                 if item.get('type') == 'hysteria2':
                     item['up_mbps'] = 50
                     item['down_mbps'] = 300
+                    
+                # 检查并更新 server_ports
+                node_key = (item.get('type'), item.get('tag'))
+                if node_key in ports_map:
+                    # 删除 server_port 字段
+                    if 'server_port' in item:
+                        del item['server_port']
+                    # 添加 server_ports 字段    
+                    item['server_ports'] = ports_map[node_key]
+                    logger.info(f"更新节点 {item['tag']} 的 server_ports: {ports_map[node_key]}")
+                
                 seen_tags.add(item['tag'])
                 node_tags.append(item['tag'])
                 sub_outbounds.append(item)

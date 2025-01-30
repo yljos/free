@@ -1,0 +1,14 @@
+{
+  "outbounds": [
+    {"type": "hysteria2", "tag": "HK1-HY2", "server_ports": ["1000:2000"]},
+    {"type": "hysteria2", "tag": "HK2-HY2", "server_ports": ["3000:4000"]},
+    {"type": "hysteria2", "tag": "HK3-HY2", "server_ports": ["5000:6000"]},
+    {"type": "hysteria2", "tag": "HK4-HY2", "server_ports": ["7000:8000"]},
+    {"type": "hysteria2", "tag": "HK5-HY2", "server_ports": ["9000:10000"]},
+    {"type": "hysteria2", "tag": "TW1-HY2", "server_ports": ["1000:2000"]},
+    {"type": "hysteria2", "tag": "TW2-HY2", "server_ports": ["3000:4000"]},
+    {"type": "hysteria2", "tag": "TW3-HY2", "server_ports": ["5000:6000"]},
+    {"type": "hysteria2", "tag": "TW4-HY2", "server_ports": ["7000:8000"]},
+    {"type": "hysteria2", "tag": "TW5-HY2", "server_ports": ["9000:10000"]}
+  ]
+}
