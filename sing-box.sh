@@ -5,7 +5,7 @@ jq -r '.[] | select(.prerelease == false and .draft == false) | .assets[] | sele
 tar zxvf *.tar.gz --strip-components=1 && \
 chown root:root sing-box && \
 chmod +x sing-box && \
-rm LICENSE && rm *.tar.gz
+rm LICENSE && rm *.tar.gz && rm -rf /usr/share/sing-box/ui && rm -rf /usr/share/sing-box/cache.db && \
 /etc/init.d/sing-box stop && /etc/init.d/sing-box start
 echo "sing-box 更新到最新稳定版"
 
