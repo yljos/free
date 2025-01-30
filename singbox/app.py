@@ -154,6 +154,13 @@ def process_subscription(sub_path):
             sub_path.unlink()
             logger.info(f"清理临时文件: {sub_path}")
 
+def create_cleanup_callback(temp_files):
+    @after_this_request
+    def cleanup_callback(response):
+        cleanup_files(temp_files)
+        return response
+    return cleanup_callback
+
 @app.route('/<path:sub_url>')
 def process_subscription_url(sub_url):
     temp_files = []
@@ -176,18 +183,16 @@ def process_subscription_url(sub_url):
             download_name='config.json'
         )
         
-        # 注册清理回调
-        @after_this_request
-        def cleanup_callback(response):
-            cleanup_files(temp_files)
-            return response
-            
+        # 使用新的清理回调方式
+        create_cleanup_callback(temp_files)
+        
         return response
         
     except Exception as error:
-        # 发生异常时立即清理
-        cleanup_files(temp_files)
         return f'处理失败: {str(error)}', 500
+    finally:
+        # 无论是否发生异常，都确保清理临时文件
+        cleanup_files(temp_files)
 
 def cleanup_files(file_paths):
     """清理临时文件"""
