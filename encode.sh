@@ -17,7 +17,7 @@ encode_url "0.txt" >> singbox.txt
 printf "\n" >> singbox.txt
 
 # 生成 clash URL (使用LF) 
-printf "https://clash.suckless.top:8443/" > clash.txt
+printf "http://nas:5002/" > clash.txt
 encode_url "0.txt" >> clash.txt
 printf "\n" >> clash.txt
 
