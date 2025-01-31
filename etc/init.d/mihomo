@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=10
+USE_PROCD=1
+
+PROG="/usr/bin/mihomo"
+CONFIG_DIR="/etc/mihomo"
+SERVICE_NAME="mihomo"
+
+start_service() {
+    procd_open_instance
+    procd_set_param command "$PROG" -d "$CONFIG_DIR"
+    procd_set_param respawn
+    procd_close_instance
+}
+
+stop_service() {
+    procd_kill "$SERVICE_NAME"
+}
+
+service_triggers() {
+    local ifaces
+    config_load "$SERVICE_NAME"
+    config_get ifaces "main" "ifaces"
+    procd_open_trigger
+    for iface in $ifaces; do
+        procd_add_interface_trigger "interface.*.up" $iface /etc/init.d/$SERVICE_NAME restart
+    done
+    procd_close_trigger
+    procd_add_reload_trigger "$SERVICE_NAME"
+}
