@@ -8,7 +8,7 @@ bind-address: "*" # 绑定地址，默认是
 find-process-mode: strict # always, strict, off
 mode: rule # global, rule, direct
 log-level: warning # info, warning, error, debug
-ipv6: false # 是否启用 IPv6
+ipv6: true # 是否启用 IPv6
 udp: true # 是否启用 UDP 代理
 geodata-mode: false # 是否启用地理数据模式
 unified-delay: true # 是否启用统一延迟模式
@@ -81,7 +81,7 @@ dns:
   enable: true
   prefer-h3: false
   listen: "0.0.0.0:1053"
-  ipv6: false # 是否启用 IPv6
+  ipv6: true # 是否启用 IPv6
   ipv6-timeout: 100 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
   enhanced-mode: fake-ip # fake-ip, redir-host
   fake-ip-range: 198.18.0.1/16
@@ -117,10 +117,10 @@ dns:
   use-system-hosts: false # 是否使用系统hosts
   default-nameserver:
     # 添加IPv6 DNS服务器
-    # - 2400:3200::1 # 阿里DNS IPv6
-    # - 2400:3200:baba::1 # 阿里DNS IPv6
-    # - 2606:4700:4700::1111 # Cloudflare IPv6 主要
-    # - 2606:4700:4700::1001 # Cloudflare IPv6 备用（可选）
+    - 2400:3200::1 # 阿里DNS IPv6
+    - 2400:3200:baba::1 # 阿里DNS IPv6
+    - 2606:4700:4700::1111 # Cloudflare IPv6 主要
+    - 2606:4700:4700::1001 # Cloudflare IPv6 备用（可选）
     # 添加IPv4 DNS服务器
     - 223.5.5.5 # 阿里DNS
     - 223.6.6.6 # 阿里DNS
@@ -138,6 +138,7 @@ dns:
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M"
     "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M"
     # 国内直连服务
+    "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M"
     "rule-set:direct": "https://dns.alidns.com/dns-query#D"
     "rule-set:cn": "https://dns.alidns.com/dns-query#D"
     "rule-set:bilibili": "https://dns.alidns.com/dns-query#D"
@@ -168,7 +169,8 @@ dns:
     "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub"
     # 社交媒体
     "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram"
-    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US"
+    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US"
     "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
     # 流媒体服务
     "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
@@ -276,8 +278,7 @@ proxy-groups:
       name: HK,
       filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: url-test,
-      tolerance: 100,
+      type: fallback, # 由url-test改为fallback
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
@@ -288,8 +289,7 @@ proxy-groups:
       name: JP,
       filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: url-test,
-      tolerance: 100,
+      type: fallback, # 由url-test改为fallback
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
@@ -300,8 +300,7 @@ proxy-groups:
       name: US,
       filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: url-test,
-      tolerance: 100,
+      type: fallback, # 由url-test改为fallback
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
@@ -312,8 +311,7 @@ proxy-groups:
       name: SG,
       filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: url-test,
-      tolerance: 100,
+      type: fallback, # 由url-test改为fallback
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
@@ -324,8 +322,7 @@ proxy-groups:
       name: TW,
       filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: url-test,
-      tolerance: 100,
+      type: fallback, # 由url-test改为fallback
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
@@ -406,6 +403,14 @@ rule-providers:
     format: yaml
     path: ./rules/docker.yaml
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml
+  direct-cf:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/direct-cf.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-cf.yaml
   direct:
     type: http
     interval: 86400
@@ -702,53 +707,73 @@ rule-providers:
     format: yaml
     path: ./rules/tencent.yaml
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml
+  facebook:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/facebook.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/facebook.yaml
+  facebook-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/facebook-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/facebook.yaml
 
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei,REJECT"
-  - "RULE-SET,category-ads-all,REJECT" # 广告拦截
-  - "RULE-SET,direct,D" # 直连规则
-  - "RULE-SET,direct-ip,D" # 直连规则
-  - "RULE-SET,pass-ip,D" # 智能家居设备直连规则
-  - "RULE-SET,xiaomi,D" # 小米服务
-  - "RULE-SET,bilibili,D" # B站
-  - "RULE-SET,unionpay,D" # 银联支付
-  - "RULE-SET,pikpak-download,PikPak-Download" # PikPak下载
-  - "RULE-SET,pikpak,HK" # PikPak服务
-  - "RULE-SET,alibaba,D" # 阿里巴巴
-  - "RULE-SET,meituan,D" # 美团
-  - "RULE-SET,jd,D" # 京东
-  - "RULE-SET,tencent,D" # 腾讯服务
-  - "RULE-SET,archlinux,M" # ArchLinux服务
-  - "RULE-SET,proxy,M" # 代理列表
-  - "RULE-SET,mozilla,M" # Firefox服务
-  - "RULE-SET,openwrt,M" # OpenWRT服务
-  - "RULE-SET,openai,OpenAi" # OpenAI服务
-  - "RULE-SET,adguard,M" # AdGuard
-  - "RULE-SET,tmdb,M" # TMDB影视资料库
-  - "RULE-SET,docker,M" # Docker服务
-  - "RULE-SET,reddit,M" # Reddit
-  - "RULE-SET,spotify,M" # Spotify音乐
-  - "RULE-SET,speedtest,SpeedTest" # 网速测试
-  - "RULE-SET,wikimedia,M" # 维基媒体
-  - "RULE-SET,javdb,M" # JavDB
-  - "RULE-SET,apkpure,M" # APKPure
-  - "RULE-SET,f-droid,M" # F-Droid
-  - "RULE-SET,steam,Steam" # Steam平台
-  - "RULE-SET,tiktok,TikTok" # TikTok
-  - "RULE-SET,youtube,Google" # YouTube
-  - "RULE-SET,telegram,Telegram" # Telegram
-  - "RULE-SET,telegram-ip,Telegram" # Telegram IP
-  - "RULE-SET,twitter,M" # Twitter
-  - "RULE-SET,twitter-ip,M" # Twitter IP
-  - "RULE-SET,github,GitHub" # GitHub
-  - "RULE-SET,netflix,Netflix" # Netflix
-  - "RULE-SET,netflix-ip,Netflix" # Netflix IP
-  - "RULE-SET,googlefcm,D" # Google FCM服务
-  - "RULE-SET,google,Google" # Google服务
-  - "RULE-SET,google-ip,Google" # Google IP
-  - "RULE-SET,microsoft,Microsoft" # 微软服务
-  - "RULE-SET,gfw,M" # GFW封锁列表
-  - "RULE-SET,cn,D" # 中国大陆域名
-  - "RULE-SET,cn-ip,D" # 中国大陆IP
-  - "MATCH,Default" # 最终规则
+  - "RULE-SET,category-ads-all,REJECT"
+
+  - "RULE-SET,direct,D"
+  - "RULE-SET,direct-cf,D"
+  - "RULE-SET,direct-ip,D"
+  - "RULE-SET,pass-ip,D"
+  - "RULE-SET,xiaomi,D"
+  - "RULE-SET,bilibili,D"
+  - "RULE-SET,unionpay,D"
+  - "RULE-SET,pikpak,HK"
+  - "RULE-SET,alibaba,D"
+  - "RULE-SET,meituan,D"
+  - "RULE-SET,jd,D"
+  - "RULE-SET,tencent,D"
+  - "RULE-SET,googlefcm,D"
+  - "RULE-SET,pikpak-download,PikPak-Download"
+  - "RULE-SET,proxy,M"
+  - "RULE-SET,github,GitHub"
+  - "RULE-SET,docker,M"
+  - "RULE-SET,archlinux,M"
+  - "RULE-SET,openwrt,M"
+  - "RULE-SET,mozilla,M"
+  - "RULE-SET,microsoft,Microsoft"
+  - "RULE-SET,openai,OpenAi"
+  - "RULE-SET,youtube,Google"
+  - "RULE-SET,google,Google"
+  - "RULE-SET,google-ip,Google"
+  - "RULE-SET,netflix,Netflix"
+  - "RULE-SET,netflix-ip,Netflix"
+  - "RULE-SET,tiktok,TikTok"
+  - "RULE-SET,tmdb,M"
+  - "RULE-SET,telegram,Telegram"
+  - "RULE-SET,telegram-ip,Telegram"
+  - "RULE-SET,twitter,US"
+  - "RULE-SET,twitter-ip,US"
+  - "RULE-SET,facebook,US"
+  - "RULE-SET,facebook-ip,US"
+  - "RULE-SET,reddit,M"
+  - "RULE-SET,adguard,M"
+  - "RULE-SET,speedtest,SpeedTest"
+  - "RULE-SET,wikimedia,M"
+  - "RULE-SET,javdb,M"
+  - "RULE-SET,apkpure,M"
+  - "RULE-SET,f-droid,M"
+  - "RULE-SET,spotify,M"
+  - "RULE-SET,steam,Steam"
+  - "RULE-SET,gfw,M"
+  - "RULE-SET,cn,D"
+  - "RULE-SET,cn-ip,D"
+  - "MATCH,Default"

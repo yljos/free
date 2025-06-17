@@ -89,39 +89,39 @@
         "server": "dns_google"
       },
       {
-        "rule_set": "geosite-category-ads-all",
+        "rule_set": "category-ads-all",
         "action": "route",
         "server": "dns_block"
       },
       {
-        "rule_set": "geosite-huawei",
+        "rule_set": "huawei",
         "action": "route",
         "server": "dns_block"
       },
       {
-        "rule_set": "geosite-xiaomi",
+        "rule_set": "xiaomi",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-tencent",
+        "rule_set": "tencent",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-cn",
+        "rule_set": "cn",
         "action": "route",
         "server": "dns_direct"
       },
       {
         "rule_set": [
-          "geosite-googlefcm"
+          "googlefcm"
         ],
         "action": "route",
         "server": "dns_google"
       },
       {
-        "rule_set": "geosite-geolocation-cn",
+        "rule_set": "geolocation-cn",
         "action": "route",
         "server": "dns_direct"
       },
@@ -131,27 +131,27 @@
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-unionpay",
+        "rule_set": "unionpay",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-jd",
+        "rule_set": "jd",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-meituan",
+        "rule_set": "meituan",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-alibaba",
+        "rule_set": "alibaba",
         "action": "route",
         "server": "dns_direct"
       },
       {
-        "rule_set": "geosite-bilibili",
+        "rule_set": "bilibili",
         "action": "route",
         "server": "dns_direct"
       },
@@ -160,11 +160,11 @@
         "mode": "and",
         "rules": [
           {
-            "rule_set": "geosite-geolocation-!cn",
+            "rule_set": "geolocation-!cn",
             "invert": true
           },
           {
-            "rule_set": "geoip-cn"
+            "rule_set": "cn-ip"
           }
         ],
         "action": "route",
@@ -460,7 +460,7 @@
         "strategy": "ipv4_only"
       },
       {
-        "rule_set": "geosite-tencent",
+        "rule_set": "tencent",
         "outbound": "D"
       },
       {
@@ -486,7 +486,7 @@
         "outbound": "PikPak-Download"
       },
       {
-        "rule_set": "geosite-pikpak",
+        "rule_set": "pikpak",
         "outbound": "PikPak"
       },
       {
@@ -494,11 +494,11 @@
         "action": "hijack-dns"
       },
       {
-        "rule_set": "geosite-category-ads-all",
+        "rule_set": "category-ads-all",
         "action": "reject"
       },
       {
-        "rule_set": "geosite-xiaomi",
+        "rule_set": "xiaomi",
         "outbound": "D"
       },
       {
@@ -525,151 +525,151 @@
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-mozilla",
+        "rule_set": "mozilla",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-fdroid",
+        "rule_set": "fdroid",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-openai",
+        "rule_set": "openai",
         "outbound": "OpenAi"
       },
       {
-        "rule_set": "geosite-unionpay",
+        "rule_set": "unionpay",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-jd",
+        "rule_set": "jd",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-meituan",
+        "rule_set": "meituan",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-alibaba",
+        "rule_set": "alibaba",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-github",
+        "rule_set": "github",
         "outbound": "GitHub"
       },
       {
-        "rule_set": "geosite-adguard",
+        "rule_set": "adguard",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-apkpure",
+        "rule_set": "apkpure",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-docker",
+        "rule_set": "docker",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-javdb",
+        "rule_set": "javdb",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-tmdb",
+        "rule_set": "tmdb",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-reddit",
+        "rule_set": "reddit",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-speedtest",
+        "rule_set": "speedtest",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-wikimedia",
+        "rule_set": "wikimedia",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-steam",
+        "rule_set": "steam",
         "outbound": "Steam"
       },
       {
-        "rule_set": "geosite-openwrt",
+        "rule_set": "openwrt",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-googlefcm",
+        "rule_set": "googlefcm",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-youtube",
+        "rule_set": "youtube",
         "outbound": "Google"
       },
       {
         "rule_set": [
-          "geoip-google",
-          "geosite-google"
+          "google-ip",
+          "google"
         ],
         "outbound": "Google"
       },
       {
         "rule_set": [
-          "geoip-telegram",
-          "geosite-telegram"
+          "telegram-ip",
+          "telegram"
         ],
         "outbound": "Telegram"
       },
       {
         "rule_set": [
-          "geoip-twitter",
-          "geosite-twitter"
+          "twitter-ip",
+          "twitter"
         ],
         "outbound": "Twitter"
       },
       {
         "rule_set": [
-          "geoip-facebook",
-          "geosite-facebook"
+          "facebook-ip",
+          "facebook"
         ],
         "outbound": "FaceBook"
       },
       {
-        "rule_set": "geosite-bilibili",
+        "rule_set": "bilibili",
         "outbound": "D"
       },
       {
-        "rule_set": "geosite-tiktok",
+        "rule_set": "tiktok",
         "outbound": "TikTok"
       },
       {
         "rule_set": [
-          "geoip-netflix",
-          "geosite-netflix"
+          "netflix-ip",
+          "netflix"
         ],
         "outbound": "Netflix"
       },
       {
-        "rule_set": "geosite-gfw",
+        "rule_set": "gfw",
         "outbound": "M"
       },
       {
-        "rule_set": "geosite-microsoft",
+        "rule_set": "microsoft",
         "outbound": "Microsoft"
       },
       {
-        "rule_set": "geosite-huawei",
+        "rule_set": "huawei",
         "action": "reject"
       },
       {
         "rule_set": [
-          "geoip-cn",
-          "geosite-cn"
+          "cn-ip",
+          "cn"
         ],
         "outbound": "D"
       }
     ],
     "rule_set": [
       {
-        "tag": "geosite-geolocation-cn",
+        "tag": "geolocation-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-cn.srs",
@@ -677,7 +677,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-xiaomi",
+        "tag": "xiaomi",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/xiaomi.srs",
@@ -685,7 +685,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-category-ads-all",
+        "tag": "category-ads-all",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads-all.srs",
@@ -693,7 +693,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-microsoft",
+        "tag": "microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/microsoft.srs",
@@ -701,7 +701,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-mozilla",
+        "tag": "mozilla",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/mozilla.srs",
@@ -709,7 +709,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-openwrt",
+        "tag": "openwrt",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/openwrt.srs",
@@ -757,7 +757,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-openai",
+        "tag": "openai",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/openai.srs",
@@ -765,7 +765,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-youtube",
+        "tag": "youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/youtube.srs",
@@ -773,7 +773,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-google",
+        "tag": "google-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/google.srs",
@@ -781,7 +781,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-google",
+        "tag": "google",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/google.srs",
@@ -789,7 +789,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-github",
+        "tag": "github",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/github.srs",
@@ -797,7 +797,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-telegram",
+        "tag": "telegram-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/telegram.srs",
@@ -805,7 +805,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-telegram",
+        "tag": "telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/telegram.srs",
@@ -813,7 +813,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-twitter",
+        "tag": "twitter-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/twitter.srs",
@@ -821,7 +821,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-twitter",
+        "tag": "twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/twitter.srs",
@@ -829,7 +829,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-facebook",
+        "tag": "facebook-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/facebook.srs",
@@ -837,7 +837,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-facebook",
+        "tag": "facebook",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/facebook.srs",
@@ -845,7 +845,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-bilibili",
+        "tag": "bilibili",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/bilibili.srs",
@@ -853,7 +853,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-tiktok",
+        "tag": "tiktok",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tiktok.srs",
@@ -861,7 +861,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-netflix",
+        "tag": "netflix-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/netflix.srs",
@@ -869,7 +869,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-netflix",
+        "tag": "netflix",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/netflix.srs",
@@ -877,7 +877,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-geolocation-!cn",
+        "tag": "geolocation-!cn",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-!cn.srs",
@@ -885,7 +885,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geoip-cn",
+        "tag": "cn-ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/cn.srs",
@@ -893,7 +893,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-cn",
+        "tag": "cn",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/cn.srs",
@@ -901,7 +901,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-unionpay",
+        "tag": "unionpay",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/unionpay.srs",
@@ -909,7 +909,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-jd",
+        "tag": "jd",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/jd.srs",
@@ -917,7 +917,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-pikpak",
+        "tag": "pikpak",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/pikpak.srs",
@@ -925,7 +925,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-alibaba",
+        "tag": "alibaba",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/alibaba.srs",
@@ -933,7 +933,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-meituan",
+        "tag": "meituan",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/meituan.srs",
@@ -941,7 +941,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-apkpure",
+        "tag": "apkpure",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/apkpure.srs",
@@ -949,7 +949,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-tmdb",
+        "tag": "tmdb",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tmdb.srs",
@@ -957,7 +957,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-docker",
+        "tag": "docker",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/docker.srs",
@@ -965,7 +965,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-reddit",
+        "tag": "reddit",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/reddit.srs",
@@ -973,7 +973,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-speedtest",
+        "tag": "speedtest",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/speedtest.srs",
@@ -981,7 +981,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-wikimedia",
+        "tag": "wikimedia",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/wikimedia.srs",
@@ -989,7 +989,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-javdb",
+        "tag": "javdb",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/javdb.srs",
@@ -997,7 +997,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-adguard",
+        "tag": "adguard",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/adguard.srs",
@@ -1005,7 +1005,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-steam",
+        "tag": "steam",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/steam.srs",
@@ -1013,7 +1013,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-googlefcm",
+        "tag": "googlefcm",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/googlefcm.srs",
@@ -1021,7 +1021,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-gfw",
+        "tag": "gfw",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/gfw.srs",
@@ -1029,7 +1029,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-fdroid",
+        "tag": "fdroid",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/f-droid.srs",
@@ -1037,7 +1037,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-huawei",
+        "tag": "huawei",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/huawei.srs",
@@ -1045,7 +1045,7 @@
         "update_interval": "12h"
       },
       {
-        "tag": "geosite-tencent",
+        "tag": "tencent",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tencent.srs",
