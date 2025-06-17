@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain_suffix": [
+        "suckless.top",
+        "huai.ink",
+        "huaihuaidehuaihuai.top",
+        "ihuai.top",
+        "jsdmirror.cn",
+        "jsdmirror.com",
+        "fastly.jsdelivr.net",
+        "cdn.jsdelivr.net",
+        "ddns-link-b5.uk",
+        "dexlos.com",
+        "082500.xyz",
+        "202309.xyz"
+      ],
+      "domain": [
+        "ntp.aliyun.com"
+      ]
+    }
+  ]
+}

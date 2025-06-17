@@ -1,0 +1,754 @@
+port: 7890 # HTTP(S) 代理服务器端口
+socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 12138 # HTTP(S) 和 SOCKS 代理混合端口
+redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
+tproxy-port: 7893 # 透明代理端口，用于 Linux 和 MacOS
+allow-lan: true # 是否允许局域网访问
+bind-address: "*" # 绑定地址，默认是
+find-process-mode: strict # always, strict, off
+mode: rule # global, rule, direct
+log-level: warning # info, warning, error, debug
+ipv6: false # 是否启用 IPv6
+udp: true # 是否启用 UDP 代理
+geodata-mode: false # 是否启用地理数据模式
+unified-delay: true # 是否启用统一延迟模式
+tcp-concurrent: true # 是否启用 TCP 并发连接
+global-ua: clash.meta # 全局 User-Agent
+enable-process: true # 是否启用进程监控
+# global-ua: "Mozilla/5.0 (X11; CrOS x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+profile:
+  store_fake_ip: true
+  store_selected: true
+external-controller: "0.0.0.0:9090"
+secret: "101300"
+authentication: # http,socks 入口的验证用户名，密码
+  - "huai:12138password"
+skip-auth-prefixes: # 设置跳过验证的 IP 段
+  - 10.0.0.0/24 # 仅允许 10.0.0.1-10.0.0.255
+  - 127.0.0.1/8 # 仅允许 127.0.0.0-127.255.255.255 (本地回环地址)
+  - 192.168.0.0/16 # 仅允许 192.168.0.0-192.168.255.255
+external-ui: ui
+#external-ui-name: yacd
+global-client-fingerprint: chrome
+routing-mark: 666
+external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    QUIC:
+      ports: [443, 8443]
+    TLS:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+  skip-domain:
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.apple.com"
+    - "*.baidu.com"
+  force-domain:
+    - "google.com"
+tun:
+  enable: true # 是否启用 tun 模式
+  device: mihomo # tun device name
+  stack: system # system, gvisor, mixed
+  dns-hijack:
+    - "any:53" # DNS 拦截
+    - "tcp://any:53" # DNS 拦截
+  auto-route: true # 自动路由
+  udp-timeout: 300 # UDP 超时时间，单位：秒
+  mtu: 1500 # 最大传输单元
+  auto-detect-interface: true # 自动检测接口
+  auto-redirect: true # 自动配置 iptables 以重定向 TCP 连接。仅支持 Linux。带有 auto-redirect 的 auto-route 现在可以在路由器上按预期工作，无需干预。
+  strict-route: true # 严格路由模式
+  endpoint-independent-nat: true # 是否启用端点无关的 NAT
+hosts:
+  "openwrt": "10.0.0.1" # 替换为实际的路由器IP地址
+  "nas": "10.0.0.21" # 替换为实际的NAS IP地址
+  "ax6s": "10.0.0.2" # 替换为实际的路由器IP地址
+  "homeassistant.local": "10.0.0.21" # 替换为实际的HomeAssistant IP地址
+ntp:
+  enable: true
+  write-to-system: false
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
+dns:
+  enable: true
+  prefer-h3: false
+  listen: "0.0.0.0:1053"
+  ipv6: false # 是否启用 IPv6
+  ipv6-timeout: 100 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
+  enhanced-mode: fake-ip # fake-ip, redir-host
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "localhost.ptlogin2.qq.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.googleapis.com"
+    - "+.googleapis.cn"
+    - "alt1-mtalk.google.com"
+    - "alt2-mtalk.google.com"
+    - "alt3-mtalk.google.com"
+    - "alt4-mtalk.google.com"
+    - "alt5-mtalk.google.com"
+    - "alt6-mtalk.google.com"
+    - "alt7-mtalk.google.com"
+    - "alt8-mtalk.google.com"
+    - "mtalk.google.com"
+    - "mtalk-dev.google.com"
+    - "mtalk-staging.google.com"
+    - "mtalk4.google.com"
+    - "ntp.aliyun.com"
+    - "+.huai.ink"
+    - "+.huaihuaidehuaihuai.top"
+    - "+.ihuai.top"
+    - "+.suckless.top"
+    - "+.082500.xyz"
+    - "+.202309.xyz"
+  use-hosts: true # 是否使用配置中设置的hosts
+  use-system-hosts: false # 是否使用系统hosts
+  default-nameserver:
+    # 添加IPv6 DNS服务器
+    # - 2400:3200::1 # 阿里DNS IPv6
+    # - 2400:3200:baba::1 # 阿里DNS IPv6
+    # - 2606:4700:4700::1111 # Cloudflare IPv6 主要
+    # - 2606:4700:4700::1001 # Cloudflare IPv6 备用（可选）
+    # 添加IPv4 DNS服务器
+    - 223.5.5.5 # 阿里DNS
+    - 223.6.6.6 # 阿里DNS
+    - 1.1.1.1 # Cloudflare 主要
+    - 1.0.0.1 # Cloudflare 备用（可选）
+  proxy-server-nameserver:
+    - "https://dns.alidns.com/dns-query"
+    - "https://doh.pub/dns-query"
+    - "https://doh.onedns.net/dns-query"
+  nameserver: [https://cloudflare-dns.com/dns-query#M]
+  nameserver-policy:
+    # 代理服务
+    "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M"
+    # 国内直连服务
+    "rule-set:direct": "https://dns.alidns.com/dns-query#D"
+    "rule-set:cn": "https://dns.alidns.com/dns-query#D"
+    "rule-set:bilibili": "https://dns.alidns.com/dns-query#D"
+    "rule-set:xiaomi": "https://dns.alidns.com/dns-query#D"
+    "rule-set:unionpay": "https://dns.alidns.com/dns-query#D"
+    "rule-set:alibaba": "https://dns.alidns.com/dns-query#D"
+    "rule-set:meituan": "https://dns.alidns.com/dns-query#D"
+    "rule-set:jd": "https://dns.alidns.com/dns-query#D"
+    "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft"
+    "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
+    # 广告拦截服务
+    "rule-set:category-ads-all": "rcode://refused"
+    "rule-set:huawei": "rcode://refused"
+    # 特定应用服务
+    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi"
+    "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#PikPak-Download"
+    "rule-set:adguard": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:tmdb": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:docker": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:reddit": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:spotify": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:wikimedia": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:javdb": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:apkpure": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam"
+    "rule-set:mozilla": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub"
+    # 社交媒体
+    "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
+    # 流媒体服务
+    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google"
+    # Google服务
+    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google"
+    # 测速服务
+    "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
+    "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M"
+proxies: []
+proxy-groups:
+  - {
+      name: M,
+      type: fallback,
+      proxies: [HK, SG, JP],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: Default,
+      type: select,
+      proxies: [M, D, TW, SG, US, JP, HK],
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - { name: D, type: select, proxies: [DIRECT], hidden: true }
+  - {
+      name: Google,
+      type: fallback,
+      proxies: [US, SG, JP],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: OpenAi,
+      type: fallback,
+      proxies: [US, SG, JP],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: Telegram,
+      type: fallback,
+      proxies: [US, SG, JP],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: TikTok,
+      type: fallback,
+      proxies: [JP, SG],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: Steam,
+      type: fallback,
+      proxies: [HK, D],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: Netflix,
+      type: fallback,
+      proxies: [SG],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - { name: PikPak-Download, type: select, proxies: [D, SG] }
+  - { name: SpeedTest, type: select, proxies: [SG, US, JP, HK] }
+  - {
+      name: GitHub,
+      type: fallback,
+      proxies: [HK, D],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: Microsoft,
+      type: fallback,
+      proxies: [HK, D],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+    }
+  - {
+      name: HK,
+      filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))",
+      include-all-proxies: true,
+      type: url-test,
+      tolerance: 100,
+      url: https://cp.cloudflare.com,
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - {
+      name: JP,
+      filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))",
+      include-all-proxies: true,
+      type: url-test,
+      tolerance: 100,
+      url: https://cp.cloudflare.com,
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - {
+      name: US,
+      filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))",
+      include-all-proxies: true,
+      type: url-test,
+      tolerance: 100,
+      url: https://cp.cloudflare.com,
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - {
+      name: SG,
+      filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))",
+      include-all-proxies: true,
+      type: url-test,
+      tolerance: 100,
+      url: https://cp.cloudflare.com,
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - {
+      name: TW,
+      filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))",
+      include-all-proxies: true,
+      type: url-test,
+      tolerance: 100,
+      url: https://cp.cloudflare.com,
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+
+rule-providers:
+  archlinux:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/archlinux.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml
+  adguard:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/adguard.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml
+  alibaba:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/alibaba.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/alibaba.yaml
+  apkpure:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/apkpure.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml
+  bilibili:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/bilibili.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/bilibili.yaml
+  category-ads-all:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/category-ads-all.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/category-ads-all.yaml
+  cn:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/cn.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/cn.yaml
+  cn-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/cn-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/cn.yaml
+  docker:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/docker.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml
+  direct:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/direct.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct.yaml
+  direct-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/direct-ip.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-ip.yaml
+  mozilla:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/mozilla.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml
+  gfw:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/gfw.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml
+  github:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/github.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml
+  google:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/google.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml
+  google-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/google-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/google.yaml
+  googlefcm:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/googlefcm.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml
+  huawei:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/huawei.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/huawei.yaml
+  javdb:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/javdb.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml
+  jd:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/jd.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml
+  meituan:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/meituan.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/meituan.yaml
+  microsoft:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/microsoft.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml
+  netflix:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/netflix.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml
+  netflix-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/netflix-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/netflix.yaml
+  openai:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/openai.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml
+  openwrt:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/openwrt.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml
+  pass-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/pass-ip.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pass-ip.yaml
+  pikpak:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/pikpak.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pikpak.yaml
+  pikpak-download:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/pikpak-download.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml
+  proxy:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/proxy.yaml
+    url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/proxy.yaml
+  reddit:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/reddit.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml
+  speedtest:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/speedtest.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/speedtest.yaml
+  spotify:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/spotify.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml
+  steam:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/steam.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml
+  telegram:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/telegram.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/telegram.yaml
+  telegram-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/telegram-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/telegram.yaml
+  tiktok:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/tiktok.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml
+  tmdb:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/tmdb.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml
+  twitter:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/twitter.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml
+  twitter-ip:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/twitter-ip.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/twitter.yaml
+  unionpay:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/unionpay.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/unionpay.yaml
+  wikimedia:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/wikimedia.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/wikimedia.yaml
+  xiaomi:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/xiaomi.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/xiaomi.yaml
+  youtube:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/youtube.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/youtube.yaml
+  f-droid:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/f-droid.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/f-droid.yaml
+  tencent:
+    type: http
+    interval: 86400
+    proxy: M
+    behavior: classical
+    format: yaml
+    path: ./rules/tencent.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml
+
+rules:
+  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
+  - "RULE-SET,huawei,REJECT"
+  - "RULE-SET,category-ads-all,REJECT" # 广告拦截
+  - "RULE-SET,direct,D" # 直连规则
+  - "RULE-SET,direct-ip,D" # 直连规则
+  - "RULE-SET,pass-ip,D" # 智能家居设备直连规则
+  - "RULE-SET,xiaomi,D" # 小米服务
+  - "RULE-SET,bilibili,D" # B站
+  - "RULE-SET,unionpay,D" # 银联支付
+  - "RULE-SET,pikpak-download,PikPak-Download" # PikPak下载
+  - "RULE-SET,pikpak,HK" # PikPak服务
+  - "RULE-SET,alibaba,D" # 阿里巴巴
+  - "RULE-SET,meituan,D" # 美团
+  - "RULE-SET,jd,D" # 京东
+  - "RULE-SET,tencent,D" # 腾讯服务
+  - "RULE-SET,archlinux,M" # ArchLinux服务
+  - "RULE-SET,proxy,M" # 代理列表
+  - "RULE-SET,mozilla,M" # Firefox服务
+  - "RULE-SET,openwrt,M" # OpenWRT服务
+  - "RULE-SET,openai,OpenAi" # OpenAI服务
+  - "RULE-SET,adguard,M" # AdGuard
+  - "RULE-SET,tmdb,M" # TMDB影视资料库
+  - "RULE-SET,docker,M" # Docker服务
+  - "RULE-SET,reddit,M" # Reddit
+  - "RULE-SET,spotify,M" # Spotify音乐
+  - "RULE-SET,speedtest,SpeedTest" # 网速测试
+  - "RULE-SET,wikimedia,M" # 维基媒体
+  - "RULE-SET,javdb,M" # JavDB
+  - "RULE-SET,apkpure,M" # APKPure
+  - "RULE-SET,f-droid,M" # F-Droid
+  - "RULE-SET,steam,Steam" # Steam平台
+  - "RULE-SET,tiktok,TikTok" # TikTok
+  - "RULE-SET,youtube,Google" # YouTube
+  - "RULE-SET,telegram,Telegram" # Telegram
+  - "RULE-SET,telegram-ip,Telegram" # Telegram IP
+  - "RULE-SET,twitter,M" # Twitter
+  - "RULE-SET,twitter-ip,M" # Twitter IP
+  - "RULE-SET,github,GitHub" # GitHub
+  - "RULE-SET,netflix,Netflix" # Netflix
+  - "RULE-SET,netflix-ip,Netflix" # Netflix IP
+  - "RULE-SET,googlefcm,D" # Google FCM服务
+  - "RULE-SET,google,Google" # Google服务
+  - "RULE-SET,google-ip,Google" # Google IP
+  - "RULE-SET,microsoft,Microsoft" # 微软服务
+  - "RULE-SET,gfw,M" # GFW封锁列表
+  - "RULE-SET,cn,D" # 中国大陆域名
+  - "RULE-SET,cn-ip,D" # 中国大陆IP
+  - "MATCH,Default" # 最终规则
