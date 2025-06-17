@@ -54,6 +54,14 @@
     },
     "rules": [
       {
+        "domain_suffix": [
+          "ddns-link-b5.uk",
+          "dexlos.com"
+        ],
+        "action": "route",
+        "server": "dns_direct"
+      },
+      {
         "rule_set": "direct-cf",
         "action": "route",
         "server": "dns_proxy"
