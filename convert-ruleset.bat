@@ -8,6 +8,7 @@ echo === Converting JSON to SRS format ===
 .\sing-box.exe rule-set compile pass-ip.json
 .\sing-box.exe rule-set compile direct-ip.json
 .\sing-box.exe rule-set compile pikpak-download.json
+.\sing-box.exe rule-set compile direct-cf.json
 
 echo JSON files conversion completed
 

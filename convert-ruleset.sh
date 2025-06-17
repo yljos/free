@@ -9,6 +9,7 @@ echo -e "\n>>> 执行JSON到SRS格式转换..."
 ./sing-box rule-set compile pass-ip.json
 ./sing-box rule-set compile direct-ip.json
 ./sing-box rule-set compile pikpak-download.json
+./sing-box rule-set compile direct-cf.json
 echo "JSON文件转换完成"
 
 # # 第二部分：YAML到MRS格式转换

@@ -54,22 +54,7 @@
     },
     "rules": [
       {
-        "domain_suffix": [
-          "fastly.jsdelivr.net",
-          "ntp.aliyun.com",
-          "ddns-link-b5.uk",
-          "dexlos.com",
-          "jsdmirror.cn",
-          "jsdmirror.com"
-        ],
-        "action": "route",
-        "server": "dns_direct"
-      },
-      {
-        "domain_suffix": [
-          "202309.xyz",
-          "082500.xyz"
-        ],
+        "rule_set": "direct-cf",
         "action": "route",
         "server": "dns_proxy"
       },
@@ -466,6 +451,7 @@
       {
         "rule_set": [
           "direct",
+          "direct-cf",
           "direct-ip"
         ],
         "outbound": "D"
@@ -526,6 +512,14 @@
       },
       {
         "rule_set": "mozilla",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "archlinux",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "spotify",
         "outbound": "M"
       },
       {
@@ -1049,6 +1043,30 @@
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/tencent.srs",
+        "download_detour": "M",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "archlinux",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/archlinux.srs",
+        "download_detour": "M",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "spotify",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/spotify.srs",
+        "download_detour": "M",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "direct-cf",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/yljos/free/raw/refs/heads/main/direct-cf.srs",
         "download_detour": "M",
         "update_interval": "12h"
       }
