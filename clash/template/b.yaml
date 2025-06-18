@@ -24,7 +24,6 @@ secret: "101300"
 authentication: # http,socks 入口的验证用户名，密码
   - "huai:12138password"
 skip-auth-prefixes: # 设置跳过验证的 IP 段
-  - 10.0.0.0/24 # 仅允许 10.0.0.1-10.0.0.255
   - 127.0.0.1/8 # 仅允许 127.0.0.0-127.255.255.255 (本地回环地址)
   - 192.168.0.0/16 # 仅允许 192.168.0.0-192.168.255.255
 external-ui: ui
@@ -67,10 +66,10 @@ tun:
   strict-route: true # 严格路由模式
   endpoint-independent-nat: true # 是否启用端点无关的 NAT
 hosts:
-  "openwrt": "10.0.0.1" # 替换为实际的路由器IP地址
-  "nas": "10.0.0.21" # 替换为实际的NAS IP地址
-  "ax6s": "10.0.0.2" # 替换为实际的路由器IP地址
-  "homeassistant.local": "10.0.0.21" # 替换为实际的HomeAssistant IP地址
+  "openwrt": "192.168.1.1" # 替换为实际的路由器IP地址
+  "nas": "192.168.1.21" # 替换为实际的NAS IP地址
+  "ax6s": "192.168.1.2" # 替换为实际的路由器IP地址
+  "homeassistant.local": "192.168.1.21" # 替换为实际的HomeAssistant IP地址
 ntp:
   enable: true
   write-to-system: false
