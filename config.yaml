@@ -131,7 +131,7 @@ dns:
     - "https://doh.onedns.net/dns-query"
   nameserver: [https://cloudflare-dns.com/dns-query#M]
   nameserver-policy:
-    "mitce.net": "https://dns.alidns.com/dns-query#D"
+    "+.mitce.net": "https://dns.alidns.com/dns-query#D"
     # 代理服务
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M"
