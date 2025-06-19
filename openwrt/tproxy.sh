@@ -207,7 +207,7 @@ table inet sing-box {
         type ipv4_addr
         flags interval
         auto-merge
-        elements = { 192.168.1.8 }
+        elements = { 192.168.8.8 }
     }
 
     chain prerouting_singbox {

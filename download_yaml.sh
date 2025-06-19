@@ -22,7 +22,7 @@ cd "$TEMP_DIR" || exit 1
 echo "选择的订阅: $SUBSCRIPTION"
 
 # 下载并解压 clash.zip
-if ! curl -s -o clash.zip http://10.0.0.21/clash.zip; then
+if ! curl -s -o clash.zip http://nas/clash.zip; then
     echo "错误: 下载 clash.zip 失败"
     rm -rf "$TEMP_DIR"
     exit 1
