@@ -316,6 +316,15 @@
       "default": "HK"
     },
     {
+      "tag": "GitHub",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "D"
+      ],
+      "default": "HK"
+    },
+    {
       "tag": "Microsoft",
       "type": "selector",
       "outbounds": [
@@ -335,15 +344,6 @@
         "D"
       ],
       "default": "D"
-    },
-    {
-      "tag": "GitHub",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "D"
-      ],
-      "default": "HK"
     },
     {
       "tag": "Default",
