@@ -33,7 +33,7 @@ OUTPUT_FOLDER = BASE_DIR / 'outputs'
 TEMPLATE_MAP = {
     'tproxy': BASE_DIR / 'template' / 'tproxy_1.11.json',  # tproxy模式
     'tun': BASE_DIR / 'template' / 'tun_1.11.json',       # tun模式
-    'shouji': BASE_DIR / 'template' / 'tproxy_1.11_shouji.json'  # 手机tproxy模式
+
 }
 
 # 重新获取环境变量值 - 默认为 'tproxy'
