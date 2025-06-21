@@ -67,11 +67,6 @@
         "server": "dns_proxy"
       },
       {
-        "rule_set": "github",
-        "action": "route",
-        "server": "dns_proxy"
-      },
-      {
         "domain_keyword": [
           "msftconnecttest.com",
           "msftncsi.com"
