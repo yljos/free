@@ -32,12 +32,6 @@
         "detour": "Microsoft"
       },
       {
-        "tag": "dns_github",
-        "address": "1.1.1.1",
-        "strategy": "ipv4_only",
-        "detour": "Github"
-      },
-      {
         "tag": "dns_direct",
         "address": "https://dns.alidns.com/dns-query",
         "address_resolver": "dns_resolver",
@@ -71,11 +65,6 @@
         "rule_set": "direct-cf",
         "action": "route",
         "server": "dns_proxy"
-      },
-      {
-        "rule_set": "github",
-        "action": "route",
-        "server": "dns_github"
       },
       {
         "domain_keyword": [
