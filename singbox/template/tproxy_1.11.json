@@ -82,6 +82,11 @@
         "server": "dns_google"
       },
       {
+        "rule_set": "github",
+        "action": "route",
+        "server": "dns_proxy"
+      },
+      {
         "rule_set": "category-ads-all",
         "action": "route",
         "server": "dns_block"
