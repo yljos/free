@@ -70,6 +70,7 @@ hosts:
   "nas": "192.168.8.21" # 替换为实际的NAS IP地址
   "ax6s": "192.168.8.2" # 替换为实际的路由器IP地址
   "homeassistant.local": "192.168.8.21" # 替换为实际的HomeAssistant IP地址
+  
 ntp:
   enable: true
   write-to-system: false
@@ -113,7 +114,7 @@ dns:
     - "+.082500.xyz"
     - "+.202309.xyz"
   use-hosts: true # 是否使用配置中设置的hosts
-  use-system-hosts: false # 是否使用系统hosts
+  use-system-hosts: true # 是否使用系统hosts
   default-nameserver:
     # 添加IPv6 DNS服务器
     # - "2400:3200::1#DIRECT" # 阿里DNS IPv6
@@ -264,7 +265,7 @@ proxy-groups:
   - {
       name: Microsoft,
       type: fallback,
-      proxies: [HK, D],
+      proxies: [D, HK],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
