@@ -318,7 +318,7 @@ proxy-groups:
       name: TW,
       filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
-      type: fallback, 
+      type: fallback,
       url: https://cp.cloudflare.com,
       interval: 60,
       timeout: 1500,
