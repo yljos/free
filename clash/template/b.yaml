@@ -70,7 +70,7 @@ hosts:
   "nas": "192.168.8.21" # 替换为实际的NAS IP地址
   "ax6s": "192.168.8.2" # 替换为实际的路由器IP地址
   "homeassistant.local": "192.168.8.21" # 替换为实际的HomeAssistant IP地址
-  
+
 ntp:
   enable: true
   write-to-system: false
