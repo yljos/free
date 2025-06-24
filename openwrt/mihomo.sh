@@ -30,6 +30,6 @@ chown root:root mihomo && \
 chmod +x mihomo && \
 rm -f "$FILENAME" && \
 rm -rf /etc/mihomo/ui && rm -rf /etc/mihomo/cache.db && rm -rf /etc/mihomo/rules && \
-/etc/init.d/mihomo restart
+#/etc/init.d/mihomo restart
 echo "mihomo 已更新到最新稳定版"
 
