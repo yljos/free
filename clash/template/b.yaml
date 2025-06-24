@@ -73,6 +73,7 @@ hosts:
   # 网络设备
   'nas.lan': 192.168.8.21 # NAS设备
   'homeassistant.local': 192.168.8.21 # Home Assistant
+  'huai-PC.lan': 192.168.8.15 # Huai的PC
 ntp:
   enable: true
   write-to-system: false
