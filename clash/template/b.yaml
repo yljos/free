@@ -67,13 +67,13 @@ tun:
   endpoint-independent-nat: true # 是否启用端点无关的 NAT
 hosts:
   # 路由器设备
-  'openwrt.lan': 192.168.8.1 # OpenWrt路由器
-  'ax6s.lan': 192.168.8.2 # AX6S路由器
-  
+  "openwrt.lan": 192.168.8.1 # OpenWrt路由器
+  "ax6s.lan": 192.168.8.2 # AX6S路由器
+
   # 网络设备
-  'nas.lan': 192.168.8.21 # NAS设备
-  'homeassistant.local': 192.168.8.21 # Home Assistant
-  'huai-PC.lan': 192.168.8.15 # Huai的PC
+  "nas.lan": 192.168.8.21 # NAS设备
+  "homeassistant.local": 192.168.8.21 # Home Assistant
+  "huai-PC.lan": 192.168.8.15 # Huai的PC
 ntp:
   enable: true
   write-to-system: false
