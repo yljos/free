@@ -117,7 +117,7 @@ dns:
     - "*.082500.xyz"
     - "*.202309.xyz"
   use-hosts: true # 是否使用配置中设置的hosts
-  use-system-hosts: true # 是否使用系统hosts
+  use-system-hosts: false # 是否使用系统hosts
   default-nameserver:
     # 添加IPv6 DNS服务器
     # - "2400:3200::1#DIRECT" # 阿里DNS IPv6
