@@ -147,7 +147,7 @@ dns:
     "rule-set:alibaba": "https://dns.alidns.com/dns-query#D"
     "rule-set:meituan": "https://dns.alidns.com/dns-query#D"
     "rule-set:jd": "https://dns.alidns.com/dns-query#D"
-    "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft"
+    "rule-set:microsoft": "1.1.1.1#Microsoft"
     "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
     # 广告拦截服务
     "rule-set:category-ads-all": "rcode://refused"
@@ -176,8 +176,8 @@ dns:
     "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
     "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google"
     # Google服务
-    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google"
-    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:googlefcm": "8.8.8.8#Google"
+    "rule-set:google": "8.8.8.8#Google"
     # 测速服务
     "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
     "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M"
