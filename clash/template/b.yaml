@@ -123,8 +123,8 @@ dns:
     # - "2400:3200::1#DIRECT" # 阿里DNS IPv6
     # - "2400:3200:baba::1#DIRECT" # 阿里DNS IPv6
     # 添加IPv4 DNS服务器
-    - "114.114.114.114#DIRECT"
-    - "223.5.5.5#DIRECT"
+    - "223.5.5.5#DIRECT" # 阿里DNS IPv4
+    - "114.114.114.114#DIRECT" # 114DNS IPv4
 
   proxy-server-nameserver:
     - "https://dns.alidns.com/dns-query#DIRECT"
