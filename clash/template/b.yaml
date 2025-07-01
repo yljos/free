@@ -150,8 +150,8 @@ dns:
     "rule-set:microsoft": "1.1.1.1#Microsoft_fallback"
     "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
     # 广告拦截服务
-    "rule-set:category-ads-all": "rcode://refused"
-    "rule-set:huawei": "rcode://refused"
+    "rule-set:category-ads-all": "rcode://name_error"
+    "rule-set:huawei": "rcode://name_error"
     # 特定应用服务
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -781,9 +781,9 @@ rule-providers:
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/facebook.yaml
 
 rules:
-  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
-  - "RULE-SET,huawei,REJECT"
-  - "RULE-SET,category-ads-all,REJECT"
+  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT-DROP"
+  - "RULE-SET,huawei,REJECT-DROP"
+  - "RULE-SET,category-ads-all,REJECT-DROP"
 
   - "RULE-SET,direct,D"
   - "RULE-SET,direct-cf,D"
