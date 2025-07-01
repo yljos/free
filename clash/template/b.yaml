@@ -332,7 +332,7 @@ proxy-groups:
     }
   - {
       name: HK_fallback,
-      filter: "(?i)(香港|HK_fallback|hong)(?!.*(家宽|isp|小众|低倍率))",
+      filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
       url: https://cp.cloudflare.com,
