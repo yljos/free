@@ -39,10 +39,6 @@
         "detour": "D"
       },
       {
-        "tag": "dns_block",
-        "address": "rcode://refused"
-      },
-      {
         "tag": "dns_fakeip",
         "address": "fakeip"
       }
@@ -83,13 +79,13 @@
       },
       {
         "rule_set": "category-ads-all",
-        "action": "route",
-        "server": "dns_block"
+        "action": "reject",
+        "method": "drop"
       },
       {
         "rule_set": "huawei",
-        "action": "route",
-        "server": "dns_block"
+        "action": "reject",
+        "method": "drop"
       },
       {
         "rule_set": "xiaomi",
