@@ -130,15 +130,15 @@ dns:
     - "https://dns.alidns.com/dns-query#DIRECT"
     - "https://doh.pub/dns-query#DIRECT"
     - "https://doh.onedns.net/dns-query#DIRECT"
-  nameserver: [https://cloudflare-dns.com/dns-query#M]
+  nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   nameserver-policy:
     # 代理服务
-    "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M_fallback"
     # 国内直连服务
-    "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:direct": "https://dns.alidns.com/dns-query#D"
     "rule-set:cn": "https://dns.alidns.com/dns-query#D"
     "rule-set:bilibili": "https://dns.alidns.com/dns-query#D"
@@ -147,136 +147,192 @@ dns:
     "rule-set:alibaba": "https://dns.alidns.com/dns-query#D"
     "rule-set:meituan": "https://dns.alidns.com/dns-query#D"
     "rule-set:jd": "https://dns.alidns.com/dns-query#D"
-    "rule-set:microsoft": "1.1.1.1#Microsoft"
+    "rule-set:microsoft": "1.1.1.1#Microsoft_fallback"
     "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
     # 广告拦截服务
     "rule-set:category-ads-all": "rcode://refused"
     "rule-set:huawei": "rcode://refused"
     # 特定应用服务
-    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi"
-    "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
+    "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#PikPak-Download"
-    "rule-set:adguard": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:tmdb": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:docker": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:reddit": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:spotify": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:wikimedia": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:javdb": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:apkpure": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam"
-    "rule-set:mozilla": "https://cloudflare-dns.com/dns-query#M"
-    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub"
+    "rule-set:adguard": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:tmdb": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:docker": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:reddit": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:spotify": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:wikimedia": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:javdb": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:apkpure": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam_fallback"
+    "rule-set:mozilla": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
     # 社交媒体
-    "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram"
-    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US"
-    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US"
-    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
+    "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US_fallback"
+    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US_fallback"
+    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok_fallback"
     # 流媒体服务
-    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
-    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix_fallback"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google_fallback"
     # Google服务
-    "rule-set:googlefcm": "8.8.8.8#Google"
-    "rule-set:google": "8.8.8.8#Google"
+    "rule-set:googlefcm": "8.8.8.8#Google_fallback"
+    "rule-set:google": "8.8.8.8#Google_fallback"
     # 测速服务
     "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
-    "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M"
+    "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M_fallback"
 proxies: []
 proxy-groups:
   - {
       name: M,
-      type: fallback,
-      proxies: [HK, SG, JP],
-      url: "https://cp.cloudflare.com",
-      interval: 60,
-      timeout: 1500,
-      max-failed-times: 3,
-    }
-  - {
-      name: Default,
       type: select,
-      proxies: [M, D, TW, SG, US, JP, HK],
       filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
       include-all-proxies: true,
     }
+  - {
+      name: M_fallback,
+      type: fallback,
+      proxies: [M, HK_fallback, SG_fallback, JP_fallback],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - { name: Default, type: select, proxies: [M_fallback, D] }
   - { name: D, type: select, proxies: [DIRECT], hidden: true }
   - {
       name: Google,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: Google_fallback,
       type: fallback,
-      proxies: [US, SG, JP],
+      proxies: [Google, US_fallback, SG_fallback, JP_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
       name: OpenAi,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: OpenAi_fallback,
       type: fallback,
-      proxies: [US, SG, JP],
+      proxies: [OpenAi, US_fallback, SG_fallback, JP_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
       name: Telegram,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: Telegram_fallback,
       type: fallback,
-      proxies: [US, SG, JP],
+      proxies: [Telegram, US_fallback, SG_fallback, JP_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
       name: TikTok,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: TikTok_fallback,
       type: fallback,
-      proxies: [JP, SG],
+      proxies: [TikTok, JP_fallback, SG_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
       name: Steam,
-      type: fallback,
-      proxies: [HK, D],
-      url: "https://cp.cloudflare.com",
-      interval: 60,
-      timeout: 1500,
-      max-failed-times: 3,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
     }
   - {
-      name: Netflix,
+      name: Steam_fallback,
       type: fallback,
-      proxies: [SG],
+      proxies: [Steam, HK_fallback, D],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
-  - { name: PikPak-Download, type: select, proxies: [D, SG] }
-  - { name: SpeedTest, type: select, proxies: [SG, US, JP, HK] }
+  - {
+      name: Netflix_fallback,
+      type: fallback,
+      proxies: [SG_fallback],
+      url: "https://cp.cloudflare.com",
+      interval: 60,
+      timeout: 1500,
+      max-failed-times: 3,
+      hidden: true,
+    }
+  - { name: PikPak-Download, type: select, proxies: [D, SG_fallback] }
+  - {
+      name: SpeedTest,
+      type: select,
+      proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback],
+    }
   - {
       name: GitHub,
+      type: select,
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: GitHub_fallback,
       type: fallback,
-      proxies: [HK, D],
+      proxies: [GitHub, HK_fallback, D],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
       name: Microsoft,
+      type: select,
+      proxies: [D],
+      filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
+      include-all-proxies: true,
+    }
+  - {
+      name: Microsoft_fallback,
       type: fallback,
-      proxies: [D, HK],
+      proxies: [Microsoft, D, HK_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
       max-failed-times: 3,
+      hidden: true,
     }
   - {
-      name: HK,
-      filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))",
+      name: HK_fallback,
+      filter: "(?i)(香港|HK_fallback|hong)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
       url: https://cp.cloudflare.com,
@@ -286,7 +342,7 @@ proxy-groups:
       hidden: true,
     }
   - {
-      name: JP,
+      name: JP_fallback,
       filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
@@ -297,7 +353,7 @@ proxy-groups:
       hidden: true,
     }
   - {
-      name: US,
+      name: US_fallback,
       filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
@@ -308,7 +364,7 @@ proxy-groups:
       hidden: true,
     }
   - {
-      name: SG,
+      name: SG_fallback,
       filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
@@ -319,7 +375,7 @@ proxy-groups:
       hidden: true,
     }
   - {
-      name: TW,
+      name: TW_fallback,
       filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))",
       include-all-proxies: true,
       type: fallback,
@@ -334,7 +390,7 @@ rule-providers:
   archlinux:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/archlinux.yaml
@@ -342,7 +398,7 @@ rule-providers:
   adguard:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/adguard.yaml
@@ -350,7 +406,7 @@ rule-providers:
   alibaba:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/alibaba.yaml
@@ -358,7 +414,7 @@ rule-providers:
   apkpure:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/apkpure.yaml
@@ -366,7 +422,7 @@ rule-providers:
   bilibili:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/bilibili.yaml
@@ -374,7 +430,7 @@ rule-providers:
   category-ads-all:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/category-ads-all.yaml
@@ -382,7 +438,7 @@ rule-providers:
   cn:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/cn.yaml
@@ -390,7 +446,7 @@ rule-providers:
   cn-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/cn-ip.yaml
@@ -398,7 +454,7 @@ rule-providers:
   docker:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/docker.yaml
@@ -406,7 +462,7 @@ rule-providers:
   direct-cf:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/direct-cf.yaml
@@ -414,7 +470,7 @@ rule-providers:
   direct:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/direct.yaml
@@ -422,7 +478,7 @@ rule-providers:
   direct-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/direct-ip.yaml
@@ -430,7 +486,7 @@ rule-providers:
   mozilla:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/mozilla.yaml
@@ -438,7 +494,7 @@ rule-providers:
   gfw:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/gfw.yaml
@@ -446,7 +502,7 @@ rule-providers:
   github:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/github.yaml
@@ -454,7 +510,7 @@ rule-providers:
   google:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/google.yaml
@@ -462,7 +518,7 @@ rule-providers:
   google-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/google-ip.yaml
@@ -470,7 +526,7 @@ rule-providers:
   googlefcm:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/googlefcm.yaml
@@ -478,7 +534,7 @@ rule-providers:
   huawei:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/huawei.yaml
@@ -486,7 +542,7 @@ rule-providers:
   javdb:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/javdb.yaml
@@ -494,7 +550,7 @@ rule-providers:
   jd:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/jd.yaml
@@ -502,7 +558,7 @@ rule-providers:
   meituan:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/meituan.yaml
@@ -510,7 +566,7 @@ rule-providers:
   microsoft:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/microsoft.yaml
@@ -518,7 +574,7 @@ rule-providers:
   netflix:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/netflix.yaml
@@ -526,7 +582,7 @@ rule-providers:
   netflix-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/netflix-ip.yaml
@@ -534,7 +590,7 @@ rule-providers:
   openai:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/openai.yaml
@@ -542,7 +598,7 @@ rule-providers:
   openwrt:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/openwrt.yaml
@@ -550,7 +606,7 @@ rule-providers:
   pass-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/pass-ip.yaml
@@ -558,7 +614,7 @@ rule-providers:
   pikpak:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/pikpak.yaml
@@ -566,7 +622,7 @@ rule-providers:
   pikpak-download:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/pikpak-download.yaml
@@ -574,7 +630,7 @@ rule-providers:
   proxy:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/proxy.yaml
@@ -582,7 +638,7 @@ rule-providers:
   reddit:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/reddit.yaml
@@ -590,7 +646,7 @@ rule-providers:
   speedtest:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/speedtest.yaml
@@ -598,7 +654,7 @@ rule-providers:
   spotify:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/spotify.yaml
@@ -606,7 +662,7 @@ rule-providers:
   steam:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/steam.yaml
@@ -614,7 +670,7 @@ rule-providers:
   telegram:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/telegram.yaml
@@ -622,7 +678,7 @@ rule-providers:
   telegram-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/telegram-ip.yaml
@@ -630,7 +686,7 @@ rule-providers:
   tiktok:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/tiktok.yaml
@@ -638,7 +694,7 @@ rule-providers:
   tmdb:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/tmdb.yaml
@@ -646,7 +702,7 @@ rule-providers:
   twitter:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/twitter.yaml
@@ -654,7 +710,7 @@ rule-providers:
   twitter-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/twitter-ip.yaml
@@ -662,7 +718,7 @@ rule-providers:
   unionpay:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/unionpay.yaml
@@ -670,7 +726,7 @@ rule-providers:
   wikimedia:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/wikimedia.yaml
@@ -678,7 +734,7 @@ rule-providers:
   xiaomi:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/xiaomi.yaml
@@ -686,7 +742,7 @@ rule-providers:
   youtube:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/youtube.yaml
@@ -694,7 +750,7 @@ rule-providers:
   f-droid:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/f-droid.yaml
@@ -702,7 +758,7 @@ rule-providers:
   tencent:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/tencent.yaml
@@ -710,7 +766,7 @@ rule-providers:
   facebook:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/facebook.yaml
@@ -718,7 +774,7 @@ rule-providers:
   facebook-ip:
     type: http
     interval: 86400
-    proxy: M
+    proxy: M_fallback
     behavior: classical
     format: yaml
     path: ./rules/facebook-ip.yaml
@@ -736,44 +792,44 @@ rules:
   - "RULE-SET,xiaomi,D"
   - "RULE-SET,bilibili,D"
   - "RULE-SET,unionpay,D"
-  - "RULE-SET,pikpak,HK"
+  - "RULE-SET,pikpak,HK_fallback"
   - "RULE-SET,alibaba,D"
   - "RULE-SET,meituan,D"
   - "RULE-SET,jd,D"
   - "RULE-SET,tencent,D"
   - "RULE-SET,googlefcm,D"
   - "RULE-SET,pikpak-download,PikPak-Download"
-  - "RULE-SET,proxy,M"
-  - "RULE-SET,github,GitHub"
-  - "RULE-SET,docker,M"
-  - "RULE-SET,archlinux,M"
-  - "RULE-SET,openwrt,M"
-  - "RULE-SET,mozilla,M"
-  - "RULE-SET,microsoft,Microsoft"
-  - "RULE-SET,openai,OpenAi"
-  - "RULE-SET,youtube,Google"
-  - "RULE-SET,google,Google"
-  - "RULE-SET,google-ip,Google"
-  - "RULE-SET,netflix,Netflix"
-  - "RULE-SET,netflix-ip,Netflix"
-  - "RULE-SET,tiktok,TikTok"
-  - "RULE-SET,tmdb,M"
-  - "RULE-SET,telegram,Telegram"
-  - "RULE-SET,telegram-ip,Telegram"
-  - "RULE-SET,twitter,US"
-  - "RULE-SET,twitter-ip,US"
-  - "RULE-SET,facebook,US"
-  - "RULE-SET,facebook-ip,US"
-  - "RULE-SET,reddit,M"
-  - "RULE-SET,adguard,M"
-  - "RULE-SET,speedtest,SpeedTest"
-  - "RULE-SET,wikimedia,M"
-  - "RULE-SET,javdb,M"
-  - "RULE-SET,apkpure,M"
-  - "RULE-SET,f-droid,M"
-  - "RULE-SET,spotify,M"
-  - "RULE-SET,steam,Steam"
-  - "RULE-SET,gfw,M"
+  - "RULE-SET,proxy,M_fallback"
+  - "RULE-SET,github,GitHub_fallback"
+  - "RULE-SET,docker,M_fallback"
+  - "RULE-SET,archlinux,M_fallback"
+  - "RULE-SET,openwrt,M_fallback"
+  - "RULE-SET,mozilla,M_fallback"
+  - "RULE-SET,microsoft,Microsoft_fallback"
+  - "RULE-SET,openai,OpenAi_fallback"
+  - "RULE-SET,youtube,Google_fallback"
+  - "RULE-SET,google,Google_fallback"
+  - "RULE-SET,google-ip,Google_fallback"
+  - "RULE-SET,netflix,Netflix_fallback"
+  - "RULE-SET,netflix-ip,Netflix_fallback"
+  - "RULE-SET,tiktok,TikTok_fallback"
+  - "RULE-SET,tmdb,M_fallback"
+  - "RULE-SET,telegram,Telegram_fallback"
+  - "RULE-SET,telegram-ip,Telegram_fallback"
+  - "RULE-SET,twitter,US_fallback"
+  - "RULE-SET,twitter-ip,US_fallback"
+  - "RULE-SET,facebook,US_fallback"
+  - "RULE-SET,facebook-ip,US_fallback"
+  - "RULE-SET,reddit,M_fallback"
+  - "RULE-SET,adguard,M_fallback"
+  - "RULE-SET,speedtest,SpeedTest_fallback"
+  - "RULE-SET,wikimedia,M_fallback"
+  - "RULE-SET,javdb,M_fallback"
+  - "RULE-SET,apkpure,M_fallback"
+  - "RULE-SET,f-droid,M_fallback"
+  - "RULE-SET,spotify,M_fallback"
+  - "RULE-SET,steam,Steam_fallback"
+  - "RULE-SET,gfw,M_fallback"
   - "RULE-SET,cn,D"
   - "RULE-SET,cn-ip,D"
   - "MATCH,Default"

@@ -145,7 +145,7 @@ def save_node_names(proxies):
         return None
 
 def replace_proxy_groups_with_nodes(template_data):
-    """将代理组中的US、HK、SG和JP替换为实际节点"""
+    """将代理组中的US_fallback、HK_fallback、SG_fallback和JP_fallback替换为实际节点"""
     try:
         # 检查nodes.yaml是否存在
         nodes_path = OUTPUT_FOLDER / 'nodes.yaml'
@@ -192,49 +192,51 @@ def replace_proxy_groups_with_nodes(template_data):
             if isinstance(group, dict) and group.get('type') == 'fallback' and 'proxies' in group:
                 proxies = group['proxies']
                 
-                # 替换US节点
-                if 'US' in proxies and us_nodes:
-                    index = proxies.index('US')
+                # 替换US_fallback节点
+                if 'US_fallback' in proxies and us_nodes:
+                    index = proxies.index('US_fallback')
                     filtered_us_nodes = [node for node in us_nodes if node not in proxies]
                     
                     if filtered_us_nodes:
                         proxies.pop(index)
                         for i, node in enumerate(filtered_us_nodes):
                             proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换US为 {len(filtered_us_nodes)} 个实际节点")
+                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换US_fallback为 {len(filtered_us_nodes)} 个实际节点")
                 
-                # 替换HK节点
-                if 'HK' in proxies and hk_nodes:
-                    index = proxies.index('HK')
+                # 替换HK_fallback节点
+                if 'HK_fallback' in proxies and hk_nodes:
+                    index = proxies.index('HK_fallback')
                     filtered_hk_nodes = [node for node in hk_nodes if node not in proxies]
                     
                     if filtered_hk_nodes:
                         proxies.pop(index)
                         for i, node in enumerate(filtered_hk_nodes):
                             proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换HK为 {len(filtered_hk_nodes)} 个实际节点")
+                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换HK_fallback为 {len(filtered_hk_nodes)} 个实际节点")
                 
-                # 替换SG节点
-                if 'SG' in proxies and sg_nodes:
-                    index = proxies.index('SG')
+                # 替换SG_fallback节点
+                if 'SG_fallback' in proxies and sg_nodes:
+                    index = proxies.index('SG_fallback')
                     filtered_sg_nodes = [node for node in sg_nodes if node not in proxies]
                     
                     if filtered_sg_nodes:
                         proxies.pop(index)
                         for i, node in enumerate(filtered_sg_nodes):
                             proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换SG为 {len(filtered_sg_nodes)} 个实际节点")
+                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换SG_fallback为 {len(filtered_sg_nodes)} 个实际节点")
                 
-                # 替换JP节点
-                if 'JP' in proxies and jp_nodes:
-                    index = proxies.index('JP')
+                # 替换JP_fallback节点
+                if 'JP_fallback' in proxies and jp_nodes:
+                    index = proxies.index('JP_fallback')
                     filtered_jp_nodes = [node for node in jp_nodes if node not in proxies]
                     
                     if filtered_jp_nodes:
                         proxies.pop(index)
                         for i, node in enumerate(filtered_jp_nodes):
                             proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换JP为 {len(filtered_jp_nodes)} 个实际节点")
+                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换JP_fallback为 {len(filtered_jp_nodes)} 个实际节点")
+                
+
         
         return template_data
     except Exception as e:
