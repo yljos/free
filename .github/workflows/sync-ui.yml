@@ -22,8 +22,12 @@ jobs:
           REMOTE_VERSION=$(echo "$REMOTE_INFO" | jq -r .tag_name)
           REMOTE_DATE=$(echo "$REMOTE_INFO" | jq -r .published_at)
           
+          # 检查获取的版本是否为 null 或空
+          if [ "$REMOTE_VERSION" = "null" ] || [ -z "$REMOTE_VERSION" ]; then
+            echo "Failed to get remote version or version is null"
+            echo "UPDATED=false" >> $GITHUB_ENV
           # 如果本地已有版本记录，检查是否需要更新
-          if [ -f ".version" ] && [ "$(cat .version)" = "$REMOTE_VERSION" ]; then
+          elif [ -f ".version" ] && [ "$(cat .version)" = "$REMOTE_VERSION" ]; then
             echo "Already up to date (version $REMOTE_VERSION)"
             echo "UPDATED=false" >> $GITHUB_ENV
           else
