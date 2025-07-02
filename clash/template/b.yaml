@@ -236,13 +236,14 @@ proxy-groups:
   - {
       name: Telegram,
       type: select,
+      proxies: [SG_fallback],
       filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$",
       include-all-proxies: true,
     }
   - {
       name: Telegram_fallback,
       type: fallback,
-      proxies: [Telegram, US_fallback, SG_fallback, JP_fallback],
+      proxies: [Telegram, SG_fallback, US_fallback, JP_fallback],
       url: "https://cp.cloudflare.com",
       interval: 60,
       timeout: 1500,
