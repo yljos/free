@@ -457,6 +457,7 @@
     "rules": [
       {
         "rule_set": "pass-ip",
+        "action": "route",
         "outbound": "D"
       },
       {
@@ -476,6 +477,7 @@
       },
       {
         "rule_set": "tencent",
+        "action": "route",
         "outbound": "D"
       },
       {
@@ -484,6 +486,7 @@
           "direct-cf",
           "direct-ip"
         ],
+        "action": "route",
         "outbound": "D"
       },
       {
@@ -495,14 +498,17 @@
       },
       {
         "rule_set": "proxy",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "pikpak-download",
+        "action": "route",
         "outbound": "PikPak-Download"
       },
       {
         "rule_set": "pikpak",
+        "action": "route",
         "outbound": "PikPak"
       },
       {
@@ -511,10 +517,12 @@
       },
       {
         "rule_set": "category-ads-all",
-        "action": "reject"
+        "action": "reject",
+        "method": "drop"
       },
       {
         "rule_set": "xiaomi",
+        "action": "route",
         "outbound": "D"
       },
       {
@@ -533,99 +541,121 @@
           }
         ],
         "action": "reject",
-        "method": "default",
-        "no_drop": false
+        "method": "drop"
       },
       {
         "ip_is_private": true,
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "mozilla",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "archlinux",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "spotify",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "fdroid",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "openai",
+        "action": "route",
         "outbound": "OpenAi"
       },
       {
         "rule_set": "unionpay",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "jd",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "meituan",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "alibaba",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "github",
+        "action": "route",
         "outbound": "GitHub"
       },
       {
         "rule_set": "adguard",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "apkpure",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "docker",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "javdb",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "tmdb",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "reddit",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "speedtest",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "wikimedia",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "steam",
+        "action": "route",
         "outbound": "Steam"
       },
       {
         "rule_set": "openwrt",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "googlefcm",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "youtube",
+        "action": "route",
         "outbound": "Google"
       },
       {
@@ -633,6 +663,7 @@
           "google-ip",
           "google"
         ],
+        "action": "route",
         "outbound": "Google"
       },
       {
@@ -640,6 +671,7 @@
           "telegram-ip",
           "telegram"
         ],
+        "action": "route",
         "outbound": "Telegram"
       },
       {
@@ -647,6 +679,7 @@
           "twitter-ip",
           "twitter"
         ],
+        "action": "route",
         "outbound": "Twitter"
       },
       {
@@ -654,14 +687,17 @@
           "facebook-ip",
           "facebook"
         ],
+        "action": "route",
         "outbound": "FaceBook"
       },
       {
         "rule_set": "bilibili",
+        "action": "route",
         "outbound": "D"
       },
       {
         "rule_set": "tiktok",
+        "action": "route",
         "outbound": "TikTok"
       },
       {
@@ -669,25 +705,30 @@
           "netflix-ip",
           "netflix"
         ],
+        "action": "route",
         "outbound": "Netflix"
       },
       {
         "rule_set": "gfw",
+        "action": "route",
         "outbound": "M"
       },
       {
         "rule_set": "microsoft",
+        "action": "route",
         "outbound": "Microsoft"
       },
       {
         "rule_set": "huawei",
-        "action": "reject"
+        "action": "reject",
+        "method": "drop"
       },
       {
         "rule_set": [
           "cn-ip",
           "cn"
         ],
+        "action": "route",
         "outbound": "D"
       }
     ],
