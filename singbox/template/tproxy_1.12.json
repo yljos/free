@@ -1,0 +1,1126 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "error",
+    "timestamp": true
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "ntp.aliyun.com",
+    "server_port": 123,
+    "interval": "30m"
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_resolver",
+        "type": "udp",
+        "server": "223.5.5.5",
+        "server_port": 53,
+        "detour": "D"
+      },
+      {
+        "tag": "dns_proxy",
+        "type": "https",
+        "server": "cloudflare-dns.com",
+        "server_port": 443,
+        "domain_resolver": "dns_resolver",
+        "detour": "M"
+      },
+      {
+        "tag": "dns_google",
+        "type": "udp",
+        "server": "8.8.8.8",
+        "server_port": 53,
+        "detour": "Google"
+      },
+      {
+        "tag": "dns_microsoft",
+        "type": "udp",
+        "server": "1.1.1.1",
+        "server_port": 53,
+        "detour": "Microsoft"
+      },
+      {
+        "tag": "dns_direct",
+        "type": "https",
+        "server": "dns.alidns.com",
+        "server_port": 443,
+        "domain_resolver": "dns_resolver",
+        "detour": "D"
+      },
+      {
+        "tag": "dns_fakeip",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      }
+    ],
+    "rules": [
+      {
+        "domain_suffix": [
+          "ntp.aliyun.com",
+          "ddns-link-b5.uk",
+          "dexlos.com",
+          "jsdmirror.cn",
+          "jsdmirror.com",
+          "fastly.jsdelivr.net"
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "direct-cf",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_proxy"
+      },
+      {
+        "domain_keyword": [
+          "msftconnecttest.com",
+          "msftncsi.com"
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_microsoft"
+      },
+      {
+        "domain_keyword": [
+          "googleapis"
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_google"
+      },
+      {
+        "rule_set": "category-ads-all",
+        "action": "reject",
+        "method": "drop"
+      },
+      {
+        "rule_set": "huawei",
+        "action": "reject",
+        "method": "drop"
+      },
+      {
+        "rule_set": "xiaomi",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "tencent",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "cn",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": [
+          "googlefcm"
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_google"
+      },
+      {
+        "rule_set": "geolocation-cn",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "direct",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "unionpay",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "jd",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "meituan",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "alibaba",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "bilibili",
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "cn-ip"
+          }
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_proxy",
+        "client_subnet": "114.114.114.114"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "action": "route",
+        "server": "dns_fakeip",
+        "disable_cache": true
+      },
+      {
+        "outbound": [
+          "D"
+        ],
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
+      }
+    ],
+    "final": "dns_proxy",
+    "independent_cache": true,
+    "strategy": "ipv4_only"
+  },
+  "inbounds": [
+    {
+      "type": "tproxy",
+      "tag": "tproxy-in",
+      "listen": "0.0.0.0",
+      "listen_port": 7893
+    },
+    {
+      "type": "socks",
+      "tag": "socks-in",
+      "listen": "127.0.0.1",
+      "listen_port": 12138
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "D",
+      "type": "direct",
+      "domain_resolver": "dns_direct"
+    },
+    {
+      "tag": "M",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US",
+        "D"
+      ],
+      "default": "SG"
+    },
+    {
+      "tag": "Google",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "US"
+    },
+    {
+      "tag": "OpenAi",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "US"
+    },
+    {
+      "tag": "Steam",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "HK"
+    },
+    {
+      "tag": "Telegram",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "SG"
+    },
+    {
+      "tag": "Twitter",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "US"
+    },
+    {
+      "tag": "FaceBook",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "US"
+    },
+    {
+      "tag": "TikTok",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "JP"
+    },
+    {
+      "tag": "Netflix",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "SG"
+    },
+    {
+      "tag": "PikPak",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US"
+      ],
+      "default": "HK"
+    },
+    {
+      "tag": "GitHub",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "D"
+      ],
+      "default": "HK"
+    },
+    {
+      "tag": "Microsoft",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "D"
+      ],
+      "default": "D"
+    },
+    {
+      "tag": "PikPak-Download",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US",
+        "D"
+      ],
+      "default": "D"
+    },
+    {
+      "tag": "Default",
+      "type": "selector",
+      "outbounds": [
+        "HK",
+        "SG",
+        "JP",
+        "US",
+        "D"
+      ],
+      "default": "HK"
+    },
+    {
+      "tag": "HK",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "url": "https://cp.cloudflare.com",
+      "interval": "60s",
+      "tolerance": 300,
+      "filter": [
+        {
+          "action": "match",
+          "regex": [
+            "(?i)^(?=.*(🇭🇰|HK|hk|香港|hongkong))(?!.*(家宽|isp|小众)).*$"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "SG",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "url": "https://cp.cloudflare.com",
+      "interval": "60s",
+      "tolerance": 300,
+      "filter": [
+        {
+          "action": "match",
+          "regex": [
+            "(?i)^(?=.*(新加坡|sg|singapore))(?!.*(家宽|isp|小众)).*$"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "JP",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "url": "https://cp.cloudflare.com",
+      "interval": "60s",
+      "tolerance": 300,
+      "filter": [
+        {
+          "action": "match",
+          "regex": [
+            "(?i)^(?=.*(🇯🇵|JP|jp|日本|japan))(?!.*(家宽|isp|小众)).*$"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "US",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "url": "https://cp.cloudflare.com",
+      "interval": "60s",
+      "tolerance": 300,
+      "filter": [
+        {
+          "action": "match",
+          "regex": [
+            "(?i)^(?=.*(🇺🇸|US|美国|united states|america))(?!.*(家宽|isp|小众)).*$"
+          ]
+        }
+      ]
+    }
+  ],
+  "route": {
+    "default_mark": 666,
+    "default_domain_resolver": {
+      "server": "dns_proxy",
+      "rewrite_ttl": 60,
+      "client_subnet": "114.114.114.114"
+    },
+    "rules": [
+      {
+        "rule_set": "pass-ip",
+        "outbound": "D"
+      },
+      {
+        "inbound": [
+          "tproxy-in",
+          "socks-in"
+        ],
+        "action": "sniff"
+      },
+      {
+        "inbound": [
+          "tproxy-in",
+          "socks-in"
+        ],
+        "action": "resolve",
+        "strategy": "ipv4_only"
+      },
+      {
+        "rule_set": "tencent",
+        "outbound": "D"
+      },
+      {
+        "rule_set": [
+          "direct",
+          "direct-cf",
+          "direct-ip"
+        ],
+        "outbound": "D"
+      },
+      {
+        "domain_keyword": [
+          "googleapis"
+        ],
+        "action": "route",
+        "outbound": "Google"
+      },
+      {
+        "rule_set": "proxy",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "pikpak-download",
+        "outbound": "PikPak-Download"
+      },
+      {
+        "rule_set": "pikpak",
+        "outbound": "PikPak"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "rule_set": "category-ads-all",
+        "action": "reject"
+      },
+      {
+        "rule_set": "xiaomi",
+        "outbound": "D"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "network": [
+              "udp"
+            ]
+          },
+          {
+            "port": [
+              443
+            ]
+          }
+        ],
+        "action": "reject",
+        "method": "default",
+        "no_drop": false
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "D"
+      },
+      {
+        "rule_set": "mozilla",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "archlinux",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "spotify",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "fdroid",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "openai",
+        "outbound": "OpenAi"
+      },
+      {
+        "rule_set": "unionpay",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "jd",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "meituan",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "alibaba",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "github",
+        "outbound": "GitHub"
+      },
+      {
+        "rule_set": "adguard",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "apkpure",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "docker",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "javdb",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "tmdb",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "reddit",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "speedtest",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "wikimedia",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "steam",
+        "outbound": "Steam"
+      },
+      {
+        "rule_set": "openwrt",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "googlefcm",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "youtube",
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "google-ip",
+          "google"
+        ],
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "telegram-ip",
+          "telegram"
+        ],
+        "outbound": "Telegram"
+      },
+      {
+        "rule_set": [
+          "twitter-ip",
+          "twitter"
+        ],
+        "outbound": "Twitter"
+      },
+      {
+        "rule_set": [
+          "facebook-ip",
+          "facebook"
+        ],
+        "outbound": "FaceBook"
+      },
+      {
+        "rule_set": "bilibili",
+        "outbound": "D"
+      },
+      {
+        "rule_set": "tiktok",
+        "outbound": "TikTok"
+      },
+      {
+        "rule_set": [
+          "netflix-ip",
+          "netflix"
+        ],
+        "outbound": "Netflix"
+      },
+      {
+        "rule_set": "gfw",
+        "outbound": "M"
+      },
+      {
+        "rule_set": "microsoft",
+        "outbound": "Microsoft"
+      },
+      {
+        "rule_set": "huawei",
+        "action": "reject"
+      },
+      {
+        "rule_set": [
+          "cn-ip",
+          "cn"
+        ],
+        "outbound": "D"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "xiaomi",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/xiaomi.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "category-ads-all",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "microsoft",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "mozilla",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/mozilla.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "openwrt",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openwrt.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "proxy",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/proxy.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "direct",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/direct.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "direct-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/direct-ip.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "pass-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/pass-ip.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "pikpak-download",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/pikpak-download.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "openai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "google-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "github",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "telegram-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "twitter-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/twitter.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "twitter",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "facebook-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/facebook.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "facebook",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "bilibili",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bilibili.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "tiktok",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "netflix-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "netflix",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "cn-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "unionpay",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/unionpay.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "jd",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/jd.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "pikpak",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/pikpak.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "alibaba",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/alibaba.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "meituan",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/meituan.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "apkpure",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apkpure.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "tmdb",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tmdb.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "docker",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/docker.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "reddit",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/reddit.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "speedtest",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/speedtest.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "wikimedia",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/wikimedia.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "javdb",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/javdb.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "adguard",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/adguard.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "steam",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "googlefcm",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/googlefcm.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "gfw",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/gfw.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "fdroid",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/f-droid.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "huawei",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/huawei.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "tencent",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tencent.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "archlinux",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/archlinux.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "spotify",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "direct-cf",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/yljos/free@main/direct-cf.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      }
+    ],
+    "final": "Default",
+    "auto_detect_interface": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "ui",
+      "secret": "101300",
+      "external_ui_download_url": "https://cdn.jsdmirror.com/gh/yljos/free@main/dist-cdn-fonts.zip",
+      "external_ui_download_detour": "D",
+      "default_mode": "rule"
+    }
+  }
+}
