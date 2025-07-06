@@ -190,10 +190,31 @@ def process_subscription(sub_path, template_path):
             sub_path.unlink()
             logger.info(f"清理临时文件: {sub_path}")
 
-def create_cleanup_callback(temp_files):
+def create_cleanup_callback(temp_files, exclude_files=None):
     @after_this_request
     def cleanup_callback(response):
-        cleanup_files(temp_files)
+        # 延迟清理，确保文件传输完成
+        import threading
+        import time
+        
+        def delayed_cleanup():
+            time.sleep(2)  # 等待2秒确保文件传输完成
+            files_to_clean = temp_files.copy()
+            if exclude_files:
+                # 从清理列表中排除正在使用的文件
+                for exclude_file in exclude_files:
+                    if exclude_file in files_to_clean:
+                        files_to_clean.remove(exclude_file)
+            cleanup_files(files_to_clean)
+            
+            # 最后清理被排除的文件
+            if exclude_files:
+                time.sleep(1)  # 再等待1秒
+                cleanup_files(exclude_files)
+        
+        # 使用新线程进行延迟清理
+        cleanup_thread = threading.Thread(target=delayed_cleanup, daemon=True)
+        cleanup_thread.start()
         return response
     return cleanup_callback
 
@@ -230,26 +251,46 @@ def process_subscription_url(sub_url):
             download_name='config.json'
         )
         
-        # 使用新的清理回调方式
-        create_cleanup_callback(temp_files)
+        # 使用新的清理回调方式，排除正在发送的配置文件
+        create_cleanup_callback(temp_files, exclude_files=[output_path])
         
         return response
         
     except Exception as error:
-        return f'处理失败: {str(error)}', 500
-    finally:
-        # 无论是否发生异常，都确保清理临时文件
+        # 异常情况下立即清理临时文件
         cleanup_files(temp_files)
+        return f'处理失败: {str(error)}', 500
 
 def cleanup_files(file_paths):
     """清理临时文件"""
+    if not file_paths:
+        return
+        
+    import time
+    
     for file_path in file_paths:
-        try:
-            if file_path.exists():
-                file_path.unlink()
-                logger.info(f"清理临时文件: {file_path}")
-        except Exception as error:
-            logger.error(f"清理文件失败 {file_path}: {str(error)}")
+        if not file_path:
+            continue
+            
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                if file_path.exists():
+                    file_path.unlink()
+                    logger.info(f"清理临时文件: {file_path}")
+                    break
+                else:
+                    logger.debug(f"文件不存在，跳过清理: {file_path}")
+                    break
+            except PermissionError as e:
+                if attempt < max_retries - 1:
+                    logger.warning(f"文件被占用，等待后重试 ({attempt + 1}/{max_retries}): {file_path}")
+                    time.sleep(0.5)  # 等待0.5秒后重试
+                else:
+                    logger.error(f"清理文件失败，文件被占用: {file_path}")
+            except Exception as error:
+                logger.error(f"清理文件失败 {file_path}: {str(error)}")
+                break
 
 if __name__ == '__main__':
     debug_mode = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
