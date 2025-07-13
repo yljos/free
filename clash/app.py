@@ -285,6 +285,7 @@ def process_yaml_content(yaml_path, template_path=None):
                         proxy.pop('port', None)
                 elif proxy.get('type') == 'vless':
                     proxy['skip-cert-verify'] = False
+                    proxy['packet-encoding'] = 'xudp'
         
         # 新增: 提取节点名称并保存
         save_node_names(proxies)
