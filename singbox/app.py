@@ -109,14 +109,14 @@ def process_subscription(sub_path, template_path):
                     item['up_mbps'] = UPLOAD_MBPS
                     item['down_mbps'] = DOWNLOAD_MBPS
 
-                # 替换 packet_encoding 为 xudp 以提升性能
-                if item.get('packet_encoding') == 'packetaddr':
-                    item['packet_encoding'] = 'xudp'
+                # # 替换 packet_encoding 为 xudp 以提升性能
+                # if item.get('packet_encoding') == 'packetaddr':
+                #     item['packet_encoding'] = 'xudp'
 
-                # 为 tls 配置添加 insecure: false 提升安全性
-                if 'tls' in item and isinstance(item['tls'], dict):
-                    if 'insecure' not in item['tls']:
-                        item['tls']['insecure'] = False
+                # # 为 tls 配置添加 insecure: false 提升安全性
+                # if 'tls' in item and isinstance(item['tls'], dict):
+                #     if 'insecure' not in item['tls']:
+                #         item['tls']['insecure'] = False
                     
                 # 检查并更新 server_ports
                 node_key = (item.get('type'), item.get('tag'))
