@@ -25,8 +25,8 @@ TEMP_YAML_LOCK = OUTPUT_FOLDER / os.getenv('TEMP_YAML_LOCK', 'temp.yaml.lock').s
 
 USER_AGENT = os.getenv('USER_AGENT', 'clash verge')
 CACHE_DURATION = int(os.getenv('CACHE_DURATION', 300))
-HYSTERIA2_UP = os.getenv('HYSTERIA2_UP', '50')
-HYSTERIA2_DOWN = os.getenv('HYSTERIA2_DOWN', '300')
+HYSTERIA2_UP = os.getenv('HYSTERIA2_UP', '50 Mbps')
+HYSTERIA2_DOWN = os.getenv('HYSTERIA2_DOWN', '300 Mbps')
 INCLUDED_HEADERS = set(os.getenv('INCLUDED_HEADERS', 'Subscription-Userinfo').split(','))
 
 # 确保输出目录存在
