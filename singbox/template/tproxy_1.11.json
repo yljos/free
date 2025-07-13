@@ -219,7 +219,7 @@
         "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "Google",
@@ -330,7 +330,7 @@
         "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "Microsoft",
@@ -366,7 +366,7 @@
         "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "HK",
