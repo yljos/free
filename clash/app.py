@@ -276,8 +276,12 @@ def process_yaml_content(yaml_path, template_path=None):
         for proxy in proxies:
             if isinstance(proxy, dict):
                 if proxy.get('type') == 'hysteria2':
-                    proxy['up'] = HYSTERIA2_UP
-                    proxy['down'] = HYSTERIA2_DOWN
+                    # 确保带宽值包含单位
+                    up_value = HYSTERIA2_UP if 'bps' in HYSTERIA2_UP.lower() else f"{HYSTERIA2_UP} Mbps"
+                    down_value = HYSTERIA2_DOWN if 'bps' in HYSTERIA2_DOWN.lower() else f"{HYSTERIA2_DOWN} Mbps"
+                    
+                    proxy['up'] = up_value
+                    proxy['down'] = down_value
                     proxy['skip-cert-verify'] = False
                     # 检查是否存在匹配的端口配置
                     if proxy.get('name') in ports_config:
