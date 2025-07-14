@@ -521,6 +521,13 @@
         "method": "drop"
       },
       {
+        "domain": [
+          "ntp.aliyun.com"
+        ],
+        "action": "route",
+        "outbound": "D"
+      },
+      {
         "rule_set": "xiaomi",
         "action": "route",
         "outbound": "D"
