@@ -232,7 +232,7 @@
         "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "Google",
@@ -338,15 +338,21 @@
       "type": "selector",
       "outbounds": [
         "HK",
+        "SG",
+        "JP",
+        "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "Microsoft",
       "type": "selector",
       "outbounds": [
         "HK",
+        "SG",
+        "JP",
+        "US",
         "D"
       ],
       "default": "D"
@@ -373,7 +379,7 @@
         "US",
         "D"
       ],
-      "default": "HK"
+      "default": "SG"
     },
     {
       "tag": "HK",
