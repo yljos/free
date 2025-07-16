@@ -214,6 +214,10 @@
       "domain_resolver": "dns_direct"
     },
     {
+      "tag": "block",
+      "type": "block"
+    },
+    {
       "tag": "R",
       "type": "selector",
       "outbounds": ["block", "D"],
