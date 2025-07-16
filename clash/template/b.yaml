@@ -17,8 +17,8 @@ global-ua: clash.meta
 profile: { store_fake_ip: true, store_selected: true }
 external-controller: "0.0.0.0:9090"
 secret: "101300"
-authentication: { "huai:12138password" }
-skip-auth-prefixes: { 127.0.0.1/8, 192.168.0.0/16 }
+authentication: [ "huai:12138password" ]
+skip-auth-prefixes: [ 127.0.0.1/8, 192.168.0.0/16 ]
 external-ui: ui
 global-client-fingerprint: chrome
 routing-mark: 666
@@ -35,12 +35,12 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter: { "+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.ihuai.top", "+.082500.xyz", "+.202309.xyz" }
+  fake-ip-filter: [ "+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.ihuai.top", "+.082500.xyz", "+.202309.xyz" ]
   use-hosts: true
   use-system-hosts: false
-  default-nameserver: { "223.5.5.5#DIRECT", "114.114.114.114#DIRECT" }
-  proxy-server-nameserver: { "https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT" }
-  nameserver: { https://cloudflare-dns.com/dns-query#M_fallback }
+  default-nameserver: [ "223.5.5.5#DIRECT", "114.114.114.114#DIRECT" ]
+  proxy-server-nameserver: [ "https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT" ]
+  nameserver: [ https://cloudflare-dns.com/dns-query#M_fallback ]
   nameserver-policy:
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
