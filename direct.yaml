@@ -1,10 +1,6 @@
 payload:
   - DOMAIN-SUFFIX,local
   - DOMAIN-SUFFIX,lan
-  - DOMAIN-SUFFIX,huai.ink
-  - DOMAIN-SUFFIX,huaihuaidehuaihuai.top
-  - DOMAIN-SUFFIX,ihuai.top
-  - DOMAIN-SUFFIX,suckless.top
   - DOMAIN-SUFFIX,ddns-link-b5.uk
   - DOMAIN-SUFFIX,dexlos.com
   - DOMAIN,ntp.aliyun.com

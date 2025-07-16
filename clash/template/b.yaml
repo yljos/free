@@ -14,19 +14,19 @@ unified-delay: true
 tcp-concurrent: true
 global-ua: clash.meta
 # enable-process: true
-profile: { store_fake_ip: true, store_selected: true }
+profile: {store_fake_ip: true, store_selected: true}
 external-controller: "0.0.0.0:9090"
 secret: "101300"
-authentication: [ "huai:12138password" ]
-skip-auth-prefixes: [ 127.0.0.1/8, 192.168.0.0/16 ]
+authentication: ["huai:12138password"]
+skip-auth-prefixes: [127.0.0.1/8, 192.168.0.0/16]
 external-ui: ui
 global-client-fingerprint: chrome
 routing-mark: 666
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
-sniffer: { enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: { QUIC: { ports: [443, 8443] }, TLS: { ports: [443, 8443] }, HTTP: { ports: [80, 8080-8880], override-destination: true } }, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"], force-domain: ["google.com"] }
-tun: { enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true }
-hosts: { "openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "huai-PC.lan": 192.168.31.15 }
-ntp: { enable: true, write-to-system: false, server: ntp.aliyun.com, port: 123, interval: 30 }
+sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"], force-domain: ["google.com"]}
+tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
+hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "huai-PC.lan": 192.168.31.15}
+ntp: {enable: true, write-to-system: false, server: ntp.aliyun.com, port: 123, interval: 30}
 dns:
   enable: true
   prefer-h3: false
@@ -35,12 +35,12 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter: [ "+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.ihuai.top", "+.082500.xyz", "+.202309.xyz" ]
+  fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
   use-hosts: true
   use-system-hosts: false
-  default-nameserver: [ "223.5.5.5#DIRECT", "114.114.114.114#DIRECT" ]
-  proxy-server-nameserver: [ "https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT" ]
-  nameserver: [ https://cloudflare-dns.com/dns-query#M_fallback ]
+  default-nameserver: ["223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
+  proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT"]
+  nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   nameserver-policy:
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -86,84 +86,84 @@ dns:
     "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M_fallback"
 proxies: {}
 proxy-groups:
-  - { name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D] }
-  - { name: R, type: select, proxies: [REJECT-DROP, DIRECT] }
-  - { name: D, type: select, proxies: [DIRECT], hidden: true }
-  - { name: Google, type: select, proxies: [US_fallback, SG_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: Google_fallback, type: fallback, proxies: [Google, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: OpenAi, type: select, proxies: [US_fallback, SG_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: OpenAi_fallback, type: fallback, proxies: [OpenAi, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: Telegram, type: select, proxies: [SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: Telegram_fallback, type: fallback, proxies: [Telegram, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: TikTok, type: select, proxies: [JP_fallback, SG_fallback, US_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: TikTok_fallback, type: fallback, proxies: [TikTok, JP_fallback, SG_fallback, US_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: Steam, type: select, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: Steam_fallback, type: fallback, proxies: [Steam, HK_fallback, D], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: Netflix_fallback, type: fallback, proxies: [SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: PikPak-Download, type: select, proxies: [D, SG_fallback, US_fallback, JP_fallback, HK_fallback] }
-  - { name: SpeedTest, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback, D] }
-  - { name: GitHub, type: select, proxies: [SG_fallback, HK_fallback, D], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: GitHub_fallback, type: fallback, proxies: [GitHub, SG_fallback, HK_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: Microsoft, type: select, proxies: [D, SG_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true }
-  - { name: Microsoft_fallback, type: fallback, proxies: [Microsoft, D, HK_fallback, SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true }
-  - { name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true }
-  - { name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true }
-  - { name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true }
-  - { name: SG_fallback, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true }
-  - { name: TW_fallback, filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true }
+  - {name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
+  - {name: R, type: select, proxies: [REJECT-DROP, DIRECT]}
+  - {name: D, type: select, proxies: [DIRECT], hidden: true}
+  - {name: Google, type: select, proxies: [US_fallback, SG_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Google_fallback, type: fallback, proxies: [Google, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: OpenAi, type: select, proxies: [US_fallback, SG_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: OpenAi_fallback, type: fallback, proxies: [OpenAi, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Telegram, type: select, proxies: [SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Telegram_fallback, type: fallback, proxies: [Telegram, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: TikTok, type: select, proxies: [JP_fallback, SG_fallback, US_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: TikTok_fallback, type: fallback, proxies: [TikTok, JP_fallback, SG_fallback, US_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Steam, type: select, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Steam_fallback, type: fallback, proxies: [Steam, HK_fallback, D], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Netflix_fallback, type: fallback, proxies: [SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: PikPak-Download, type: select, proxies: [D, SG_fallback, US_fallback, JP_fallback, HK_fallback]}
+  - {name: SpeedTest, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
+  - {name: GitHub, type: select, proxies: [SG_fallback, HK_fallback, D], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: GitHub_fallback, type: fallback, proxies: [GitHub, SG_fallback, HK_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Microsoft, type: select, proxies: [D, SG_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Microsoft_fallback, type: fallback, proxies: [Microsoft, D, HK_fallback, SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
+  - {name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
+  - {name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
+  - {name: SG_fallback, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
+  - {name: TW_fallback, filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
 rule-providers:
-  archlinux: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml }
-  adguard: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml }
-  alibaba: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/alibaba.yaml }
-  apkpure: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml }
-  bilibili: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/bilibili.yaml }
-  category-ads: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/category-ads-all.yaml }
-  codeberg: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml }
-  cn: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/cn.yaml }
-  cn-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/cn.yaml }
-  docker: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml }
-  direct-cf: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-cf.yaml }
-  direct: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct.yaml }
-  direct-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-ip.yaml }
-  mozilla: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml }
-  gfw: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml }
-  github: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml }
-  google: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml }
-  google-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/google.yaml }
-  googlefcm: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml }
-  huawei: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/huawei.yaml }
-  javdb: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml }
-  jd: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml }
-  meituan: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/meituan.yaml }
-  microsoft: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml }
-  netflix: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml }
-  netflix-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/netflix.yaml }
-  openai: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml }
-  openwrt: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml }
-  pass-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pass-ip.yaml }
-  pikpak: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pikpak.yaml }
-  pikpak-download: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml }
-  proxy: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/proxy.yaml }
-  reddit: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml }
-  speedtest: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/speedtest.yaml }
-  spotify: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml }
-  steam: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml }
-  telegram: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/telegram.yaml }
-  telegram-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/telegram.yaml }
-  tiktok: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml }
-  tmdb: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml }
-  twitter: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml }
-  twitter-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/twitter.yaml }
-  unionpay: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/unionpay.yaml }
-  wikimedia: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/wikimedia.yaml }
-  xiaomi: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/xiaomi.yaml }
-  youtube: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/youtube.yaml }
-  f-droid: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/f-droid.yaml }
-  tencent: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml }
-  facebook: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/facebook.yaml }
-  facebook-ip: { type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/facebook.yaml }
+  archlinux: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml}
+  adguard: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml}
+  alibaba: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/alibaba.yaml}
+  apkpure: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml}
+  bilibili: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/bilibili.yaml}
+  category-ads: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/category-ads-all.yaml}
+  codeberg: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml}
+  cn: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/cn.yaml}
+  cn-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/cn.yaml}
+  docker: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml}
+  direct-cf: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-cf.yaml}
+  direct: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct.yaml}
+  direct-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-ip.yaml}
+  mozilla: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml}
+  gfw: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml}
+  github: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml}
+  google: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml}
+  google-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/google.yaml}
+  googlefcm: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml}
+  huawei: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/huawei.yaml}
+  javdb: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
+  jd: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
+  meituan: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/meituan.yaml}
+  microsoft: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml}
+  netflix: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml}
+  netflix-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/netflix.yaml}
+  openai: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
+  openwrt: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
+  pass-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pass-ip.yaml}
+  pikpak: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pikpak.yaml}
+  pikpak-download: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml}
+  proxy: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/proxy.yaml}
+  reddit: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
+  speedtest: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/speedtest.yaml}
+  spotify: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
+  steam: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml}
+  telegram: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/telegram.yaml}
+  telegram-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/telegram.yaml}
+  tiktok: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml}
+  tmdb: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml}
+  twitter: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml}
+  twitter-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/twitter.yaml}
+  unionpay: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/unionpay.yaml}
+  wikimedia: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/wikimedia.yaml}
+  xiaomi: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/xiaomi.yaml}
+  youtube: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/youtube.yaml}
+  f-droid: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/f-droid.yaml}
+  tencent: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml}
+  facebook: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/facebook.yaml}
+  facebook-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/facebook.yaml}
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT-DROP"
   - "RULE-SET,huawei,R"
