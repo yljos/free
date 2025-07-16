@@ -93,7 +93,7 @@
         "action": "reject",
         "method": "drop"
       },
-            {
+      {
         "rule_set": "huawei",
         "action": "route",
         "strategy": "ipv4_only",
@@ -218,17 +218,18 @@
       "type": "block"
     },
     {
-      "tag": "R",
-      "type": "selector",
-      "outbounds": ["block", "D"],
-      "default": "block"
-    },
-    {
       "tag": "M",
       "type": "selector",
       "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "SG"
     },
+    {
+      "tag": "R",
+      "type": "selector",
+      "outbounds": ["block", "D"],
+      "default": "block"
+    },
+
     {
       "tag": "Google",
       "type": "selector",
