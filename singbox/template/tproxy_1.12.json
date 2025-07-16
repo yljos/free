@@ -58,14 +58,7 @@
     ],
     "rules": [
       {
-        "domain_suffix": [
-          "ntp.aliyun.com",
-          "ddns-link-b5.uk",
-          "dexlos.com",
-          "jsdmirror.cn",
-          "jsdmirror.com",
-          "fastly.jsdelivr.net"
-        ],
+        "domain_suffix": ["ntp.aliyun.com", "ddns-link-b5.uk", "dexlos.com", "jsdmirror.cn", "jsdmirror.com", "fastly.jsdelivr.net"],
         "action": "route",
         "strategy": "ipv4_only",
         "server": "dns_direct"
@@ -118,7 +111,7 @@
         "server": "dns_direct"
       },
       {
-        "rule_set": ["googlefcm"],
+        "rule_set": "googlefcm",
         "action": "route",
         "strategy": "ipv4_only",
         "server": "dns_google"
@@ -229,7 +222,6 @@
       "outbounds": ["block", "D"],
       "default": "block"
     },
-
     {
       "tag": "Google",
       "type": "selector",

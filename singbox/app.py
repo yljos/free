@@ -31,7 +31,7 @@ OUTPUT_FOLDER = BASE_DIR / 'outputs'
 
 # 模板映射
 TEMPLATE_MAP = {
-    'tproxy': BASE_DIR / 'template' / 'tproxy_1.12.json',  # tproxy模式
+    'tproxy': BASE_DIR / 'template' / '1.12.json',  # tproxy模式
     'tun': BASE_DIR / 'template' / 'tun_1.11.json',       # tun模式
 
 }
