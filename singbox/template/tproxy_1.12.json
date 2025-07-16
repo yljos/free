@@ -93,10 +93,11 @@
         "action": "reject",
         "method": "drop"
       },
-      {
+            {
         "rule_set": "huawei",
-        "action": "reject",
-        "method": "drop"
+        "action": "route",
+        "strategy": "ipv4_only",
+        "server": "dns_direct"
       },
       {
         "rule_set": "xiaomi",
@@ -214,7 +215,9 @@
     },
     {
       "tag": "R",
-      "type": "block"
+      "type": "selector",
+      "outbounds": ["block", "D"],
+      "default": "block"
     },
     {
       "tag": "M",
@@ -310,9 +313,7 @@
       "filter": [
         {
           "action": "match",
-          "regex": [
-            "(?i)^(?=.*(🇭🇰|HK|hk|香港|hongkong))(?!.*(家宽|isp|小众)).*$"
-          ]
+          "regex": ["(?i)^(?=.*(🇭🇰|HK|hk|香港|hongkong))(?!.*(家宽|isp|小众)).*$"]
         }
       ]
     },
@@ -354,9 +355,7 @@
       "filter": [
         {
           "action": "match",
-          "regex": [
-            "(?i)^(?=.*(🇺🇸|US|美国|united states|america))(?!.*(家宽|isp|小众)).*$"
-          ]
+          "regex": ["(?i)^(?=.*(🇺🇸|US|美国|united states|america))(?!.*(家宽|isp|小众)).*$"]
         }
       ]
     }
@@ -403,6 +402,11 @@
         "outbound": "M"
       },
       {
+        "rule_set": "codeberg",
+        "action": "route",
+        "outbound": "M"
+      },
+      {
         "rule_set": "pikpak-download",
         "action": "route",
         "outbound": "PikPak-Download"
@@ -420,6 +424,11 @@
         "rule_set": "category-ads-all",
         "action": "reject",
         "method": "drop"
+      },
+      {
+        "rule_set": "huawei",
+        "action": "route",
+        "outbound": "R"
       },
       {
         "domain": ["ntp.aliyun.com"],
@@ -606,11 +615,6 @@
         "outbound": "Microsoft"
       },
       {
-        "rule_set": "huawei",
-        "action": "reject",
-        "method": "drop"
-      },
-      {
         "rule_set": ["cn-ip", "cn"],
         "action": "route",
         "outbound": "D"
@@ -638,6 +642,14 @@
         "type": "remote",
         "format": "binary",
         "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "D",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "codeberg",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/codeberg.srs",
         "download_detour": "D",
         "update_interval": "12h"
       },
