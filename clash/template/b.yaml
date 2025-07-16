@@ -137,6 +137,7 @@ dns:
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:codeberg": "https://cloudflare-dns.com/dns-query#M_fallback"
     # 国内直连服务
     "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:direct": "https://dns.alidns.com/dns-query#D"
@@ -450,6 +451,14 @@ rule-providers:
     format: yaml
     path: ./rules/category-ads-all.yaml
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/category-ads-all.yaml
+  codeberg:
+    type: http
+    interval: 86400
+    proxy: M_fallback
+    behavior: classical
+    format: yaml
+    path: ./rules/codeberg.yaml
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml  
   cn:
     type: http
     interval: 86400
@@ -816,6 +825,7 @@ rules:
   - "RULE-SET,pikpak-download,PikPak-Download"
   - "RULE-SET,proxy,M_fallback"
   - "RULE-SET,github,GitHub_fallback"
+  - "RULE-SET,codeberg,M_fallback"
   - "RULE-SET,docker,M_fallback"
   - "RULE-SET,archlinux,M_fallback"
   - "RULE-SET,openwrt,M_fallback"
