@@ -152,7 +152,7 @@ dns:
     "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
     # 广告拦截服务
     "rule-set:category-ads-all": "rcode://name_error"
-    "rule-set:huawei": "rcode://name_error"
+    "rule-set:huawei": "https://dns.alidns.com/dns-query#D"
     # 特定应用服务
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -206,6 +206,7 @@ proxy-groups:
       type: select,
       proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D],
     }
+  - { name: R, type: select, proxies: [REJECT-DROP, DIRECT] }
   - { name: D, type: select, proxies: [DIRECT], hidden: true }
   - {
       name: Google,
@@ -458,7 +459,7 @@ rule-providers:
     behavior: classical
     format: yaml
     path: ./rules/codeberg.yaml
-    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml  
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml
   cn:
     type: http
     interval: 86400
@@ -806,7 +807,7 @@ rule-providers:
 
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT-DROP"
-  - "RULE-SET,huawei,REJECT-DROP"
+  - "RULE-SET,huawei,R"
   - "RULE-SET,category-ads-all,REJECT-DROP"
 
   - "RULE-SET,direct,D"
