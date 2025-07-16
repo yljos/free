@@ -73,17 +73,12 @@
         "server": "dns_proxy"
       },
       {
-        "domain_keyword": [
-          "msftconnecttest.com",
-          "msftncsi.com"
-        ],
+        "domain_keyword": ["msftconnecttest.com", "msftncsi.com"],
         "action": "route",
         "server": "dns_microsoft"
       },
       {
-        "domain_keyword": [
-          "googleapis"
-        ],
+        "domain_keyword": ["googleapis"],
         "action": "route",
         "server": "dns_google"
       },
@@ -113,9 +108,7 @@
         "server": "dns_direct"
       },
       {
-        "rule_set": [
-          "googlefcm"
-        ],
+        "rule_set": ["googlefcm"],
         "action": "route",
         "server": "dns_google"
       },
@@ -171,18 +164,13 @@
         "client_subnet": "114.114.114.114/24"
       },
       {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
+        "query_type": ["A", "AAAA"],
         "action": "route",
         "server": "dns_fakeip",
         "disable_cache": true
       },
       {
-        "outbound": [
-          "D"
-        ],
+        "outbound": ["D"],
         "action": "route",
         "server": "dns_direct"
       }
@@ -212,168 +200,91 @@
     {
       "tag": "M",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "SG"
     },
     {
       "tag": "Google",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "US"
     },
     {
       "tag": "OpenAi",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "US"
     },
     {
       "tag": "Steam",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "HK"
     },
     {
       "tag": "Telegram",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "SG"
     },
     {
       "tag": "Twitter",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "US"
     },
     {
       "tag": "FaceBook",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "US"
     },
     {
       "tag": "TikTok",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "JP"
     },
     {
       "tag": "Netflix",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "SG"
     },
     {
       "tag": "PikPak",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US"],
       "default": "HK"
     },
     {
       "tag": "GitHub",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "SG"
     },
     {
       "tag": "Microsoft",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "D"
     },
     {
       "tag": "PikPak-Download",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "D"
     },
     {
       "tag": "Default",
       "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D"
-      ],
+      "outbounds": ["HK", "SG", "JP", "US", "D"],
       "default": "SG"
     },
     {
       "tag": "HK",
       "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
+      "outbounds": ["{all}"],
       "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 300,
@@ -389,45 +300,35 @@
     {
       "tag": "SG",
       "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
+      "outbounds": ["{all}"],
       "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 300,
       "filter": [
         {
           "action": "match",
-          "regex": [
-            "(?i)^(?=.*(新加坡|sg|singapore))(?!.*(家宽|isp|小众)).*$"
-          ]
+          "regex": ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(家宽|isp|小众)).*$"]
         }
       ]
     },
     {
       "tag": "JP",
       "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
+      "outbounds": ["{all}"],
       "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 300,
       "filter": [
         {
           "action": "match",
-          "regex": [
-            "(?i)^(?=.*(🇯🇵|JP|jp|日本|japan))(?!.*(家宽|isp|小众)).*$"
-          ]
+          "regex": ["(?i)^(?=.*(🇯🇵|JP|jp|日本|japan))(?!.*(家宽|isp|小众)).*$"]
         }
       ]
     },
     {
       "tag": "US",
       "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
+      "outbounds": ["{all}"],
       "url": "https://cp.cloudflare.com",
       "interval": "60s",
       "tolerance": 300,
@@ -450,17 +351,11 @@
         "outbound": "D"
       },
       {
-        "inbound": [
-          "tproxy-in",
-          "socks-in"
-        ],
+        "inbound": ["tproxy-in", "socks-in"],
         "action": "sniff"
       },
       {
-        "inbound": [
-          "tproxy-in",
-          "socks-in"
-        ],
+        "inbound": ["tproxy-in", "socks-in"],
         "action": "resolve",
         "strategy": "ipv4_only"
       },
@@ -470,18 +365,12 @@
         "outbound": "D"
       },
       {
-        "rule_set": [
-          "direct",
-          "direct-cf",
-          "direct-ip"
-        ],
+        "rule_set": ["direct", "direct-cf", "direct-ip"],
         "action": "route",
         "outbound": "D"
       },
       {
-        "domain_keyword": [
-          "googleapis"
-        ],
+        "domain_keyword": ["googleapis"],
         "action": "route",
         "outbound": "Google"
       },
@@ -519,14 +408,10 @@
         "mode": "and",
         "rules": [
           {
-            "network": [
-              "udp"
-            ]
+            "network": ["udp"]
           },
           {
-            "port": [
-              443
-            ]
+            "port": [443]
           }
         ],
         "action": "reject",
@@ -648,34 +533,22 @@
         "outbound": "Google"
       },
       {
-        "rule_set": [
-          "google-ip",
-          "google"
-        ],
+        "rule_set": ["google-ip", "google"],
         "action": "route",
         "outbound": "Google"
       },
       {
-        "rule_set": [
-          "telegram-ip",
-          "telegram"
-        ],
+        "rule_set": ["telegram-ip", "telegram"],
         "action": "route",
         "outbound": "Telegram"
       },
       {
-        "rule_set": [
-          "twitter-ip",
-          "twitter"
-        ],
+        "rule_set": ["twitter-ip", "twitter"],
         "action": "route",
         "outbound": "Twitter"
       },
       {
-        "rule_set": [
-          "facebook-ip",
-          "facebook"
-        ],
+        "rule_set": ["facebook-ip", "facebook"],
         "action": "route",
         "outbound": "FaceBook"
       },
@@ -690,10 +563,7 @@
         "outbound": "TikTok"
       },
       {
-        "rule_set": [
-          "netflix-ip",
-          "netflix"
-        ],
+        "rule_set": ["netflix-ip", "netflix"],
         "action": "route",
         "outbound": "Netflix"
       },
@@ -713,10 +583,7 @@
         "method": "drop"
       },
       {
-        "rule_set": [
-          "cn-ip",
-          "cn"
-        ],
+        "rule_set": ["cn-ip", "cn"],
         "action": "route",
         "outbound": "D"
       }
