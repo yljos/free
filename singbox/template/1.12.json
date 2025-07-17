@@ -66,6 +66,8 @@
     "default_mark": 666,
     "default_domain_resolver": {"server": "dns_direct", "rewrite_ttl": 60},
     "rules": [
+      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": true},
+      {"rule_set": "category-ads-all", "action": "reject", "method": "drop"},
       {"rule_set": "pass-ip", "action": "route", "outbound": "D"},
       {"inbound": ["tproxy-in", "socks-in"], "action": "sniff"},
       {"inbound": ["tproxy-in", "socks-in"], "action": "resolve", "strategy": "ipv4_only"},
@@ -112,8 +114,6 @@
       {"rule_set": ["netflix-ip", "netflix"], "action": "route", "outbound": "Netflix"},
       {"rule_set": "gfw", "action": "route", "outbound": "M"},
       {"rule_set": "microsoft", "action": "route", "outbound": "Microsoft"},
-      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": true},
-      {"rule_set": "category-ads-all", "action": "reject", "method": "drop"},
       {"rule_set": ["cn-ip", "cn"], "action": "route", "outbound": "D"}
     ],
     "rule_set": [
@@ -173,5 +173,8 @@
     "final": "Default",
     "auto_detect_interface": true
   },
-  "experimental": {"clash_api": {"external_controller": "0.0.0.0:9090", "external_ui": "ui", "secret": "101300", "external_ui_download_url": "https://cdn.jsdmirror.com/gh/yljos/free@main/dist-cdn-fonts.zip", "external_ui_download_detour": "D", "default_mode": "rule"}}
+  "experimental": {
+    "clash_api": {"external_controller": "0.0.0.0:9090", "external_ui": "ui", "secret": "101300", "external_ui_download_url": "https://cdn.jsdmirror.com/gh/yljos/free@main/dist-cdn-fonts.zip", "external_ui_download_detour": "D", "default_mode": "rule"},
+    "cache_file": {"enabled": true, "path": "", "cache_id": "", "store_fakeip": true, "store_rdrc": false, "rdrc_timeout": ""}
+  }
 }
