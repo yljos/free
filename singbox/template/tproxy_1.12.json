@@ -450,7 +450,7 @@
         ],
         "action": "reject",
         "method": "default",
-        "nodrop": false
+        "nodrop": true
       },
       {
         "ip_is_private": true,
