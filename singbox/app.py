@@ -16,9 +16,7 @@ logger = logging.getLogger(__name__)
 env_path = Path(__file__).parent / '.env'
 load_dotenv(dotenv_path=env_path, override=True)
 
-# 添加调试输出
 logger.info(f"加载环境变量文件: {env_path}")
-logger.info(f"TEMPLATE_MODE: {os.getenv('TEMPLATE_MODE', '未设置')}")
 
 # 常量定义
 USER_AGENT = os.getenv('USER_AGENT', 'sing-box')
@@ -29,17 +27,11 @@ DOWNLOAD_MBPS = int(os.getenv('DOWNLOAD_MBPS', 300))
 BASE_DIR = Path(__file__).parent
 OUTPUT_FOLDER = BASE_DIR / 'outputs'
 
-# 模板映射
 TEMPLATE_MAP = {
-    '1.12': BASE_DIR / 'template' / '1.12.json',  
-    '1.11': BASE_DIR / 'template' / '1.11.json',       
-
+    '1.12': BASE_DIR / 'template' / '1.12.json',
+    '1.11': BASE_DIR / 'template' / '1.11.json',
 }
-
-# 重新获取环境变量值 - 默认为 'tproxy'
-template_mode = os.getenv('TEMPLATE_MODE', 'tproxy')
-DEFAULT_TEMPLATE = TEMPLATE_MAP[template_mode]
-logger.info(f"使用默认模板: {DEFAULT_TEMPLATE}")
+logger.info(f"可用模板: {TEMPLATE_MAP}")
 
 app = Flask(__name__)
 
@@ -235,42 +227,25 @@ def create_cleanup_callback(temp_files, exclude_files=None):
 def process_subscription_url(sub_url):
     temp_files = []
     try:
-        # 更明确地获取和记录环境变量值
-        env_template_mode = os.getenv('TEMPLATE_MODE', 'tproxy')
-        template_switch = request.args.get('switch', env_template_mode)
-        
-        logger.info(f"URL参数switch: {request.args.get('switch', '未提供')}")
-        logger.info(f"环境变量TEMPLATE_MODE: {env_template_mode}")
-        logger.info(f"最终使用的模板模式: {template_switch}")
-        
-        template_path = TEMPLATE_MAP.get(template_switch, DEFAULT_TEMPLATE)
-        
+        template_switch = request.args.get('switch', '1.12')
+        logger.info(f"URL参数switch: {template_switch}")
+        template_path = TEMPLATE_MAP.get(template_switch, TEMPLATE_MAP['1.12'])
         sub_url = unquote(sub_url)
         if not sub_url.startswith(('http://', 'https://')):
             sub_url = 'https://' + sub_url
-            
         temp_path = fetch_subscription(sub_url)
         temp_files.append(temp_path)
-        
-        # 修改process_subscription函数调用，传入模板路径
         output_path, node_path = process_subscription(temp_path, template_path)
         temp_files.extend([output_path, node_path])
-        
-        # 准备响应
         response = send_file(
             output_path,
             mimetype='application/json',
             as_attachment=True,
             download_name='config.json'
         )
-        
-        # 使用新的清理回调方式，排除正在发送的配置文件
         create_cleanup_callback(temp_files, exclude_files=[output_path])
-        
         return response
-        
     except Exception as error:
-        # 异常情况下立即清理临时文件
         cleanup_files(temp_files)
         return f'处理失败: {str(error)}', 500
 
@@ -309,10 +284,5 @@ if __name__ == '__main__':
     debug_mode = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
     port = int(os.getenv('PORT', 5000))
     host = os.getenv('HOST', '0.0.0.0')
-    
-    # 添加环境变量调试输出
-    template_mode = os.getenv('TEMPLATE_MODE', '1')
-    logger.info(f"当前TEMPLATE_MODE: {template_mode}")
-    logger.info(f"默认模板: {DEFAULT_TEMPLATE}")
-    
+    logger.info(f"可用模板: {TEMPLATE_MAP}")
     app.run(debug=debug_mode, port=port, host=host)
