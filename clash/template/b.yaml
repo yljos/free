@@ -89,7 +89,7 @@ proxy-groups:
   - {name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
-  - {name: R, type: select, proxies: [REJECT, DIRECT]}
+  - {name: R, type: select, proxies: [REJECT-DROP, DIRECT]}
   - {name: D, type: select, proxies: [DIRECT], hidden: true}
   - {name: Google, type: select, proxies: [US_fallback, SG_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: Google_fallback, type: fallback, proxies: [Google, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
