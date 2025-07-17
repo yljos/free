@@ -81,7 +81,7 @@
       {"rule_set": "huawei", "action": "route", "outbound": "R"},
       {"domain": ["ntp.aliyun.com"], "action": "route", "outbound": "D"},
       {"rule_set": "xiaomi", "action": "route", "outbound": "D"},
-      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "drop"},
+      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": true},
       {"ip_is_private": true, "action": "route", "outbound": "D"},
       {"rule_set": "mozilla", "action": "route", "outbound": "M"},
       {"rule_set": "archlinux", "action": "route", "outbound": "M"},
