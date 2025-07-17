@@ -89,7 +89,7 @@ proxy-groups:
   - {name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
-  - {name: R, type: select, proxies: [REJECT-DROP, DIRECT]}
+  - {name: R, type: select, proxies: [REJECT, DIRECT]}
   - {name: D, type: select, proxies: [DIRECT], hidden: true}
   - {name: Google, type: select, proxies: [US_fallback, SG_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: Google_fallback, type: fallback, proxies: [Google, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
@@ -165,7 +165,7 @@ rule-providers:
   facebook: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/facebook.yaml}
   facebook-ip: {type: http, interval: 86400, proxy: M_fallback, behavior: classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/classical/facebook.yaml}
 rules:
-  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT-DROP"
+  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei,R"
   - "RULE-SET,category-ads,REJECT-DROP"
   - "RULE-SET,direct,D"

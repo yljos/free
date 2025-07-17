@@ -449,7 +449,8 @@
           }
         ],
         "action": "reject",
-        "method": "drop"
+        "method": "default",
+        "nodrop": false
       },
       {
         "ip_is_private": true,
