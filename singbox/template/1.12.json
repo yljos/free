@@ -8,7 +8,7 @@
       {"tag": "dns_google", "type": "udp", "server": "8.8.8.8", "server_port": 53, "detour": "Google"},
       {"tag": "dns_microsoft", "type": "udp", "server": "1.1.1.1", "server_port": 53, "detour": "Microsoft"},
       {"tag": "dns_direct", "type": "https", "server": "dns.alidns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "D"},
-      {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
+      {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
       {"domain_suffix": ["ntp.aliyun.com", "ddns-link-b5.uk", "dexlos.com", "jsdmirror.cn", "jsdmirror.com", "fastly.jsdelivr.net"], "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
@@ -29,7 +29,7 @@
       {"rule_set": "alibaba", "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "bilibili", "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
       {"type": "logical", "mode": "and", "rules": [{"rule_set": "geolocation-!cn", "invert": true}, {"rule_set": "cn-ip"}], "action": "route", "strategy": "ipv4_only", "server": "dns_proxy", "client_subnet": "114.114.114.114"},
-      {"query_type": ["A", "AAAA"], "action": "route", "server": "dns_fakeip", "disable_cache": true}
+      {"query_type": ["A", "AAAA"], "action": "route", "server": "fakeip", "disable_cache": true}
     ],
     "final": "dns_proxy",
     "independent_cache": true,
