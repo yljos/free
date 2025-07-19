@@ -67,7 +67,7 @@
       {"protocol": "dns", "action": "hijack-dns"},
       {"inbound": ["tproxy-in", "mixed-in"], "action": "sniff"},
       {"inbound": ["tproxy-in", "mixed-in"], "action": "resolve", "strategy": "ipv4_only"},
-      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": false},
+      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": true},
       {"rule_set": "category-ads-all", "action": "route", "outbound": "block"},
       {"rule_set": "pass-ip", "action": "route", "outbound": "D"},
       {"rule_set": "tencent", "action": "route", "outbound": "D"},
