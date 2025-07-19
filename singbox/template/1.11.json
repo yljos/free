@@ -8,7 +8,8 @@
       {"tag": "dns_google", "address": "8.8.8.8", "strategy": "ipv4_only", "detour": "Google"},
       {"tag": "dns_microsoft", "address": "1.1.1.1", "strategy": "ipv4_only", "detour": "Microsoft"},
       {"tag": "dns_direct", "address": "https://dns.alidns.com/dns-query", "address_resolver": "dns_resolver", "strategy": "ipv4_only", "detour": "D"},
-      {"tag": "dns_fakeip", "address": "fakeip"}
+      {"tag": "dns_fakeip", "address": "fakeip"},
+      {"tag": "dns_block", "address": "rcode://name_error"}
     ],
     "fakeip": {"enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"},
     "rules": [
@@ -16,6 +17,8 @@
       {"rule_set": "direct-cf", "action": "route", "server": "dns_proxy"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "action": "route", "server": "dns_microsoft"},
       {"domain_keyword": ["googleapis"], "action": "route", "server": "dns_google"},
+      {"rule_set": "category-ads-all", "action": "route", "server": "dns_block"},
+      {"rule_set": "huawei", "action": "route", "server": "dns_block"},
       {"rule_set": "xiaomi", "action": "route", "server": "dns_direct"},
       {"rule_set": "tencent", "action": "route", "server": "dns_direct"},
       {"rule_set": "cn", "action": "route", "server": "dns_direct"},
