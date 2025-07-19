@@ -37,14 +37,14 @@
   },
   "inbounds": [
     {"type": "tproxy", "tag": "tproxy-in", "listen": "0.0.0.0", "listen_port": 7893},
-    {"type": "socks", "tag": "socks-in", "listen": "0.0.0.0", "listen_port": 12138}
+    {"type": "mixed", "tag": "mixed-in", "users": [{"username": "huai", "password": "password12138"}], "listen": "0.0.0.0", "listen_port": 12138}
   ],
   "outbounds": [
     {"tag": "D", "type": "direct", "domain_resolver": "dns_direct"},
     {"tag": "block", "type": "block"},
     {"tag": "M", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D"], "default": "SG"},
     {"tag": "R", "type": "selector", "outbounds": ["block", "D"], "default": "block"},
-    {"tag": "Google", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "US"},
+    {"tag": "Google", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "SG"},
     {"tag": "OpenAi", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "US"},
     {"tag": "Steam", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "HK"},
     {"tag": "Telegram", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "SG"},
@@ -69,8 +69,8 @@
       {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": true},
       {"rule_set": "category-ads-all", "action": "reject", "method": "drop"},
       {"rule_set": "pass-ip", "action": "route", "outbound": "D"},
-      {"inbound": ["tproxy-in", "socks-in"], "action": "sniff"},
-      {"inbound": ["tproxy-in", "socks-in"], "action": "resolve", "strategy": "ipv4_only"},
+      {"inbound": ["tproxy-in", "mixed-in"], "action": "sniff"},
+      {"inbound": ["tproxy-in", "mixed-in"], "action": "resolve", "strategy": "ipv4_only"},
       {"rule_set": "tencent", "action": "route", "outbound": "D"},
       {"rule_set": ["direct", "direct-cf", "direct-ip"], "action": "route", "outbound": "D"},
       {"domain_keyword": ["googleapis"], "action": "route", "outbound": "Google"},
