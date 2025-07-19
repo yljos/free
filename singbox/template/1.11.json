@@ -40,7 +40,7 @@
   },
   "inbounds": [
     {"type": "tproxy", "tag": "tproxy-in", "listen": "0.0.0.0", "listen_port": 7893},
-    {"type": "mixed", "tag": "mixed-in", "users": [{"username": "admin", "password": "admin"}], "listen": "0.0.0.0", "listen_port": 12138}
+    {"type": "mixed", "tag": "mixed-in", "users": [{"username": "huai", "password": "password12138"}], "listen": "0.0.0.0", "listen_port": 12138}
   ],
   "outbounds": [
     {"tag": "D", "type": "direct"},
