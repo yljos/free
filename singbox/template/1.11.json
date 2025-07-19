@@ -35,7 +35,6 @@
       {"outbound": ["D"], "action": "route", "server": "dns_direct"}
     ],
     "final": "dns_proxy",
-    "independent_cache": true,
     "strategy": "ipv4_only"
   },
   "inbounds": [

@@ -32,7 +32,6 @@
       {"query_type": ["A", "AAAA"], "action": "route", "server": "fakeip", "disable_cache": true}
     ],
     "final": "dns_proxy",
-    "independent_cache": true,
     "strategy": "ipv4_only"
   },
   "inbounds": [
