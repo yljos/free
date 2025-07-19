@@ -23,6 +23,7 @@ USER_AGENT = os.getenv('USER_AGENT', 'sing-box')
 UPLOAD_MBPS = int(os.getenv('UPLOAD_MBPS', 50))
 DOWNLOAD_MBPS = int(os.getenv('DOWNLOAD_MBPS', 300))
 
+
 # 路径配置
 BASE_DIR = Path(__file__).parent
 OUTPUT_FOLDER = BASE_DIR / 'outputs'
@@ -31,7 +32,13 @@ TEMPLATE_MAP = {
     '1.12': BASE_DIR / 'template' / '1.12.json',
     '1.11': BASE_DIR / 'template' / '1.11.json',
 }
+ # 从.env读取默认模板，未设置则为1.11
+DEFAULT_TEMPLATE_KEY = os.getenv('DEFAULT_TEMPLATE', '1.11')
+if DEFAULT_TEMPLATE_KEY not in TEMPLATE_MAP:
+    logger.warning(f".env中DEFAULT_TEMPLATE值无效，已回退为1.11")
+    DEFAULT_TEMPLATE_KEY = '1.11'
 logger.info(f"可用模板: {TEMPLATE_MAP}")
+logger.info(f"默认模板: {DEFAULT_TEMPLATE_KEY}")
 
 app = Flask(__name__)
 
@@ -227,9 +234,13 @@ def create_cleanup_callback(temp_files, exclude_files=None):
 def process_subscription_url(sub_url):
     temp_files = []
     try:
-        template_switch = request.args.get('switch', '1.12')
-        logger.info(f"URL参数switch: {template_switch}")
-        template_path = TEMPLATE_MAP.get(template_switch, TEMPLATE_MAP['1.12'])
+        template_switch = request.args.get('switch')
+        if template_switch:
+            logger.info(f"URL参数switch: {template_switch}")
+            template_path = TEMPLATE_MAP.get(template_switch, TEMPLATE_MAP[DEFAULT_TEMPLATE_KEY])
+        else:
+            logger.info(f"未指定switch参数，使用默认模板: {DEFAULT_TEMPLATE_KEY}")
+            template_path = TEMPLATE_MAP[DEFAULT_TEMPLATE_KEY]
         sub_url = unquote(sub_url)
         if not sub_url.startswith(('http://', 'https://')):
             sub_url = 'https://' + sub_url
