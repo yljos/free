@@ -5,7 +5,7 @@ redir-port: 7892
 tproxy-port: 7893
 allow-lan: true
 bind-address: "*"
-find-process-mode: strict # always, strict, off
+find-process-mode: off # always, strict, off
 mode: rule # global, rule, direct
 log-level: warning # info, warning, error, debug
 ipv6: false
@@ -13,7 +13,6 @@ udp: true #
 unified-delay: true
 tcp-concurrent: true
 global-ua: clash.meta
-# enable-process: true
 profile: {store_fake_ip: true, store_selected: true}
 external-controller: "0.0.0.0:9090"
 secret: "101300"
@@ -144,7 +143,7 @@ rule-providers:
   openai: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs}
   openwrt: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openwrt.mrs}
   pikpak: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs}
-  pikpak-download: {type: http,  behavior: classical, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml}
+  pikpak-download: {type: http, behavior: classical, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml}
   proxy: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/proxy.mrs}
   reddit: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/reddit.mrs}
   speedtest: {type: http, format: mrs, behavior: domain, interval: 86400, proxy: M_fallback, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/speedtest.mrs}
