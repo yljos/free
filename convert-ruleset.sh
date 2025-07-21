@@ -6,7 +6,6 @@ echo "===== 开始执行所有规则转换 ====="
 echo -e "\n>>> 执行JSON到SRS格式转换..."
 ./sing-box rule-set compile proxy.json
 ./sing-box rule-set compile direct.json
-./sing-box rule-set compile pass-ip.json
 ./sing-box rule-set compile direct-ip.json
 ./sing-box rule-set compile pikpak-download.json
 ./sing-box rule-set compile direct-cf.json
