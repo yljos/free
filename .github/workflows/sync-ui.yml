@@ -1,0 +1,49 @@
+name: Sync UI Panel from zashboard
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时执行一次
+  workflow_dispatch:     # 手动触发也可以
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repo
+        uses: actions/checkout@v4
+
+      - name: Check for updates and download if available
+        run: |
+          # 获取远程版本信息
+          REMOTE_INFO=$(curl -s https://api.github.com/repos/Zephyruso/zashboard/releases/latest)
+          REMOTE_VERSION=$(echo "$REMOTE_INFO" | jq -r .tag_name)
+          REMOTE_DATE=$(echo "$REMOTE_INFO" | jq -r .published_at)
+          
+          # 检查获取的版本是否为 null 或空
+          if [ "$REMOTE_VERSION" = "null" ] || [ -z "$REMOTE_VERSION" ]; then
+            echo "Failed to get remote version or version is null"
+            echo "UPDATED=false" >> $GITHUB_ENV
+          # 如果本地已有版本记录，检查是否需要更新
+          elif [ -f ".version" ] && [ "$(cat .version)" = "$REMOTE_VERSION" ]; then
+            echo "Already up to date (version $REMOTE_VERSION)"
+            echo "UPDATED=false" >> $GITHUB_ENV
+          else
+            echo "New version available: $REMOTE_VERSION (published at $REMOTE_DATE)"
+            curl -L -o dist-cdn-fonts.zip https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip
+            echo "$REMOTE_VERSION" > .version
+            echo "UPDATED=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and push if changed
+        if: ${{ env.UPDATED == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist-cdn-fonts.zip .version
+          git commit -m "Update dist-cdn-fonts.zip from zashboard to $(cat .version)"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:main

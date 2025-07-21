@@ -1,0 +1,629 @@
+# port: 7890 # HTTP(S) 代理服务器端口
+# socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 12138 # HTTP(S) 和 SOCKS 代理混合端口
+# redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
+# Transparent proxy server port for Linux (TProxy TCP and TProxy UDP)
+# tproxy-port: 7893
+allow-lan: true
+bind-address: "*"
+#  find-process-mode has 3 values:always, strict, off
+#  - always, 开启，强制匹配所有进程
+#  - strict, 默认，由 mihomo 判断是否开启
+#  - off, 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict # always, strict, off
+mode: rule # global, rule, direct
+log-level: warning # info, warning, error, debug
+ipv6: false
+udp: true
+geodata-mode: false
+unified-delay: true
+tcp-concurrent: true
+enable-process: true
+# global-ua: "Mozilla/5.0 (X11; CrOS x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+profile:
+  store_fake_ip: true
+  store_selected: true
+external-controller: 0.0.0.0:9090
+secret: "101300"
+authentication: # http,socks 入口的验证用户名，密码
+  - "huai:12138password"
+skip-auth-prefixes: # 设置跳过验证的 IP 段
+  - 10.0.0.0/24 # 仅允许 10.0.0.1-10.0.0.255
+  - 127.0.0.1/8 # 仅允许 127.0.0.0-127.255.255.255 (本地回环地址)
+  - 192.168.0.0/16 # 仅允许 192.168.0.0-192.168.255.255
+external-ui: ui
+#external-ui-name: yacd
+global-client-fingerprint: chrome
+external-ui-url: "https://www.huai.ink/dist-cdn-fonts.zip"
+sniffer:
+  enable: true
+  sniff:
+    {
+      QUIC: { ports: [443] },
+      TLS: { ports: [443, 8443] },
+      HTTP: { ports: [80, 8080-8880], override-destination: true },
+    }
+  skip-domain: ["Mijia Cloud", "dlg.io.mi.com", "+.apple.com", "*.baidu.com"]
+  force-domain: ["google.com"]
+tun:
+  enable: true # 是否启用 tun 模式
+  device: mihomo # tun device name
+  stack: system # system, gvisor, mixed
+  dns-hijack: ["any:53"] # DNS 拦截
+  auto-route: true # 自动路由
+  auto-detect-interface: true # 自动检测接口
+  strict-route: true # 严格路由模式
+  endpoint-independent-nat: true # 是否启用端点无关的 NAT
+hosts:
+  "openwrt": "10.0.0.1" # 替换为实际的路由器IP地址
+  "nas": "10.0.0.21" # 替换为实际的NAS IP地址
+  "ax6s": "10.0.0.2" # 替换为实际的路由器IP地址
+  "homeassistant.local": "10.0.0.21" # 替换为实际的HomeAssistant IP地址
+
+dns:
+  enable: true
+  prefer-h3: true
+  listen: "127.0.0.1:1053"
+  ipv6: false
+  enhanced-mode: fake-ip # fake-ip, redir-host
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "+.nas"
+    - "localhost.ptlogin2.qq.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.googleapis.com"
+    - "+.googleapis.cn"
+    - "alt1-mtalk.google.com"
+    - "alt2-mtalk.google.com"
+    - "alt3-mtalk.google.com"
+    - "alt4-mtalk.google.com"
+    - "alt5-mtalk.google.com"
+    - "alt6-mtalk.google.com"
+    - "alt7-mtalk.google.com"
+    - "alt8-mtalk.google.com"
+    - "mtalk.google.com"
+    - "mtalk-dev.google.com"
+    - "mtalk-staging.google.com"
+    - "mtalk4.google.com"
+    - "+.huaihuaidehuaihuai.top"
+    - "+.huai.ink"
+    - "+.suckless.top"
+    - "+.ihuai.top"
+  use-hosts: true # 是否使用配置中设置的hosts
+  use-system-hosts: false # 是否使用系统hosts
+  default-nameserver: [1.1.1.1, 223.5.5.5]
+  proxy-server-nameserver: ["https://dns.alidns.com/dns-query"]
+  nameserver: [https://cloudflare-dns.com/dns-query#Proxy]
+  nameserver-policy:
+    # 代理服务
+    "rule-set:proxy": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:gfw": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#Proxy"
+    # 国内直连服务
+    "fastly.jsdelivr.net": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:cn": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:bilibili": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:xiaomi": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:unionpay": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:alibaba": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:meituan": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:jd": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:microsoft": "https://dns.alidns.com/dns-query#DIRECT"
+    # 广告拦截服务
+    "rule-set:category-ads-all": "rcode://refused"
+    # 特定应用服务
+    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi"
+    "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#Singapore"
+    "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#PikPak-Download"
+    "rule-set:adguard": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:tmdb": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:docker": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:reddit": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:spotify": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:wikimedia": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:javdb": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:apkpure": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam"
+    "rule-set:mozilla": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:onedrive": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:github": "https://cloudflare-dns.com/dns-query#Proxy"
+    # 社交媒体
+    "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#Proxy"
+    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
+    # 流媒体服务
+    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google"
+    # Google服务
+    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google"
+    # 测速服务
+    "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
+proxies: []
+proxy-groups:
+  - name: Proxy
+    type: select
+    filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9])).*$"
+    include-all-proxies: true
+    proxies: [Singapore, United States, Japan, Hong Kong, Taiwan, DIRECT]
+  - name: Google
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: OpenAi
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: Telegram
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: TikTok
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: Steam
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: Netflix
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: PikPak-Download
+    type: select
+    proxies: [DIRECT, Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: SpeedTest
+    type: select
+    proxies: [Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+  - name: Taiwan
+    filter: "(?i)(台湾|tw|taiwan)(?!.*(家宽|isp|小众|0\\.[0-9]))"
+    include-all-proxies: true
+    type: load-balance
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    timeout: 3000
+    max-failed-times: 3
+    # lazy: true
+    strategy: consistent-hashing
+  - name: Hong Kong
+    filter: "(?i)(香港|hk|hong)(?!.*(家宽|isp|小众|0\\.[0-9]))"
+    include-all-proxies: true
+    type: load-balance
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    timeout: 3000
+    max-failed-times: 3
+    #  lazy: true
+    strategy: consistent-hashing
+  - name: Japan
+    filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|0\\.[0-9]))"
+    include-all-proxies: true
+    type: load-balance
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    timeout: 3000
+    max-failed-times: 3
+    #  lazy: true
+    strategy: consistent-hashing
+  - name: United States
+    filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|0\\.[0-9]))"
+    include-all-proxies: true
+    type: load-balance
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    timeout: 3000
+    max-failed-times: 3
+    # lazy: true
+    strategy: consistent-hashing
+  - name: Singapore
+    filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|0\\.[0-9]))"
+    include-all-proxies: true
+    type: load-balance
+    url: https://cp.cloudflare.com/generate_204
+    interval: 60
+    timeout: 3000
+    max-failed-times: 3
+    # lazy: true
+    strategy: consistent-hashing
+  - name: Final
+    type: select
+    proxies: [DIRECT, Proxy, Singapore, United States, Japan, Hong Kong, Taiwan]
+    filter: "(?i)^(?!.*(剩余|到期|限制|套餐|时间|官网|产品|平台|Traffic|Expire|小众|0\\.[0-9])).*$"
+    include-all-proxies: true
+rule-providers:
+  adguard:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/adguard.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/adguard.mrs
+  alibaba:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/alibaba.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/alibaba.mrs
+  apkpure:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/apkpure.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/apkpure.mrs
+  bilibili:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/bilibili.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/bilibili.mrs
+  category-ads-all:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/category-ads-all.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs
+  cn:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/cn.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/cn.mrs
+  cn-ip:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: ipcidr
+    format: mrs
+    path: ./rules/cn-ip.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/cn.mrs
+  docker:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/docker.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/docker.mrs
+  mozilla:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/mozilla.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/mozilla.mrs
+  gfw:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/gfw.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/gfw.mrs
+  github:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/github.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/github.mrs
+  google:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/google.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/google.mrs
+  google-ip:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: ipcidr
+    format: mrs
+    path: ./rules/google-ip.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/google.mrs
+  googlefcm:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/googlefcm.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/googlefcm.mrs
+  javdb:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/javdb.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/javdb.mrs
+  jd:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/jd.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/jd.mrs
+  meituan:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/meituan.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/meituan.mrs
+  microsoft:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/microsoft.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/microsoft.mrs
+  netflix:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/netflix.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/netflix.mrs
+  netflix-ip:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: ipcidr
+    format: mrs
+    path: ./rules/netflix-ip.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/netflix.mrs
+  onedrive:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/onedrive.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/onedrive.mrs
+  openai:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/openai.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/openai.mrs
+  openwrt:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/openwrt.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/openwrt.mrs
+  pikpak:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/pikpak.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/pikpak.mrs
+  pikpak-download:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: classical
+    format: yaml
+    path: ./rules/pikpak-download.yaml
+    url: https://fastly.jsdelivr.net/gh/huai12138/free@main/pikpak-download.yaml
+  proxy:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/proxy.mrs
+    url: https://fastly.jsdelivr.net/gh/huai12138/free@main/proxy.mrs
+  reddit:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/reddit.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/reddit.mrs
+  speedtest:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/speedtest.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/speedtest.mrs
+  spotify:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/spotify.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/spotify.mrs
+  steam:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/steam.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/steam.mrs
+  telegram:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/telegram.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/telegram.mrs
+  telegram-ip:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: ipcidr
+    format: mrs
+    path: ./rules/telegram-ip.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/telegram.mrs
+  tiktok:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/tiktok.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/tiktok.mrs
+  tmdb:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/tmdb.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/tmdb.mrs
+  twitter:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/twitter.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/twitter.mrs
+  twitter-ip:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: ipcidr
+    format: mrs
+    path: ./rules/twitter-ip.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/twitter.mrs
+  unionpay:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/unionpay.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/unionpay.mrs
+  wikimedia:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/wikimedia.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/wikimedia.mrs
+  xiaomi:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/xiaomi.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/xiaomi.mrs
+  youtube:
+    type: http
+    interval: 86400
+    proxy: DIRECT
+    behavior: domain
+    format: mrs
+    path: ./rules/youtube.mrs
+    url: https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/youtube.mrs
+rules:
+  #######################
+  # 本地网络访问规则
+  #######################
+  - DOMAIN-SUFFIX,local,DIRECT
+  - DOMAIN-SUFFIX,lan,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,10.0.0.0/24,DIRECT
+  #######################
+  # 直连规则
+  #######################
+  - DOMAIN-SUFFIX,suckless.top,DIRECT
+  - DOMAIN-SUFFIX,huai.ink,DIRECT
+  - DOMAIN-SUFFIX,huaihuaidehuaihuai.top,DIRECT
+  - DOMAIN-SUFFIX,ihuai.top,DIRECT
+  #######################
+  # 智能家居设备直连规则
+  #######################
+  - SRC-IP-CIDR,10.0.0.18/32,DIRECT # 小爱音响
+  - SRC-IP-CIDR,10.0.0.28/32,DIRECT # 小米智能插座
+  - SRC-IP-CIDR,10.0.0.13/32,DIRECT # 小米电暖器
+  - SRC-IP-CIDR,10.0.0.14/32,DIRECT # 小米小饭煲
+  #######################
+  # 应用规则集分流配置
+  #######################
+  # 代理服务
+  - RULE-SET,proxy,Proxy # 代理列表
+  - RULE-SET,pikpak,Singapore # PikPak服务
+  - RULE-SET,mozilla,Proxy # Firefox服务
+  - RULE-SET,openwrt,Proxy # OpenWRT服务
+  # 国内应用直连
+  - RULE-SET,xiaomi,DIRECT # 小米服务
+  - RULE-SET,bilibili,DIRECT # B站
+  - RULE-SET,unionpay,DIRECT # 银联支付
+  - RULE-SET,alibaba,DIRECT # 阿里巴巴
+  - RULE-SET,meituan,DIRECT # 美团
+  - RULE-SET,jd,DIRECT # 京东
+  # 国外服务代理
+  - RULE-SET,onedrive,Proxy # OneDrive
+  - RULE-SET,openai,OpenAi # OpenAI服务
+  - RULE-SET,pikpak-download,PikPak-Download # PikPak下载
+  - RULE-SET,adguard,Proxy # AdGuard
+  - RULE-SET,tmdb,Proxy # TMDB影视资料库
+  - RULE-SET,docker,Proxy # Docker服务
+  - RULE-SET,reddit,Proxy # Reddit
+  - RULE-SET,spotify,Proxy # Spotify音乐
+  - RULE-SET,speedtest,SpeedTest # 网速测试
+  - RULE-SET,wikimedia,Proxy # 维基媒体
+  - RULE-SET,javdb,Proxy # JavDB
+  - RULE-SET,apkpure,Proxy # APKPure
+  # 游戏平台
+  - RULE-SET,steam,Steam # Steam平台
+  # 社交媒体
+  - RULE-SET,tiktok,TikTok # TikTok
+  - RULE-SET,youtube,Google # YouTube
+  - RULE-SET,telegram,Telegram # Telegram
+  - RULE-SET,telegram-ip,Telegram # Telegram IP
+  - RULE-SET,twitter,Proxy # Twitter
+  - RULE-SET,twitter-ip,Proxy # Twitter IP
+  # 开发平台
+  - RULE-SET,github,Proxy # GitHub
+  # 流媒体服务
+  - RULE-SET,netflix,Netflix # Netflix
+  - RULE-SET,netflix-ip,Netflix # Netflix IP
+  # 科技公司服务
+  - RULE-SET,googlefcm,DIRECT # Google FCM服务
+  - RULE-SET,google,Google # Google服务
+  - RULE-SET,google-ip,Google # Google IP
+  - RULE-SET,microsoft,DIRECT # 微软服务
+  - RULE-SET,gfw,Proxy # GFW封锁列表
+  # 中国大陆直连
+  - RULE-SET,cn,DIRECT # 中国大陆域名
+  - RULE-SET,cn-ip,DIRECT # 中国大陆IP
+  # 广告拦截服务
+  - RULE-SET,category-ads-all,REJECT # 广告拦截
+  # 未匹配规则
+  - MATCH,Final # 最终规则

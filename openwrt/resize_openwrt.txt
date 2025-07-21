@@ -1,0 +1,22 @@
+opkg remove dnsmasq &&opkg install dnsmasq-full
+opkg update &&opkg install openssh-sftp-server 
+opkg install fdisk
+opkg install block-mount
+opkg install parted 
+parted -l
+mkfs.ext4 /dev/sda3
+
+
+
+
+
+
+
+
+mkdir -p /tmp/introot
+mkdir -p /tmp/extroot
+mount --bind / /tmp/introot
+mount /dev/sda3 /tmp/extroot
+tar -C /tmp/introot -cvf - . | tar -C /tmp/extroot -xf -
+umount /tmp/introot
+umount /tmp/extroot

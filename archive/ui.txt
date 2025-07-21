@@ -1,0 +1,2 @@
+https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip

@@ -1,0 +1,6 @@
+flask
+ruamel.yaml
+requests
+PyYAML
+filelock
+python-dotenv
