@@ -9,7 +9,7 @@ find-process-mode: off # always, strict, off
 mode: rule # global, rule, direct
 log-level: warning # info, warning, error, debug
 ipv6: false
-udp: true 
+udp: true
 unified-delay: true
 tcp-concurrent: true
 global-ua: clash.meta
@@ -89,12 +89,12 @@ proxy-groups:
   - {name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
-  - {name: R, type: select, proxies: [REJECT-DROP, DIRECT]}
+  - {name: R, type: select, proxies: [REJECT, DIRECT]}
   - {name: D, type: select, proxies: [DIRECT], hidden: true}
-  - {name: Google, type: select, proxies: [US_fallback, SG_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
-  - {name: Google_fallback, type: fallback, proxies: [Google, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-  - {name: OpenAi, type: select, proxies: [US_fallback, SG_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
-  - {name: OpenAi_fallback, type: fallback, proxies: [OpenAi, US_fallback, SG_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Google, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Google_fallback, type: fallback, proxies: [Google, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: OpenAi, type: select, proxies: [SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: OpenAi_fallback, type: fallback, proxies: [OpenAi, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Telegram, type: select, proxies: [SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: Telegram_fallback, type: fallback, proxies: [Telegram, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: TikTok, type: select, proxies: [JP_fallback, SG_fallback, US_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
@@ -103,7 +103,7 @@ proxy-groups:
   - {name: Steam_fallback, type: fallback, proxies: [Steam, HK_fallback, D], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Netflix_fallback, type: fallback, proxies: [SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: PikPak-Download, type: select, proxies: [D, SG_fallback, US_fallback, JP_fallback, HK_fallback]}
-  - {name: SpeedTest, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
+  - {name: SpeedTest, type: select, proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
   - {name: GitHub, type: select, proxies: [SG_fallback, HK_fallback, D], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: GitHub_fallback, type: fallback, proxies: [GitHub, SG_fallback, HK_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Microsoft, type: select, proxies: [D, SG_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
@@ -166,7 +166,7 @@ rule-providers:
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei,R"
-  - "RULE-SET,category-ads,REJECT-DROP"
+  - "RULE-SET,category-ads,REJECT"
   - "DOMAIN,ntp.aliyun.com,D"
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
