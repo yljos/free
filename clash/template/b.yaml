@@ -9,11 +9,11 @@ find-process-mode: off # always, strict, off
 mode: rule # global, rule, direct
 log-level: warning # info, warning, error, debug
 ipv6: false
-udp: true #
+udp: true 
 unified-delay: true
 tcp-concurrent: true
 global-ua: clash.meta
-profile: {store_fake_ip: true, store_selected: true}
+profile: {store-selected: false, store-fake-ip: true}
 external-controller: "0.0.0.0:9090"
 secret: "101300"
 authentication: ["huai:password12138"]
