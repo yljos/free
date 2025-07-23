@@ -41,25 +41,25 @@ dns:
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT"]
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   nameserver-policy:
-    "ntp.aliyun.com": "https://dns.alidns.com/dns-query#D"
+    "ntp.aliyun.com": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:codeberg": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M_fallback"
-    "rule-set:direct": "https://dns.alidns.com/dns-query#D"
-    "rule-set:cn": "https://dns.alidns.com/dns-query#D"
-    "rule-set:bilibili": "https://dns.alidns.com/dns-query#D"
-    "rule-set:xiaomi": "https://dns.alidns.com/dns-query#D"
-    "rule-set:unionpay": "https://dns.alidns.com/dns-query#D"
-    "rule-set:alibaba": "https://dns.alidns.com/dns-query#D"
-    "rule-set:meituan": "https://dns.alidns.com/dns-query#D"
-    "rule-set:jd": "https://dns.alidns.com/dns-query#D"
+    "rule-set:direct": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:cn": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:bilibili": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:xiaomi": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:unionpay": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:alibaba": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:meituan": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:jd": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:microsoft": "1.1.1.1#Microsoft_fallback"
-    "rule-set:tencent": "https://dns.alidns.com/dns-query#D"
-    "rule-set:category-ads": "rcode://name_error"
-    "rule-set:huawei": "https://dns.alidns.com/dns-query#D"
+    "rule-set:tencent": "https://dns.alidns.com/dns-query#DIRECT"
+    "rule-set:category-ads": "rcode://refused"
+    "rule-set:huawei": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#PikPak-Download"
@@ -88,9 +88,8 @@ proxies: {}
 proxy-groups:
   - {name: M, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: M_fallback, type: fallback, proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-  - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
+  - {name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]}
   - {name: R, type: select, proxies: [REJECT, DIRECT]}
-  - {name: D, type: select, proxies: [DIRECT], hidden: true}
   - {name: Google, type: select, proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: Google_fallback, type: fallback, proxies: [Google, SG_fallback, US_fallback, JP_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: OpenAi, type: select, proxies: [SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
@@ -100,14 +99,14 @@ proxy-groups:
   - {name: TikTok, type: select, proxies: [JP_fallback, SG_fallback, US_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: TikTok_fallback, type: fallback, proxies: [TikTok, JP_fallback, SG_fallback, US_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Steam, type: select, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
-  - {name: Steam_fallback, type: fallback, proxies: [Steam, HK_fallback, D], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Steam_fallback, type: fallback, proxies: [Steam, HK_fallback, DIRECT], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: Netflix_fallback, type: fallback, proxies: [SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-  - {name: PikPak-Download, type: select, proxies: [D, SG_fallback, US_fallback, JP_fallback, HK_fallback]}
-  - {name: SpeedTest, type: select, proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, D]}
-  - {name: GitHub, type: select, proxies: [SG_fallback, HK_fallback, D], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: PikPak-Download, type: select, proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback]}
+  - {name: SpeedTest, type: select, proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]}
+  - {name: GitHub, type: select, proxies: [SG_fallback, HK_fallback, DIRECT], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
   - {name: GitHub_fallback, type: fallback, proxies: [GitHub, SG_fallback, HK_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-  - {name: Microsoft, type: select, proxies: [D, SG_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
-  - {name: Microsoft_fallback, type: fallback, proxies: [Microsoft, D, HK_fallback, SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+  - {name: Microsoft, type: select, proxies: [DIRECT, SG_fallback, HK_fallback], filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$", include-all-proxies: true}
+  - {name: Microsoft_fallback, type: fallback, proxies: [Microsoft, DIRECT, HK_fallback, SG_fallback], url: "https://cp.cloudflare.com", interval: 60, hidden: true}
   - {name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
   - {name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
   - {name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true, type: fallback, url: https://cp.cloudflare.com, interval: 60, hidden: true}
@@ -167,22 +166,22 @@ rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei,R"
   - "RULE-SET,category-ads,REJECT"
-  - "DOMAIN,ntp.aliyun.com,D"
+  - "DOMAIN,ntp.aliyun.com,DIRECT"
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
-  - "RULE-SET,direct,D"
-  - "RULE-SET,direct-cf,D"
-  - "RULE-SET,direct-ip,D"
-  - "RULE-SET,xiaomi,D"
-  - "RULE-SET,bilibili,D"
-  - "RULE-SET,unionpay,D"
+  - "RULE-SET,direct,DIRECT"
+  - "RULE-SET,direct-cf,DIRECT"
+  - "RULE-SET,direct-ip,DIRECT"
+  - "RULE-SET,xiaomi,DIRECT"
+  - "RULE-SET,bilibili,DIRECT"
+  - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak,HK_fallback"
-  - "RULE-SET,alibaba,D"
-  - "RULE-SET,meituan,D"
-  - "RULE-SET,jd,D"
-  - "RULE-SET,tencent,D"
-  - "RULE-SET,googlefcm,D"
+  - "RULE-SET,alibaba,DIRECT"
+  - "RULE-SET,meituan,DIRECT"
+  - "RULE-SET,jd,DIRECT"
+  - "RULE-SET,tencent,DIRECT"
+  - "RULE-SET,googlefcm,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"
   - "RULE-SET,proxy,M_fallback"
   - "RULE-SET,github,GitHub_fallback"
@@ -216,6 +215,6 @@ rules:
   - "RULE-SET,spotify,M_fallback"
   - "RULE-SET,steam,Steam_fallback"
   - "RULE-SET,gfw,M_fallback"
-  - "RULE-SET,cn,D"
-  - "RULE-SET,cn-ip,D"
+  - "RULE-SET,cn,DIRECT"
+  - "RULE-SET,cn-ip,DIRECT"
   - "MATCH,Default"
