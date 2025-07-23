@@ -1,3 +1,24 @@
+select: &select
+  type: select
+  filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$"
+  include-all-proxies: true
+fallback: &fallback
+  type: fallback
+  url: "https://cp.cloudflare.com"
+  interval: 60
+  hidden: true
+domain: &domain
+  proxy: M_fallback
+  interval: 86400
+  type: http
+  format: mrs
+  behavior: domain
+ipcidr: &ipcidr
+  proxy: M_fallback
+  interval: 86400
+  type: http
+  format: mrs
+  behavior: ipcidr
 port: 7890
 socks-port: 7891
 mixed-port: 12138
@@ -156,15 +177,6 @@ dns:
     "rule-set:f-droid": "https://cloudflare-dns.com/dns-query#M_fallback"
 proxies: {}
 proxy-groups:
-  - &select
-    type: select
-    filter: "(?i)^(?!.*(Traffic|Expire|小众|0\\.[0-9]|DE|GB|低倍率)).*$"
-    include-all-proxies: true
-  - &fallback
-    type: fallback
-    url: "https://cp.cloudflare.com"
-    interval: 60
-    hidden: true
   - <<: *select
     name: M
     proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback]
@@ -250,18 +262,6 @@ proxy-groups:
     filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))"
     include-all-proxies: true
 rule-providers:
-  domain: &domain
-    proxy: M_fallback
-    interval: 86400
-    type: http
-    format: mrs
-    behavior: domain
-  ipcidr: &ipcidr
-    proxy: M_fallback
-    interval: 86400
-    type: http
-    format: mrs
-    behavior: ipcidr
   archlinux:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/archlinux.mrs
