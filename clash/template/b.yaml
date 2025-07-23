@@ -34,7 +34,7 @@ udp: true
 unified-delay: true
 tcp-concurrent: true
 global-ua: clash.meta
-profile: { store-selected: false, store-fake-ip: true }
+profile: {store-selected: false, store-fake-ip: true}
 external-controller: "0.0.0.0:9090"
 secret: "101300"
 authentication: ["huai:password12138"]
@@ -43,51 +43,10 @@ external-ui: ui
 global-client-fingerprint: chrome
 routing-mark: 666
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
-sniffer:
-  {
-    enable: true,
-    force-dns-mapping: true,
-    parse-pure-ip: true,
-    override-destination: true,
-    sniff:
-      {
-        QUIC: { ports: [443, 8443] },
-        TLS: { ports: [443, 8443] },
-        HTTP: { ports: [80, 8080-8880], override-destination: true },
-      },
-    skip-domain: ["Mijia Cloud", "dlg.io.mi.com"],
-  }
-tun:
-  {
-    enable: true,
-    device: mihomo,
-    stack: system,
-    dns-hijack: [0.0.0.0:53],
-    auto-route: true,
-    udp-timeout: 60,
-    mtu: 9000,
-    auto-detect-interface: true,
-    auto-redirect: true,
-    strict-route: true,
-    endpoint-independent-nat: true,
-  }
-hosts:
-  {
-    "openwrt.lan": 192.168.31.1,
-    "ax6s.lan": 192.168.31.2,
-    "nas.lan": 192.168.31.21,
-    "homeassistant.local": 192.168.31.21,
-    "pve.windows": 192.168.31.15,
-    "pve.openwrt": 192.168.31.88,
-  }
-ntp:
-  {
-    enable: true,
-    write-to-system: false,
-    server: ntp.aliyun.com,
-    port: 123,
-    interval: 30,
-  }
+sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
+tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
+hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "pve.windows": 192.168.31.15, "pve.openwrt": 192.168.31.88}
+ntp: {enable: true, write-to-system: false, server: ntp.aliyun.com, port: 123, interval: 30}
 dns:
   enable: true
   prefer-h3: false
@@ -96,40 +55,11 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter:
-    [
-      "+.lan",
-      "+.local",
-      "localhost.ptlogin2.qq.com",
-      "+.msftconnecttest.com",
-      "+.msftncsi.com",
-      "+.googleapis.com",
-      "+.googleapis.cn",
-      "alt1mtalk.google.com",
-      "alt2mtalk.google.com",
-      "alt3mtalk.google.com",
-      "alt4mtalk.google.com",
-      "alt5mtalk.google.com",
-      "alt6mtalk.google.com",
-      "alt7mtalk.google.com",
-      "alt8mtalk.google.com",
-      "mtalk.google.com",
-      "mtalkdev.google.com",
-      "mtalkstaging.google.com",
-      "mtalk4.google.com",
-      "ntp.aliyun.com",
-      "+.082500.xyz",
-      "+.202309.xyz",
-    ]
+  fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
   use-hosts: true
   use-system-hosts: false
   default-nameserver: ["223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
-  proxy-server-nameserver:
-    [
-      "https://dns.alidns.com/dns-query#DIRECT",
-      "https://doh.pub/dns-query#DIRECT",
-      "https://doh.onedns.net/dns-query#DIRECT",
-    ]
+  proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT"]
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   nameserver-policy:
     "ntp.aliyun.com": "https://dns.alidns.com/dns-query#DIRECT"
@@ -185,8 +115,7 @@ proxy-groups:
     proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback]
   - name: Default
     type: select
-    proxies:
-      [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]
+    proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]
   - name: R
     type: select
     proxies: [REJECT, DIRECT]
