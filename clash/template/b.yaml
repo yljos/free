@@ -19,34 +19,28 @@ ipcidr: &ipcidr
   type: http
   format: mrs
   behavior: ipcidr
-port: 7890
-socks-port: 7891
 mixed-port: 12138
 redir-port: 7892
 tproxy-port: 7893
 allow-lan: true
 bind-address: "*"
 find-process-mode: off # always, strict, off
-mode: rule # global, rule, direct
-log-level: warning # info, warning, error, debug
+log-level: error # info, warning, error, debug
 ipv6: false
 udp: true
 unified-delay: true
 tcp-concurrent: true
-global-ua: clash.meta
-profile: {store-selected: false, store-fake-ip: true}
+profile: {store-selected: true, store-fake-ip: true}
 external-controller: "0.0.0.0:9090"
 secret: "101300"
 authentication: ["huai:password12138"]
 skip-auth-prefixes: [127.0.0.1/8, 192.168.0.0/16]
 external-ui: ui
 global-client-fingerprint: chrome
-routing-mark: 666
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
 hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "pve.windows": 192.168.31.15, "pve.openwrt": 192.168.31.88}
-ntp: {enable: true, write-to-system: false, server: ntp.aliyun.com, port: 123, interval: 30}
 dns:
   enable: true
   prefer-h3: false
@@ -57,33 +51,22 @@ dns:
   fake-ip-filter-mode: blacklist
   fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
   use-hosts: true
-  use-system-hosts: false
   default-nameserver: ["223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
-  proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT", "https://doh.pub/dns-query#DIRECT", "https://doh.onedns.net/dns-query#DIRECT"]
+  proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
+  direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
-    "ntp.aliyun.com": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:openwrt": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:codeberg": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:direct-cf": "https://cloudflare-dns.com/dns-query#M_fallback"
-    "rule-set:direct": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:cn": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:bilibili": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:xiaomi": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:unionpay": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:alibaba": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:meituan": "https://dns.alidns.com/dns-query#DIRECT"
-    "rule-set:jd": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:microsoft": "1.1.1.1#Microsoft_fallback"
-    "rule-set:tencent": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:category-ads": "rcode://refused"
-    "rule-set:huawei": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak": "https://cloudflare-dns.com/dns-query#M_fallback"
-    "rule-set:pikpak-download": "https://dns.alidns.com/dns-query#PikPak-Download"
+    "rule-set:pikpak-download": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:adguard": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:tmdb": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:docker": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -344,8 +327,6 @@ rule-providers:
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei,R"
-  - "RULE-SET,category-ads,REJECT"
-  - "DOMAIN,ntp.aliyun.com,DIRECT"
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
