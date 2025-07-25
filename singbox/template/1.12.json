@@ -1,17 +1,16 @@
 {
   "log": {"disabled": false, "level": "error", "timestamp": true},
-  "ntp": {"enabled": true, "server": "ntp.aliyun.com", "server_port": 123, "interval": "30m"},
   "dns": {
     "servers": [
       {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
       {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "M"},
-      {"tag": "dns_google", "type": "udp", "server": "8.8.8.8", "server_port": 53, "detour": "Google"},
-      {"tag": "dns_microsoft", "type": "udp", "server": "1.1.1.1", "server_port": 53, "detour": "Microsoft"},
+      {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Google"},
+      {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Microsoft"},
       {"tag": "dns_direct", "type": "https", "server": "dns.alidns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "D"},
       {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
-      {"domain_suffix": ["ntp.aliyun.com", "ddns-link-b5.uk", "dexlos.com", "jsdmirror.cn", "jsdmirror.com", "fastly.jsdelivr.net"], "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "direct-cf", "action": "route", "strategy": "ipv4_only", "server": "dns_proxy"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "action": "route", "strategy": "ipv4_only", "server": "dns_microsoft"},
       {"domain_keyword": ["googleapis"], "action": "route", "strategy": "ipv4_only", "server": "dns_google"},
