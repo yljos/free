@@ -135,6 +135,12 @@ proxy-groups:
   - <<: *fallback
     name: Netflix_fallback
     proxies: [SG_fallback]
+  - <<: *select
+    name: PikPak
+    proxies: [PikPak_fallback, HK_fallback, SG_fallback, US_fallback, JP_fallback]
+  - <<: *fallback
+    name: PikPak_fallback
+    proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]
   - name: PikPak-Download
     type: select
     proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback]
@@ -337,7 +343,7 @@ rules:
   - "RULE-SET,bilibili,DIRECT"
   - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"
-  - "RULE-SET,pikpak,HK_fallback"
+  - "RULE-SET,pikpak,PikPak_fallback"
   - "RULE-SET,alibaba,DIRECT"
   - "RULE-SET,meituan,DIRECT"
   - "RULE-SET,jd,DIRECT"
