@@ -56,6 +56,7 @@ dns:
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
+    "rule-set:emby": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -213,6 +214,9 @@ rule-providers:
   direct-ip:
     <<: *ipcidr
     url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/direct-ip.mrs
+  emby:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-emby.mrs
   mozilla:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/mozilla.mrs
@@ -326,6 +330,7 @@ rule-providers:
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
+  - "RULE-SET,emby,DIRECT"
   - "RULE-SET,huawei,R"
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
