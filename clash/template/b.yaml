@@ -137,7 +137,7 @@ proxy-groups:
     proxies: [SG_fallback]
   - <<: *select
     name: PikPak
-    proxies: [PikPak_fallback, HK_fallback, SG_fallback, US_fallback, JP_fallback]
+    proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback]
   - <<: *fallback
     name: PikPak_fallback
     proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]
