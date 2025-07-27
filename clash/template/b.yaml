@@ -326,7 +326,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
-  - "RULE-SET,emby,DIRECT"
   - "RULE-SET,huawei,R"
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
