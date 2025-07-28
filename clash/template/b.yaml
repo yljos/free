@@ -14,7 +14,7 @@ load-balance: &load-balance
   url: "https://cp.cloudflare.com"
   interval: 60
   hidden: true
-  lazy: true  
+  lazy: true
 domain: &domain
   proxy: M_fallback
   interval: 86400
@@ -151,10 +151,10 @@ proxy-groups:
     proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]
   - name: PikPak-Download
     type: select
-    proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, TW_loadbalance]
+    proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance]
   - name: SpeedTest
     type: select
-    proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, TW_loadbalance, DIRECT]
+    proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, DIRECT]
   - <<: *select
     name: GitHub
     proxies: [SG_fallback, HK_fallback, DIRECT]
