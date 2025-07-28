@@ -7,14 +7,12 @@ fallback: &fallback
   url: "https://cp.cloudflare.com"
   interval: 60
   hidden: true
-  lazy: true
 load-balance: &load-balance
   type: load-balance
   strategy: consistent-hashing
   url: "https://cp.cloudflare.com"
   interval: 60
   hidden: true
-  lazy: true
 domain: &domain
   proxy: M_fallback
   interval: 86400
