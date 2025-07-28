@@ -7,6 +7,14 @@ fallback: &fallback
   url: "https://cp.cloudflare.com"
   interval: 60
   hidden: true
+  lazy: true
+load-balance: &load-balance
+  type: load-balance
+  strategy: consistent-hashing
+  url: "https://cp.cloudflare.com"
+  interval: 60
+  hidden: true
+  lazy: true  
 domain: &domain
   proxy: M_fallback
   interval: 86400
@@ -39,7 +47,7 @@ external-ui: ui
 global-client-fingerprint: chrome
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
-tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
+tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
 hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21}
 dns:
   enable: true
@@ -143,10 +151,10 @@ proxy-groups:
     proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]
   - name: PikPak-Download
     type: select
-    proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback]
+    proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, TW_loadbalance]
   - name: SpeedTest
     type: select
-    proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]
+    proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, TW_loadbalance, DIRECT]
   - <<: *select
     name: GitHub
     proxies: [SG_fallback, HK_fallback, DIRECT]
@@ -177,6 +185,26 @@ proxy-groups:
     include-all-proxies: true
   - <<: *fallback
     name: TW_fallback
+    filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))"
+    include-all-proxies: true
+  - <<: *load-balance
+    name: HK_loadbalance
+    filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))"
+    include-all-proxies: true
+  - <<: *load-balance
+    name: JP_loadbalance
+    filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))"
+    include-all-proxies: true
+  - <<: *load-balance
+    name: US_loadbalance
+    filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))"
+    include-all-proxies: true
+  - <<: *load-balance
+    name: SG_loadbalance
+    filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))"
+    include-all-proxies: true
+  - <<: *load-balance
+    name: TW_loadbalance
     filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))"
     include-all-proxies: true
 rule-providers:
