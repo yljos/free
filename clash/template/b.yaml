@@ -46,7 +46,7 @@ global-client-fingerprint: chrome
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
-hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "huai-PC.lan":192.168.31.15}
+hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "huai-PC.lan": 192.168.31.15}
 dns:
   enable: true
   prefer-h3: false
@@ -62,6 +62,7 @@ dns:
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
+    "rule-set:category-emby": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -224,6 +225,9 @@ rule-providers:
   category-ads:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.mrs
+  category-emby:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-emby.mrs
   codeberg:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/codeberg.mrs
@@ -362,6 +366,7 @@ rules:
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
+  - "RULE-SET,category-emby,DIRECT"
   - "RULE-SET,direct,DIRECT"
   - "RULE-SET,direct-cf,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
