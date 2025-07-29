@@ -62,7 +62,6 @@ dns:
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
-    "rule-set:category-emby": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
@@ -225,9 +224,6 @@ rule-providers:
   category-ads:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.mrs
-  category-emby:
-    <<: *domain
-    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-emby.mrs
   codeberg:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/codeberg.mrs
@@ -366,7 +362,6 @@ rules:
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
-  - "RULE-SET,category-emby,DIRECT"
   - "RULE-SET,direct,DIRECT"
   - "RULE-SET,direct-cf,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
