@@ -42,7 +42,7 @@
     {"tag": "M", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D"], "default": "SG"},
     {"tag": "R", "type": "selector", "outbounds": ["block", "D"], "default": "block"},
     {"tag": "Google", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "SG"},
-    {"tag": "OpenAi", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "US"},
+    {"tag": "OpenAi", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "SG"},
     {"tag": "Steam", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "HK"},
     {"tag": "Telegram", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "SG"},
     {"tag": "Twitter", "type": "selector", "outbounds": ["HK", "SG", "JP", "US"], "default": "US"},
