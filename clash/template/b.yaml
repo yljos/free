@@ -62,7 +62,7 @@ dns:
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
-    "rule-set:category-emby": "https://cloudflare-dns.com/dns-query#M_fallback"
+    "rule-set:category-emby": "https://dns.alidns.com/dns-query#DIRECT"
     "rule-set:archlinux": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:proxy": "https://cloudflare-dns.com/dns-query#M_fallback"
     "rule-set:gfw": "https://cloudflare-dns.com/dns-query#M_fallback"
