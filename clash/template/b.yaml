@@ -98,55 +98,55 @@ proxies: {}
 proxy-groups:
   - <<: *select
     name: M
-    proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback]
+    proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: M_fallback
-    proxies: [M, SG_fallback, HK_fallback, US_fallback, JP_fallback]
+    proxies: [M, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - name: Default
     type: select
-    proxies: [M_fallback, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]
+    proxies: [M_fallback, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback, DIRECT]
   - name: R
     type: select
     proxies: [REJECT, DIRECT]
   - <<: *select
     name: Google
-    proxies: [SG_fallback, US_fallback, JP_fallback, HK_fallback]
+    proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: Google_fallback
-    proxies: [Google, SG_fallback, US_fallback, JP_fallback]
+    proxies: [Google, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *select
     name: OpenAi
-    proxies: [SG_fallback, US_fallback, JP_fallback]
+    proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: OpenAi_fallback
-    proxies: [OpenAi, SG_fallback, US_fallback, JP_fallback]
+    proxies: [OpenAi, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *select
     name: Telegram
-    proxies: [SG_fallback, US_fallback, JP_fallback]
+    proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: Telegram_fallback
-    proxies: [Telegram, SG_fallback, US_fallback, JP_fallback]
+    proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *select
     name: TikTok
-    proxies: [JP_fallback, SG_fallback, US_fallback]
+    proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]
   - <<: *fallback
     name: TikTok_fallback
-    proxies: [TikTok, JP_fallback, SG_fallback, US_fallback]
+    proxies: [TikTok, JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]
   - <<: *select
     name: Steam
-    proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback]
+    proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: Steam_fallback
-    proxies: [Steam, HK_fallback, DIRECT]
+    proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback, DIRECT]
   - <<: *fallback
     name: Netflix_fallback
     proxies: [SG_fallback]
   - <<: *select
     name: PikPak
-    proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback]
+    proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: PikPak_fallback
-    proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]
+    proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]
   - name: PikPak-Download
     type: select
     proxies: [DIRECT, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance]
@@ -155,16 +155,16 @@ proxy-groups:
     proxies: [M, SG_fallback, US_fallback, JP_fallback, HK_fallback, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_loadbalance, DIRECT]
   - <<: *select
     name: GitHub
-    proxies: [SG_fallback, HK_fallback, DIRECT]
+    proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback, DIRECT]
   - <<: *fallback
     name: GitHub_fallback
-    proxies: [GitHub, SG_fallback, HK_fallback]
+    proxies: [GitHub, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *select
     name: Microsoft
-    proxies: [DIRECT, SG_fallback, HK_fallback]
+    proxies: [DIRECT, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: Microsoft_fallback
-    proxies: [Microsoft, DIRECT, HK_fallback, SG_fallback]
+    proxies: [Microsoft, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]
   - <<: *fallback
     name: HK_fallback
     filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))"
