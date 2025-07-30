@@ -22,7 +22,7 @@ cd "$TEMP_DIR" || exit 1
 echo "选择的订阅: $SUBSCRIPTION"
 
 # 下载并解压 singbox.zip
-if ! curl -s -o singbox.zip http://nas/singbox.zip; then
+if ! curl -s -o singbox.zip http://192.168.31.21/singbox.zip; then
     echo "错误: 下载 singbox.zip 失败"
     rm -rf "$TEMP_DIR"
     exit 1
