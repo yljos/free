@@ -2,17 +2,7 @@
   "version": 2,
   "rules": [
     {
-      "domain_suffix": [
-        "jsdmirror.cn",
-        "jsdmirror.com",
-        "fastly.jsdelivr.net",
-        "cdn.jsdelivr.net",
-        "ddns-link-b5.uk",
-        "dexlos.com"
-      ],
-      "domain": [
-        "ntp.aliyun.com"
-      ]
+      "domain_suffix": ["bukkit.org"]
     }
   ]
 }
