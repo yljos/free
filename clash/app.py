@@ -327,21 +327,35 @@ def cleanup_files(*paths):
         except Exception as e:
             logger.error(f"清理文件失败 {path}: {str(e)}")
 
-def cleanup_response(response, *file_paths):
-    """处理响应后的清理函数"""
-    def delayed_cleanup():
-        logger.info("开始执行延迟清理...")
-        time.sleep(30)  # 等待30秒后删除文件
-        cleanup_files(*file_paths, HEADERS_CACHE_PATH)
-        logger.info("文件清理完成")
+def create_cleanup_callback(temp_files, exclude_files=None):
+    """创建智能清理回调函数"""
+    @after_this_request
+    def cleanup_callback(response):
+        # 延迟清理，确保文件传输完成
+        def delayed_cleanup():
+            time.sleep(2)  # 等待2秒确保文件传输完成
+            files_to_clean = temp_files.copy() if temp_files else []
+            if exclude_files:
+                # 从清理列表中排除正在使用的文件
+                for exclude_file in exclude_files:
+                    if exclude_file in files_to_clean:
+                        files_to_clean.remove(exclude_file)
+            cleanup_files(*files_to_clean)
+            
+            # 最后清理被排除的文件和缓存
+            if exclude_files:
+                time.sleep(1)  # 再等待1秒
+                cleanup_files(*exclude_files, HEADERS_CACHE_PATH)
         
-    threading.Thread(target=delayed_cleanup, daemon=True).start()
-    return response
+        # 使用新线程进行延迟清理
+        cleanup_thread = threading.Thread(target=delayed_cleanup, daemon=True)
+        cleanup_thread.start()
+        return response
+    return cleanup_callback
 
 @app.route('/<path:yaml_url>')
 def process_yaml(yaml_url):
-    temp_yaml_path = None
-    output_path = None
+    temp_files = []
     
     try:
         yaml_url = unquote(yaml_url)
@@ -351,7 +365,11 @@ def process_yaml(yaml_url):
             yaml_url = 'https://' + yaml_url.lstrip('/')
         
         temp_yaml_path = fetch_yaml(yaml_url)
+        temp_files.append(temp_yaml_path)
+        
         output_path = process_yaml_content(temp_yaml_path)
+        temp_files.append(output_path)
+        
         cached_headers = get_headers_cache(yaml_url)
         
         response = send_file(
@@ -368,15 +386,13 @@ def process_yaml(yaml_url):
                 if header.lower() in {h.lower() for h in INCLUDED_HEADERS}:
                     response.headers[header] = value
         
-        # 设置清理任务
-        @after_this_request
-        def cleanup(response):
-            return cleanup_response(response, temp_yaml_path, output_path)
+        # 使用新的智能清理机制
+        create_cleanup_callback(temp_files, exclude_files=[output_path])
         
         return response
         
     except Exception as e:
-        cleanup_files(temp_yaml_path, output_path)
+        cleanup_files(*temp_files)
         logger.error(f"处理请求失败: {str(e)}")
         return str(e), 500
 

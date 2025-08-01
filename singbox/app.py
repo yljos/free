@@ -28,17 +28,12 @@ DOWNLOAD_MBPS = int(os.getenv('DOWNLOAD_MBPS', 300))
 BASE_DIR = Path(__file__).parent
 OUTPUT_FOLDER = BASE_DIR / 'outputs'
 
-TEMPLATE_MAP = {
-    '1.12': BASE_DIR / 'template' / '1.12.json',
-    '1.11': BASE_DIR / 'template' / '1.11.json',
-}
- # 从.env读取默认模板，未设置则为1.11
-DEFAULT_TEMPLATE_KEY = os.getenv('DEFAULT_TEMPLATE', '1.11')
-if DEFAULT_TEMPLATE_KEY not in TEMPLATE_MAP:
-    logger.warning(f".env中DEFAULT_TEMPLATE值无效，已回退为1.11")
-    DEFAULT_TEMPLATE_KEY = '1.11'
-logger.info(f"可用模板: {TEMPLATE_MAP}")
-logger.info(f"默认模板: {DEFAULT_TEMPLATE_KEY}")
+# 从.env读取模板文件名，默认为1.12.json
+TEMPLATE_FILE = os.getenv('TEMPLATE_FILE', '1.12.json')
+TEMPLATE_PATH = BASE_DIR / 'template' / TEMPLATE_FILE
+
+logger.info(f"使用模板文件: {TEMPLATE_FILE}")
+logger.info(f"模板路径: {TEMPLATE_PATH}")
 
 app = Flask(__name__)
 
@@ -234,20 +229,19 @@ def create_cleanup_callback(temp_files, exclude_files=None):
 def process_subscription_url(sub_url):
     temp_files = []
     try:
-        template_switch = request.args.get('switch')
-        if template_switch:
-            logger.info(f"URL参数switch: {template_switch}")
-            template_path = TEMPLATE_MAP.get(template_switch, TEMPLATE_MAP[DEFAULT_TEMPLATE_KEY])
-        else:
-            logger.info(f"未指定switch参数，使用默认模板: {DEFAULT_TEMPLATE_KEY}")
-            template_path = TEMPLATE_MAP[DEFAULT_TEMPLATE_KEY]
+        # 只使用1.12模板
+        template_path = TEMPLATE_PATH
+        
         sub_url = unquote(sub_url)
         if not sub_url.startswith(('http://', 'https://')):
             sub_url = 'https://' + sub_url
+        
         temp_path = fetch_subscription(sub_url)
         temp_files.append(temp_path)
+        
         output_path, node_path = process_subscription(temp_path, template_path)
         temp_files.extend([output_path, node_path])
+        
         response = send_file(
             output_path,
             mimetype='application/json',
@@ -295,5 +289,5 @@ if __name__ == '__main__':
     debug_mode = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
     port = int(os.getenv('PORT', 5000))
     host = os.getenv('HOST', '0.0.0.0')
-    logger.info(f"可用模板: {TEMPLATE_MAP}")
+    logger.info(f"启动应用 - 模板文件: {TEMPLATE_FILE}, 端口: {port}")
     app.run(debug=debug_mode, port=port, host=host)
