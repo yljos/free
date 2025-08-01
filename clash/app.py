@@ -22,9 +22,9 @@ BASE_DIR = Path(os.getenv('BASE_DIR', '.')).absolute()
 OUTPUT_FOLDER = BASE_DIR / os.getenv('OUTPUT_FOLDER', 'outputs')
 TEMPLATE_PATH = BASE_DIR / os.getenv('TEMPLATE_PATH', 'template/b.yaml')
 PORTS_PATH = BASE_DIR / os.getenv('PORTS_PATH', 'template/ports.yaml')
-HEADERS_CACHE_PATH = OUTPUT_FOLDER / os.getenv('HEADERS_CACHE_PATH', 'headers_cache.json').split('/')[-1]
-TEMP_YAML_PATH = OUTPUT_FOLDER / os.getenv('TEMP_YAML_PATH', 'temp.yaml').split('/')[-1]
-TEMP_YAML_LOCK = OUTPUT_FOLDER / os.getenv('TEMP_YAML_LOCK', 'temp.yaml.lock').split('/')[-1]
+HEADERS_CACHE_PATH = OUTPUT_FOLDER / 'headers_cache.json'
+TEMP_YAML_PATH = OUTPUT_FOLDER / 'temp.yaml'
+TEMP_YAML_LOCK = OUTPUT_FOLDER / 'temp.yaml.lock'
 
 USER_AGENT = os.getenv('USER_AGENT', 'clash verge')
 CACHE_DURATION = int(os.getenv('CACHE_DURATION', 300))
@@ -278,12 +278,8 @@ def process_yaml_content(yaml_path):
         for proxy in proxies:
             if isinstance(proxy, dict):
                 if proxy.get('type') == 'hysteria2':
-                    # 确保带宽值包含单位
-                    up_value = HYSTERIA2_UP if 'bps' in HYSTERIA2_UP.lower() else f"{HYSTERIA2_UP} Mbps"
-                    down_value = HYSTERIA2_DOWN if 'bps' in HYSTERIA2_DOWN.lower() else f"{HYSTERIA2_DOWN} Mbps"
-                    
-                    proxy['up'] = up_value
-                    proxy['down'] = down_value
+                    proxy['up'] = HYSTERIA2_UP
+                    proxy['down'] = HYSTERIA2_DOWN
                     proxy['skip-cert-verify'] = False
                     # 检查是否存在匹配的端口配置
                     if proxy.get('name') in ports_config:
@@ -324,24 +320,21 @@ def cleanup_files(*paths):
     """清理指定的文件"""
     for path in paths:
         try:
-            if isinstance(path, (str, Path)) and Path(path).exists():
-                Path(path).unlink()
+            path_obj = Path(path) if isinstance(path, str) else path
+            if path_obj and path_obj.exists():
+                path_obj.unlink()
                 logger.info(f"成功删除文件: {path}")
-            elif isinstance(path, (str, Path)):
-                logger.warning(f"文件不存在，跳过删除: {path}")
         except Exception as e:
             logger.error(f"清理文件失败 {path}: {str(e)}")
 
-def cleanup_response(response, temp_yaml_path, output_path):
+def cleanup_response(response, *file_paths):
     """处理响应后的清理函数"""
     def delayed_cleanup():
         logger.info("开始执行延迟清理...")
         time.sleep(30)  # 等待30秒后删除文件
-        logger.info("30秒等待结束，开始清理文件")
-        cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+        cleanup_files(*file_paths, HEADERS_CACHE_PATH)
         logger.info("文件清理完成")
         
-    # 在后台线程中执行清理
     threading.Thread(target=delayed_cleanup, daemon=True).start()
     return response
 
@@ -375,19 +368,15 @@ def process_yaml(yaml_url):
                 if header.lower() in {h.lower() for h in INCLUDED_HEADERS}:
                     response.headers[header] = value
         
-        # 修复：将清理函数定义在外部，通过闭包捕获必要的变量
-        temp_path = temp_yaml_path  # 创建闭包变量
-        out_path = output_path      # 创建闭包变量
-        
+        # 设置清理任务
         @after_this_request
         def cleanup(response):
-            return cleanup_response(response, temp_path, out_path)
+            return cleanup_response(response, temp_yaml_path, output_path)
         
         return response
         
     except Exception as e:
-        if temp_yaml_path or output_path:
-            cleanup_files(temp_yaml_path, output_path)  # 清理临时文件和输出文件
+        cleanup_files(temp_yaml_path, output_path)
         logger.error(f"处理请求失败: {str(e)}")
         return str(e), 500
 
