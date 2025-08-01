@@ -3,6 +3,8 @@ from ruamel.yaml import YAML
 import requests
 from urllib.parse import unquote
 import json
+import time
+import threading
 from datetime import datetime, timedelta
 from filelock import FileLock
 import logging
@@ -19,6 +21,7 @@ app = Flask(__name__)
 BASE_DIR = Path(os.getenv('BASE_DIR', '.')).absolute()
 OUTPUT_FOLDER = BASE_DIR / os.getenv('OUTPUT_FOLDER', 'outputs')
 TEMPLATE_PATH = BASE_DIR / os.getenv('TEMPLATE_PATH', 'template/b.yaml')
+PORTS_PATH = BASE_DIR / os.getenv('PORTS_PATH', 'template/ports.yaml')
 HEADERS_CACHE_PATH = OUTPUT_FOLDER / os.getenv('HEADERS_CACHE_PATH', 'headers_cache.json').split('/')[-1]
 TEMP_YAML_PATH = OUTPUT_FOLDER / os.getenv('TEMP_YAML_PATH', 'temp.yaml').split('/')[-1]
 TEMP_YAML_LOCK = OUTPUT_FOLDER / os.getenv('TEMP_YAML_LOCK', 'temp.yaml.lock').split('/')[-1]
@@ -261,8 +264,7 @@ def process_yaml_content(yaml_path):
             template_data = yaml.load(f)
 
         # 读取ports配置
-        ports_path = BASE_DIR / 'template' / 'ports.yaml'
-        with open(ports_path, 'r', encoding='utf-8') as f:
+        with open(PORTS_PATH, 'r', encoding='utf-8') as f:
             ports_data = yaml.load(f)
             
         ports_config = {proxy['name']: proxy['ports'] 
@@ -324,18 +326,20 @@ def cleanup_files(*paths):
         try:
             if isinstance(path, (str, Path)) and Path(path).exists():
                 Path(path).unlink()
-                logger.debug(f"成功删除文件: {path}")
+                logger.info(f"成功删除文件: {path}")
+            elif isinstance(path, (str, Path)):
+                logger.warning(f"文件不存在，跳过删除: {path}")
         except Exception as e:
             logger.error(f"清理文件失败 {path}: {str(e)}")
 
 def cleanup_response(response, temp_yaml_path, output_path):
     """处理响应后的清理函数"""
-    import threading
-    
     def delayed_cleanup():
-        import time
+        logger.info("开始执行延迟清理...")
         time.sleep(30)  # 等待30秒后删除文件
+        logger.info("30秒等待结束，开始清理文件")
         cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+        logger.info("文件清理完成")
         
     # 在后台线程中执行清理
     threading.Thread(target=delayed_cleanup, daemon=True).start()
