@@ -29,6 +29,9 @@ HYSTERIA2_UP = os.getenv('HYSTERIA2_UP', '50 Mbps')
 HYSTERIA2_DOWN = os.getenv('HYSTERIA2_DOWN', '300 Mbps')
 INCLUDED_HEADERS = set(os.getenv('INCLUDED_HEADERS', 'Subscription-Userinfo').split(','))
 
+# 节点替换功能开关
+ENABLE_NODE_REPLACEMENT = os.getenv('ENABLE_NODE_REPLACEMENT', 'false').lower() == 'true'
+
 # 确保输出目录存在
 OUTPUT_FOLDER.mkdir(exist_ok=True)
 
@@ -243,7 +246,7 @@ def replace_proxy_groups_with_nodes(template_data):
         logger.error(f"替换代理组节点失败: {str(e)}")
         return template_data
 
-def process_yaml_content(yaml_path, template_path=None):
+def process_yaml_content(yaml_path):
     """处理本地YAML文件"""
     try:
         # 读取输入的YAML
@@ -253,11 +256,8 @@ def process_yaml_content(yaml_path, template_path=None):
         if not isinstance(input_data, dict):
             raise ValueError('YAML内容必须是有效的字典格式')
             
-        # 使用提供的模板路径或默认模板
-        template_to_use = template_path or TEMPLATE_PATH
-        
         # 读取标准模板
-        with open(template_to_use, 'r', encoding='utf-8') as f:
+        with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
             template_data = yaml.load(f)
 
         # 读取ports配置
@@ -291,14 +291,16 @@ def process_yaml_content(yaml_path, template_path=None):
                     proxy['skip-cert-verify'] = False
                     proxy['packet-encoding'] = 'xudp'
         
-        # 新增: 提取节点名称并保存
-        save_node_names(proxies)
+        # 提取节点名称并保存（如果启用了节点替换功能）
+        if ENABLE_NODE_REPLACEMENT:
+            save_node_names(proxies)
         
         # 更新模板中的代理列表
         template_data['proxies'] = proxies
         
-        # 新增: 替换代理组中的US节点
-        template_data = replace_proxy_groups_with_nodes(template_data)
+        # 替换代理组中的节点（如果启用了节点替换功能）
+        if ENABLE_NODE_REPLACEMENT:
+            template_data = replace_proxy_groups_with_nodes(template_data)
         
         # 配置YAML输出格式
         yaml.indent(mapping=2, sequence=4, offset=2)
@@ -322,12 +324,21 @@ def cleanup_files(*paths):
         try:
             if isinstance(path, (str, Path)) and Path(path).exists():
                 Path(path).unlink()
+                logger.debug(f"成功删除文件: {path}")
         except Exception as e:
             logger.error(f"清理文件失败 {path}: {str(e)}")
 
 def cleanup_response(response, temp_yaml_path, output_path):
     """处理响应后的清理函数"""
-    cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+    import threading
+    
+    def delayed_cleanup():
+        import time
+        time.sleep(30)  # 等待30秒后删除文件
+        cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+        
+    # 在后台线程中执行清理
+    threading.Thread(target=delayed_cleanup, daemon=True).start()
     return response
 
 @app.route('/<path:yaml_url>')
@@ -338,29 +349,12 @@ def process_yaml(yaml_url):
     try:
         yaml_url = unquote(yaml_url)
         
-        if yaml_url.startswith('/http://'):
-            yaml_url = yaml_url[1:]
-        elif yaml_url.startswith('/https://'):
-            yaml_url = yaml_url[1:]
-        elif not yaml_url.startswith(('http://', 'https://')):
-            yaml_url = 'https://' + yaml_url
-        
-        # 获取模板切换参数
-        switch_template = request.args.get('switch', 'b').lower()
-        
-        # 选择模板文件
-        if switch_template == 'a':
-            template_path = BASE_DIR / 'template' / 'a.yaml'
-            if not template_path.exists():
-                return f"模板文件不存在: {template_path}", 404
-        else:
-            template_path = TEMPLATE_PATH
-            
-        # 打印当前使用的模板
-        logger.info(f"当前使用的模板: {template_path}")
+        # 确保URL以https://开头
+        if not yaml_url.startswith('https://'):
+            yaml_url = 'https://' + yaml_url.lstrip('/')
         
         temp_yaml_path = fetch_yaml(yaml_url)
-        output_path = process_yaml_content(temp_yaml_path, template_path)
+        output_path = process_yaml_content(temp_yaml_path)
         cached_headers = get_headers_cache(yaml_url)
         
         response = send_file(
@@ -389,7 +383,7 @@ def process_yaml(yaml_url):
         
     except Exception as e:
         if temp_yaml_path or output_path:
-            cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+            cleanup_files(temp_yaml_path, output_path)  # 清理临时文件和输出文件
         logger.error(f"处理请求失败: {str(e)}")
         return str(e), 500
 
