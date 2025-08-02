@@ -46,7 +46,7 @@ global-client-fingerprint: chrome
 external-ui-url: "https://raw.githubusercontent.com/yljos/free/refs/heads/main/dist-cdn-fonts.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, 8080-8880], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
-hosts: {"openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "nas.lan": 192.168.31.21, "homeassistant.local": 192.168.31.21, "huai-PC.lan": 192.168.31.15}
+hosts: {"homeassistant.local": 192.168.31.21}
 dns:
   enable: true
   prefer-h3: false
@@ -56,7 +56,7 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
-  use-hosts: false
+  use-hosts: true
   default-nameserver: ["[2400:3200::1]#DIRECT", "[2400:3200:baba::1]#DIRECT", "223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
