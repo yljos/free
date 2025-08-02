@@ -56,7 +56,7 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt1mtalk.google.com", "alt2mtalk.google.com", "alt3mtalk.google.com", "alt4mtalk.google.com", "alt5mtalk.google.com", "alt6mtalk.google.com", "alt7mtalk.google.com", "alt8mtalk.google.com", "mtalk.google.com", "mtalkdev.google.com", "mtalkstaging.google.com", "mtalk4.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
-  use-hosts: true
+  use-hosts: false
   default-nameserver: ["[2400:3200::1]#DIRECT", "[2400:3200:baba::1]#DIRECT", "223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver: [https://cloudflare-dns.com/dns-query#M_fallback]
