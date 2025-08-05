@@ -181,12 +181,6 @@ main() {
             exit 1
         }
         
-        # 启用 IP 转发
-        sysctl -w net.ipv4.ip_forward=1 > /dev/null || { 
-            echo "启用 IP 转发失败"
-            exit 1
-        }
-
         # 确保目录存在
         mkdir -p /etc/sing-box/nft
 
