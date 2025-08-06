@@ -22,9 +22,9 @@ BASE_DIR = Path(os.getenv('BASE_DIR', '.')).absolute()
 OUTPUT_FOLDER = BASE_DIR / os.getenv('OUTPUT_FOLDER', 'outputs')
 TEMPLATE_PATH = BASE_DIR / os.getenv('TEMPLATE_PATH', 'template/b.yaml')
 PORTS_PATH = BASE_DIR / os.getenv('PORTS_PATH', 'template/ports.yaml')
-HEADERS_CACHE_PATH = OUTPUT_FOLDER / 'headers_cache.json'
-TEMP_YAML_PATH = OUTPUT_FOLDER / 'temp.yaml'
-TEMP_YAML_LOCK = OUTPUT_FOLDER / 'temp.yaml.lock'
+HEADERS_CACHE_PATH = OUTPUT_FOLDER / Path(os.getenv('HEADERS_CACHE_PATH', 'headers_cache.json')).name
+TEMP_YAML_PATH = OUTPUT_FOLDER / Path(os.getenv('TEMP_YAML_PATH', 'temp.yaml')).name
+TEMP_YAML_LOCK = OUTPUT_FOLDER / Path(os.getenv('TEMP_YAML_LOCK', 'temp.yaml.lock')).name
 
 USER_AGENT = os.getenv('USER_AGENT', 'clash verge')
 CACHE_DURATION = int(os.getenv('CACHE_DURATION', 300))
@@ -43,9 +43,15 @@ if not TEMPLATE_PATH.exists():
     raise FileNotFoundError(f"模板文件不存在: {TEMPLATE_PATH}")
 
 # YAML 配置
-yaml = YAML()
-yaml.preserve_quotes = True
-yaml.indent(mapping=2, sequence=4, offset=2)
+def setup_yaml_config():
+    """设置YAML配置"""
+    yaml_config = YAML()
+    yaml_config.preserve_quotes = True
+    yaml_config.indent(mapping=2, sequence=4, offset=2)
+    yaml_config.width = 4096  # 避免自动换行
+    return yaml_config
+
+yaml = setup_yaml_config()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -134,10 +140,7 @@ def save_node_names(proxies):
         }
         
         # 配置YAML输出格式
-        nodes_yaml = YAML()
-        nodes_yaml.indent(mapping=2, sequence=4, offset=2)
-        nodes_yaml.preserve_quotes = True
-        nodes_yaml.width = 4096
+        nodes_yaml = setup_yaml_config()
         
         # 保存到nodes.yaml
         nodes_path = OUTPUT_FOLDER / 'nodes.yaml'
@@ -150,8 +153,60 @@ def save_node_names(proxies):
         logger.error(f"保存节点名称失败: {str(e)}")
         return None
 
+def filter_nodes_by_region(node_names, region_patterns):
+    """根据区域模式筛选节点"""
+    filtered_nodes = []
+    for name in node_names:
+        for pattern in region_patterns:
+            if pattern in name.upper() or any(chinese in name for chinese in region_patterns if len(chinese) > 2):
+                if name not in [p.upper() for p in region_patterns if len(p) <= 3]:  # 排除简单的区域代码
+                    filtered_nodes.append(name)
+                    break
+    return list(dict.fromkeys(filtered_nodes))  # 去重
+
+def replace_fallback_nodes_in_group(proxies, fallback_name, replacement_nodes, group_name):
+    """在代理组中替换fallback节点"""
+    if fallback_name in proxies and replacement_nodes:
+        index = proxies.index(fallback_name)
+        filtered_nodes = [node for node in replacement_nodes if node not in proxies]
+        
+        if filtered_nodes:
+            proxies.pop(index)
+            for i, node in enumerate(filtered_nodes):
+                proxies.insert(index + i, node)
+            logger.info(f"在代理组 '{group_name}' 中替换{fallback_name}为 {len(filtered_nodes)} 个实际节点")
+
+def process_proxy_config(proxy, ports_config):
+    """处理单个代理配置"""
+    if not isinstance(proxy, dict):
+        return
+        
+    proxy_type = proxy.get('type')
+    
+    if proxy_type == 'hysteria2':
+        # 确保带宽值包含单位
+        up_value = HYSTERIA2_UP if 'bps' in HYSTERIA2_UP.lower() else f"{HYSTERIA2_UP} Mbps"
+        down_value = HYSTERIA2_DOWN if 'bps' in HYSTERIA2_DOWN.lower() else f"{HYSTERIA2_DOWN} Mbps"
+        
+        proxy.update({
+            'up': up_value,
+            'down': down_value,
+            'skip-cert-verify': False
+        })
+        
+        # 检查是否存在匹配的端口配置
+        if proxy.get('name') in ports_config:
+            proxy['ports'] = ports_config[proxy['name']]
+            proxy.pop('port', None)
+            
+    elif proxy_type == 'vless':
+        proxy.update({
+            'skip-cert-verify': False,
+            'packet-encoding': 'xudp'
+        })
+
 def replace_proxy_groups_with_nodes(template_data):
-    """将代理组中的US_fallback、HK_fallback、SG_fallback和JP_fallback替换为实际节点"""
+    """将代理组中的fallback节点替换为实际节点"""
     try:
         # 检查nodes.yaml是否存在
         nodes_path = OUTPUT_FOLDER / 'nodes.yaml'
@@ -160,7 +215,7 @@ def replace_proxy_groups_with_nodes(template_data):
             return template_data
             
         # 读取nodes.yaml获取所有节点名称
-        nodes_yaml = YAML()
+        nodes_yaml = setup_yaml_config()
         with open(nodes_path, 'r', encoding='utf-8') as f:
             nodes_data = nodes_yaml.load(f)
             
@@ -169,80 +224,32 @@ def replace_proxy_groups_with_nodes(template_data):
         if not node_names:
             logger.warning("nodes.yaml中未找到节点名称")
             return template_data
-            
-        # 筛选US节点
-        us_nodes = [name for name in node_names 
-                   if (('US' in name.upper() or '美国' in name) and name != 'US')]
-        us_nodes = list(dict.fromkeys(us_nodes))
         
-        # 筛选HK节点
-        hk_nodes = [name for name in node_names 
-                   if (('HK' in name.upper() or '香港' in name) and name != 'HK')]
-        hk_nodes = list(dict.fromkeys(hk_nodes))
+        # 定义区域配置
+        region_configs = {
+            'US_fallback': (['US', '美国'], 'US'),
+            'HK_fallback': (['HK', '香港'], 'HK'),
+            'SG_fallback': (['SG', '新加坡', 'Singapore'], 'SG'),
+            'JP_fallback': (['JP', '日本', 'Japan'], 'JP'),
+            'TW_fallback': (['TW', '台湾', 'Taiwan'], 'TW')
+        }
         
-        # 筛选SG节点
-        sg_nodes = [name for name in node_names 
-                   if (('SG' in name.upper() or '新加坡' in name or 'Singapore' in name) and name != 'SG')]
-        sg_nodes = list(dict.fromkeys(sg_nodes))
-        
-        # 筛选JP节点
-        jp_nodes = [name for name in node_names 
-                   if (('JP' in name.upper() or '日本' in name or 'Japan' in name) and name != 'JP')]
-        jp_nodes = list(dict.fromkeys(jp_nodes))
-        
-        logger.info(f"找到 {len(us_nodes)} 个US节点, {len(hk_nodes)} 个HK节点, {len(sg_nodes)} 个SG节点, {len(jp_nodes)} 个JP节点")
+        # 筛选各区域节点
+        region_nodes = {}
+        for fallback_key, (patterns, _) in region_configs.items():
+            region_nodes[fallback_key] = filter_nodes_by_region(node_names, patterns)
+            logger.info(f"找到 {len(region_nodes[fallback_key])} 个{fallback_key.replace('_fallback', '')}节点")
         
         # 处理代理组
         proxy_groups = template_data.get('proxy-groups', [])
         for group in proxy_groups:
             if isinstance(group, dict) and group.get('type') == 'fallback' and 'proxies' in group:
+                group_name = group.get('name', '未命名')
                 proxies = group['proxies']
                 
-                # 替换US_fallback节点
-                if 'US_fallback' in proxies and us_nodes:
-                    index = proxies.index('US_fallback')
-                    filtered_us_nodes = [node for node in us_nodes if node not in proxies]
-                    
-                    if filtered_us_nodes:
-                        proxies.pop(index)
-                        for i, node in enumerate(filtered_us_nodes):
-                            proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换US_fallback为 {len(filtered_us_nodes)} 个实际节点")
-                
-                # 替换HK_fallback节点
-                if 'HK_fallback' in proxies and hk_nodes:
-                    index = proxies.index('HK_fallback')
-                    filtered_hk_nodes = [node for node in hk_nodes if node not in proxies]
-                    
-                    if filtered_hk_nodes:
-                        proxies.pop(index)
-                        for i, node in enumerate(filtered_hk_nodes):
-                            proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换HK_fallback为 {len(filtered_hk_nodes)} 个实际节点")
-                
-                # 替换SG_fallback节点
-                if 'SG_fallback' in proxies and sg_nodes:
-                    index = proxies.index('SG_fallback')
-                    filtered_sg_nodes = [node for node in sg_nodes if node not in proxies]
-                    
-                    if filtered_sg_nodes:
-                        proxies.pop(index)
-                        for i, node in enumerate(filtered_sg_nodes):
-                            proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换SG_fallback为 {len(filtered_sg_nodes)} 个实际节点")
-                
-                # 替换JP_fallback节点
-                if 'JP_fallback' in proxies and jp_nodes:
-                    index = proxies.index('JP_fallback')
-                    filtered_jp_nodes = [node for node in jp_nodes if node not in proxies]
-                    
-                    if filtered_jp_nodes:
-                        proxies.pop(index)
-                        for i, node in enumerate(filtered_jp_nodes):
-                            proxies.insert(index + i, node)
-                        logger.info(f"在代理组 '{group.get('name', '未命名')}' 中替换JP_fallback为 {len(filtered_jp_nodes)} 个实际节点")
-                
-
+                # 替换所有区域的fallback节点
+                for fallback_name, nodes in region_nodes.items():
+                    replace_fallback_nodes_in_group(proxies, fallback_name, nodes, group_name)
         
         return template_data
     except Exception as e:
@@ -276,18 +283,7 @@ def process_yaml_content(yaml_path):
             
         # 处理代理配置
         for proxy in proxies:
-            if isinstance(proxy, dict):
-                if proxy.get('type') == 'hysteria2':
-                    proxy['up'] = HYSTERIA2_UP
-                    proxy['down'] = HYSTERIA2_DOWN
-                    proxy['skip-cert-verify'] = False
-                    # 检查是否存在匹配的端口配置
-                    if proxy.get('name') in ports_config:
-                        proxy['ports'] = ports_config[proxy['name']]
-                        proxy.pop('port', None)
-                elif proxy.get('type') == 'vless':
-                    proxy['skip-cert-verify'] = False
-                    proxy['packet-encoding'] = 'xudp'
+            process_proxy_config(proxy, ports_config)
         
         # 提取节点名称并保存（如果启用了节点替换功能）
         if ENABLE_NODE_REPLACEMENT:
@@ -299,11 +295,6 @@ def process_yaml_content(yaml_path):
         # 替换代理组中的节点（如果启用了节点替换功能）
         if ENABLE_NODE_REPLACEMENT:
             template_data = replace_proxy_groups_with_nodes(template_data)
-        
-        # 配置YAML输出格式
-        yaml.indent(mapping=2, sequence=4, offset=2)
-        yaml.preserve_quotes = True
-        yaml.width = 4096  # 避免自动换行
         
         # 保存处理后的YAML
         output_path = OUTPUT_FOLDER / 'config.yaml'
@@ -320,56 +311,48 @@ def cleanup_files(*paths):
     """清理指定的文件"""
     for path in paths:
         try:
-            path_obj = Path(path) if isinstance(path, str) else path
-            if path_obj and path_obj.exists():
-                path_obj.unlink()
+            if isinstance(path, (str, Path)) and Path(path).exists():
+                Path(path).unlink()
                 logger.info(f"成功删除文件: {path}")
+            elif isinstance(path, (str, Path)):
+                logger.warning(f"文件不存在，跳过删除: {path}")
         except Exception as e:
             logger.error(f"清理文件失败 {path}: {str(e)}")
 
-def create_cleanup_callback(temp_files, exclude_files=None):
-    """创建智能清理回调函数"""
-    @after_this_request
-    def cleanup_callback(response):
-        # 延迟清理，确保文件传输完成
-        def delayed_cleanup():
-            time.sleep(2)  # 等待2秒确保文件传输完成
-            files_to_clean = temp_files.copy() if temp_files else []
-            if exclude_files:
-                # 从清理列表中排除正在使用的文件
-                for exclude_file in exclude_files:
-                    if exclude_file in files_to_clean:
-                        files_to_clean.remove(exclude_file)
-            cleanup_files(*files_to_clean)
-            
-            # 最后清理被排除的文件和缓存
-            if exclude_files:
-                time.sleep(1)  # 再等待1秒
-                cleanup_files(*exclude_files, HEADERS_CACHE_PATH)
+def cleanup_response(response, temp_yaml_path, output_path):
+    """处理响应后的清理函数"""
+    def delayed_cleanup():
+        logger.info("开始执行延迟清理...")
+        time.sleep(30)  # 等待30秒后删除文件
+        logger.info("30秒等待结束，开始清理文件")
+        cleanup_files(temp_yaml_path, output_path, HEADERS_CACHE_PATH)
+        logger.info("文件清理完成")
         
-        # 使用新线程进行延迟清理
-        cleanup_thread = threading.Thread(target=delayed_cleanup, daemon=True)
-        cleanup_thread.start()
-        return response
-    return cleanup_callback
+    # 在后台线程中执行清理
+    threading.Thread(target=delayed_cleanup, daemon=True).start()
+    return response
 
 @app.route('/<path:yaml_url>')
 def process_yaml(yaml_url):
-    temp_files = []
+    temp_yaml_path = None
+    output_path = None
     
     try:
         yaml_url = unquote(yaml_url)
+        
+        # 处理URL中可能包含的查询参数
+        # 如果URL中没有查询参数，但request中有查询参数，则将其拼接到URL后面
+        if '?' not in yaml_url and request.query_string:
+            yaml_url = yaml_url + '?' + request.query_string.decode('utf-8')
         
         # 确保URL以https://开头
         if not yaml_url.startswith('https://'):
             yaml_url = 'https://' + yaml_url.lstrip('/')
         
+        logger.info(f"处理URL: {yaml_url}")
+        
         temp_yaml_path = fetch_yaml(yaml_url)
-        temp_files.append(temp_yaml_path)
-        
         output_path = process_yaml_content(temp_yaml_path)
-        temp_files.append(output_path)
-        
         cached_headers = get_headers_cache(yaml_url)
         
         response = send_file(
@@ -386,13 +369,19 @@ def process_yaml(yaml_url):
                 if header.lower() in {h.lower() for h in INCLUDED_HEADERS}:
                     response.headers[header] = value
         
-        # 使用新的智能清理机制
-        create_cleanup_callback(temp_files, exclude_files=[output_path])
+        # 修复：将清理函数定义在外部，通过闭包捕获必要的变量
+        temp_path = temp_yaml_path  # 创建闭包变量
+        out_path = output_path      # 创建闭包变量
+        
+        @after_this_request
+        def cleanup(response):
+            return cleanup_response(response, temp_path, out_path)
         
         return response
         
     except Exception as e:
-        cleanup_files(*temp_files)
+        if temp_yaml_path or output_path:
+            cleanup_files(temp_yaml_path, output_path)  # 清理临时文件和输出文件
         logger.error(f"处理请求失败: {str(e)}")
         return str(e), 500
 
