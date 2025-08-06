@@ -10,6 +10,7 @@
       {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
+      
       {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "action": "route", "strategy": "prefer_ipv6", "server": "dns_direct"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "action": "route", "strategy": "prefer_ipv6", "server": "dns_microsoft"},
       {"domain_keyword": ["googleapis"], "action": "route", "strategy": "prefer_ipv6", "server": "dns_google"},
@@ -66,7 +67,7 @@
     "default_mark": 666,
     "default_domain_resolver": {"server": "dns_direct", "rewrite_ttl": 60},
     "rules": [
-      {"type": "logical", "mode": "and", "rules": [{"network": ["udp"]}, {"port": [443]}], "action": "reject", "method": "default", "nodrop": false},
+      {"protocol": ["quic"], "action": "reject", "method": "default", "no_drop": false},
       {"inbound": ["tproxy-in", "mixed-in"], "action": "sniff", "timeout": "300ms"},
       {"protocol": "dns", "action": "hijack-dns"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "action": "route", "outbound": "Microsoft"},
