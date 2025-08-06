@@ -2,6 +2,7 @@
   "log": {"disabled": false, "level": "error", "timestamp": true},
   "dns": {
     "servers": [
+      {"tag": "dns_local", "type": "udp", "server": "192.168.31.1", "server_port": 53, "detour": "D"},
       {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
       {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "M"},
       {"tag": "dns_google", "type": "https", "server": "dns.google", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Google"},
@@ -10,7 +11,7 @@
       {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
-      
+      {"domain_suffix": ["lan", "local"], "action": "route", "outbound": "D","strategy": "ipv4_only", "server": "dns_local"},
       {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "action": "route", "strategy": "ipv4_only", "server": "dns_direct"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "action": "route", "strategy": "ipv4_only", "server": "dns_microsoft"},
       {"domain_keyword": ["googleapis"], "action": "route", "strategy": "ipv4_only", "server": "dns_google"},
@@ -67,6 +68,7 @@
     "default_mark": 666,
     "default_domain_resolver": {"server": "dns_direct", "rewrite_ttl": 60},
     "rules": [
+      {"domain_suffix": ["lan", "local"], "action": "route", "outbound": "D"},
       {"protocol": ["quic"], "action": "reject", "method": "default", "no_drop": false},
       {"inbound": ["tproxy-in", "mixed-in"], "action": "sniff", "timeout": "300ms"},
       {"protocol": "dns", "action": "hijack-dns"},
