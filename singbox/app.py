@@ -1,6 +1,5 @@
 from flask import Flask, send_file, after_this_request, request
 import requests
-from urllib.parse import unquote
 import json
 import logging
 import uuid
@@ -148,7 +147,6 @@ def process_subscription(sub_path, template_path):
                 
                 if 'filter' in outbound:
                     filtered_tags = set()
-                    group_name = outbound.get('tag', '未知分组')
                     logger.info(f"分组 [{group_name}] 过滤规则: {json.dumps(outbound['filter'], ensure_ascii=False)}")
                     
                     for f in outbound['filter']:
@@ -232,11 +230,15 @@ def process_subscription_url(sub_url):
         # 只使用1.12模板
         template_path = TEMPLATE_PATH
         
-        sub_url = unquote(sub_url)
-        if not sub_url.startswith(('http://', 'https://')):
-            sub_url = 'https://' + sub_url
+        # 重构完整URL，包括查询参数，避免被截断
+        query_string = request.query_string.decode('utf-8')
+        if query_string:
+            full_url = f"{sub_url}?{query_string}"
+        else:
+            full_url = sub_url
         
-        temp_path = fetch_subscription(sub_url)
+        # 直接使用URL，不需要解码
+        temp_path = fetch_subscription(full_url)
         temp_files.append(temp_path)
         
         output_path, node_path = process_subscription(temp_path, template_path)
