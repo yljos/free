@@ -4,3 +4,4 @@ requests
 PyYAML
 filelock
 python-dotenv
+urllib3
