@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# URL编码函数
-encode_url() {
-    echo "$1" | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip()), end='')"
-}
-
 # 检查参数
 [ $# -ne 2 ] && { echo "用法: <解压密码> <压缩密码>"; exit 1; }
 
@@ -32,10 +27,10 @@ MERGED_URL=$(echo "$URLS" | tr '\n' '|')
 while IFS=': ' read -r name url || [[ -n "$url" ]]; do
     if [[ -n "$name" && -n "$url" ]]; then
         # 生成 Singbox URL
-        echo "$name: https://singbox.202309.xyz/$(encode_url "$url")" >> "$TEMP_DIR/singbox.txt"
+        echo "$name: https://singbox.202309.xyz/$url" >> "$TEMP_DIR/singbox.txt"
         
         # 生成 Clash URL
-        echo "$name: https://clash.202309.xyz/$(encode_url "$url")" >> "$TEMP_DIR/clash.txt"
+        echo "$name: https://clash.202309.xyz/$url" >> "$TEMP_DIR/clash.txt"
     fi
 done < "$TEMP_DIR/0.txt"
 
