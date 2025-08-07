@@ -134,8 +134,6 @@ dns:
   direct-nameserver:
     - "https://dns.alidns.com/dns-query#DIRECT"
   nameserver-policy:
-    "+.lan": "system"
-    "+.local": "system"
     "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
     "rule-set:category-ads": "rcode://refused"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
