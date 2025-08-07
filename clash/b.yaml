@@ -186,8 +186,8 @@ proxy-groups:
   - <<: *select
     name: Google
     proxies:
-      - SG_fallback
       - US_fallback
+      - SG_fallback
       - HK_fallback
       - JP_fallback
       - TW_fallback
@@ -195,8 +195,8 @@ proxy-groups:
     name: Google_fallback
     proxies:
       - Google
-      - SG_fallback
       - US_fallback
+      - SG_fallback
       - HK_fallback
       - JP_fallback
       - TW_fallback
