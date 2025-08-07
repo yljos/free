@@ -1,5 +1,6 @@
 __pycache__
 /clash/outputs/*
+/clash/config.yaml
 sing-box
 sing-box.exe
 mihomo
