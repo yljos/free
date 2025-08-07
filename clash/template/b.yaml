@@ -85,11 +85,11 @@ tun:
   strict-route: true
   endpoint-independent-nat: true
 hosts:
-  - "homeassistant.local": 192.168.31.21
-  - "nas.lan": 192.168.31.21
-  - "openwrt.lan": 192.168.31.1
-  - "ax6s.lan": 192.168.31.2
-  - "huai-PC.lan": 192.168.31.15
+  "homeassistant.local": 192.168.31.21
+  "nas.lan": 192.168.31.21
+  "openwrt.lan": 192.168.31.1
+  "ax6s.lan": 192.168.31.2
+  "huai-PC.lan": 192.168.31.15
 dns:
   enable: true
   prefer-h3: false
