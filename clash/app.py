@@ -345,10 +345,6 @@ def process_yaml(yaml_url):
         if '?' not in yaml_url and request.query_string:
             yaml_url = yaml_url + '?' + request.query_string.decode('utf-8')
         
-        # 确保URL以https://开头
-        if not yaml_url.startswith('https://'):
-            yaml_url = 'https://' + yaml_url.lstrip('/')
-        
         logger.info(f"处理URL: {yaml_url}")
         
         temp_yaml_path = fetch_yaml(yaml_url)
