@@ -145,9 +145,9 @@ dns:
     "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US_fallback"
     "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok_fallback"
     "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix_fallback"
-    "rule-set:youtube": "https://dns.google/dns-query#Google_fallback"
-    "rule-set:googlefcm": "https://dns.google/dns-query#Google_fallback"
-    "rule-set:google": "https://dns.google/dns-query#Google_fallback"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google_fallback"
     "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
 proxies: []
 proxy-groups:
