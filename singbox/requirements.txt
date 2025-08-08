@@ -1,5 +1,4 @@
-Flask
+flask
 requests
-python-dotenv
-urllib3
-pathlib
+pyyaml
+ruamel.yaml
