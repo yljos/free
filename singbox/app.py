@@ -106,11 +106,6 @@ def process_subscription(sub_path, template_path):
                 if item.get('packet_encoding') == 'packetaddr':
                     item['packet_encoding'] = 'xudp'
 
-                # 为 tls 配置添加 insecure: false 提升安全性
-                if 'tls' in item and isinstance(item['tls'], dict):
-                    if 'insecure' not in item['tls']:
-                        item['tls']['insecure'] = False
-
                 # 删除 flow 为空字符串的字段
                 if 'flow' in item and item['flow'] == "":
                     del item['flow']
@@ -118,9 +113,6 @@ def process_subscription(sub_path, template_path):
                 # 检查并更新 server_ports
                 node_key = (item.get('type'), item.get('tag'))
                 if node_key in ports_map:
-                    # 删除 server_port 字段
-                    if 'server_port' in item:
-                        del item['server_port']
                     # 添加 server_ports 字段    
                     item['server_ports'] = ports_map[node_key]
                     logger.info(f"更新节点 {item['tag']} 的 server_ports: {ports_map[node_key]}")
