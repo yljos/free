@@ -7,3 +7,5 @@ mihomo
 mihomo.exe
 config.json
 ui/
+vs/**/*.yaml
+vs/**/*.json
