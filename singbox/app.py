@@ -102,9 +102,9 @@ def process_subscription(sub_path, template_path):
                     item['up_mbps'] = UPLOAD_MBPS
                     item['down_mbps'] = DOWNLOAD_MBPS
 
-                # # 替换 packet_encoding 为 xudp 以提升性能
-                # if item.get('packet_encoding') == 'packetaddr':
-                #     item['packet_encoding'] = 'xudp'
+                # 替换 packet_encoding 为 xudp 以提升性能
+                if item.get('packet_encoding') == 'packetaddr':
+                    item['packet_encoding'] = 'xudp'
 
                 # 删除 flow 为空字符串的字段
                 if 'flow' in item and item['flow'] == "":
