@@ -213,10 +213,30 @@ def process_nodes_from_path(url_path):
                 base_config = yaml_ruamel.load(f)
         else:
             base_config = yaml_ruamel.load('{}')
-        # 只合并proxies
+        # 只合并proxies，全部转为内嵌JSON（YAML flow style）
         proxies = list(base_config.get('proxies', []))
         proxies.extend(nodes)
-        base_config['proxies'] = proxies
+        from ruamel.yaml.comments import CommentedSeq, CommentedMap
+        def dict_to_flow_map(d):
+            if not isinstance(d, dict):
+                return d
+            m = CommentedMap()
+            for k, v in d.items():
+                if isinstance(v, bool):
+                    m[k] = v
+                elif isinstance(v, dict):
+                    m[k] = dict_to_flow_map(v)
+                elif isinstance(v, list):
+                    m[k] = CommentedSeq([dict_to_flow_map(i) if isinstance(i, dict) else i for i in v])
+                    m[k].fa.set_flow_style()
+                else:
+                    m[k] = v
+            m.fa.set_flow_style()
+            return m
+        proxies_flow = [dict_to_flow_map(p) if isinstance(p, dict) else p for p in proxies]
+        proxies_seq = CommentedSeq(proxies_flow)
+        # 不设置 proxies_seq.fa.set_flow_style()，让它保持 block list
+        base_config['proxies'] = proxies_seq
         # 生成合并后的YAML内容并写入临时文件
         with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False, encoding='utf-8') as f:
             yaml_ruamel.dump(base_config, f)
