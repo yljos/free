@@ -59,20 +59,15 @@ def parse_shadowsocks_url(url):
         'server': server,
         'server_port': port,
         'method': method,
-        'password': password,
-        'plugin': '',
-        'plugin_opts': '',
-        'network': 'udp',
-        'udp_over_tcp': {},
-        'multiplex': {}
+        'password': password
     }
     # 处理插件参数
     query_params = parse_qs(parsed.query)
     if 'plugin' in query_params:
         plugin_info = unquote(query_params['plugin'][0])
-        config['plugin'] = plugin_info
-        # 解析插件信息
+        # 只要包含simple-obfs或obfs-local，plugin字段统一输出'obfs-local'
         if 'simple-obfs' in plugin_info or 'obfs-local' in plugin_info:
+            config['plugin'] = 'obfs-local'
             plugin_parts = plugin_info.split(';')
             obfs_mode = None
             obfs_host = None
@@ -81,27 +76,37 @@ def parse_shadowsocks_url(url):
                     obfs_mode = part.split('=', 1)[1]
                 elif part.startswith('obfs-host='):
                     obfs_host = part.split('=', 1)[1]
-            plugin_opts = {}
+            plugin_opts_str = ''
             if obfs_mode:
-                plugin_opts['mode'] = obfs_mode
+                plugin_opts_str += f'obfs={obfs_mode}'
             if obfs_host:
-                plugin_opts['host'] = obfs_host
-            if plugin_opts:
-                config['plugin_opts'] = plugin_opts
-        elif 'v2ray-plugin' in plugin_info:
-            plugin_parts = plugin_info.split(';')
-            v2ray_opts = {}
-            for part in plugin_parts:
-                if part.startswith('mode='):
-                    v2ray_opts['mode'] = part.split('=', 1)[1]
-                elif part.startswith('host='):
-                    v2ray_opts['host'] = part.split('=', 1)[1]
-                elif part.startswith('path='):
-                    v2ray_opts['path'] = part.split('=', 1)[1]
-                elif part == 'tls':
-                    v2ray_opts['tls'] = True
-            if v2ray_opts:
-                config['plugin_opts'] = v2ray_opts
+                if plugin_opts_str:
+                    plugin_opts_str += ';'
+                plugin_opts_str += f'obfs-host={obfs_host}'
+            if plugin_opts_str:
+                config['plugin_opts'] = plugin_opts_str
+        else:
+            config['plugin'] = plugin_info
+            # 解析v2ray-plugin等其它插件
+            if 'v2ray-plugin' in plugin_info:
+                plugin_parts = plugin_info.split(';')
+                v2ray_opts = {}
+                for part in plugin_parts:
+                    if part.startswith('mode='):
+                        v2ray_opts['mode'] = part.split('=', 1)[1]
+                    elif part.startswith('host='):
+                        v2ray_opts['host'] = part.split('=', 1)[1]
+                    elif part.startswith('path='):
+                        v2ray_opts['path'] = part.split('=', 1)[1]
+                    elif part == 'tls':
+                        v2ray_opts['tls'] = True
+                if v2ray_opts:
+                    config['plugin_opts'] = v2ray_opts
+    # 仅当udp_over_tcp和multiplex不为空时才写入
+    if hasattr(parse_shadowsocks_url, 'udp_over_tcp') and parse_shadowsocks_url.udp_over_tcp:
+        config['udp_over_tcp'] = parse_shadowsocks_url.udp_over_tcp
+    if hasattr(parse_shadowsocks_url, 'multiplex') and parse_shadowsocks_url.multiplex:
+        config['multiplex'] = parse_shadowsocks_url.multiplex
     return config
 
 
