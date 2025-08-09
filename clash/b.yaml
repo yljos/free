@@ -500,7 +500,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs
   pikpak-download:
     <<: *classical
-    proxy: M_fallback
     url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml
   proxy:
     <<: *domain
