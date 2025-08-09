@@ -32,7 +32,7 @@ allow-lan: true
 bind-address: "*"
 find-process-mode: off # always, strict, off
 log-level: error # info, warning, error, debug
-ipv6: false
+ipv6: true
 udp: true
 unified-delay: true
 tcp-concurrent: true
@@ -94,7 +94,7 @@ dns:
   enable: true
   prefer-h3: false
   listen: "0.0.0.0:1053"
-  ipv6: false
+  ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
@@ -123,8 +123,8 @@ dns:
     - "+.202309.xyz"
   use-hosts: true
   default-nameserver:
-    # - "[2400:3200::1]#DIRECT"
-    # - "[2400:3200:baba::1]#DIRECT"
+    - "[2400:3200::1]#DIRECT"
+    - "[2400:3200:baba::1]#DIRECT"
     - "223.5.5.5#DIRECT"
     - "114.114.114.114#DIRECT"
   proxy-server-nameserver:
