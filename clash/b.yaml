@@ -25,6 +25,12 @@ ipcidr: &ipcidr
   type: http
   format: mrs
   behavior: ipcidr
+classical: &classical
+  proxy: M_fallback
+  type: http
+  interval: 86400
+  behavior: classical
+  format: yaml
 mixed-port: 12138
 redir-port: 7892
 tproxy-port: 7893
@@ -493,10 +499,8 @@ rule-providers:
     <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/pikpak.mrs
   pikpak-download:
+    <<: *classical
     proxy: M_fallback
-    interval: 86400
-    type: http
-    behavior: classical
     url: https://raw.githubusercontent.com/yljos/free/refs/heads/main/pikpak-download.yaml
   proxy:
     <<: *domain
