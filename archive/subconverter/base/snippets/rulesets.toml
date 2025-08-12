@@ -1,0 +1,227 @@
+# 本地网络访问规则
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,local"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,lan"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]IP-CIDR,127.0.0.0/8"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]IP-CIDR,10.0.0.0/24"
+
+# 直连规则
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,suckless.top"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,huai.ink"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,huaihuaidehuaihuai.top"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]DOMAIN-SUFFIX,ihuai.top"
+
+# 智能家居设备直连规则
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]SRC-IP-CIDR,10.0.0.18/32"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]SRC-IP-CIDR,10.0.0.28/32"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]SRC-IP-CIDR,10.0.0.13/32"
+
+[[rulesets]]
+group = "DIRECT"
+ruleset = "[]SRC-IP-CIDR,10.0.0.14/32"
+
+# 应用规则集分流配置
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/huai12138/free@main/proxy.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Singapore"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/pikpak.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/mozilla.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/openwrt.yaml"
+type = "clash-domain"
+
+# 国内应用直连
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/xiaomi.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/bilibili.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/unionpay.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/alibaba.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/meituan.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/jd.yaml"
+type = "clash-domain"
+# 国外服务代理
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/onedrive.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "OpenAi"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/openai.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "PikPak-Download"
+ruleset = "https://fastly.jsdelivr.net/gh/huai12138/free@main/pikpak-download.yaml"
+type = "clash-classic"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/adguard.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/tmdb.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/docker.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/reddit.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/spotify.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "SpeedTest"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/speedtest.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/wikimedia.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/javdb.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/apkpure.yaml"
+type = "clash-domain"
+# 游戏平台
+[[rulesets]]
+group = "Steam"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/steam.yaml"
+type = "clash-domain"
+# 社交媒体
+[[rulesets]]
+group = "TikTok"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/tiktok.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Google"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/youtube.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Telegram"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/telegram.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Telegram"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/telegram.yaml"
+type = "clash-ipcidr"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/twitter.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/twitter.yaml"
+type = "clash-ipcidr"
+# 开发平台
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/github.yaml"
+type = "clash-domain"
+# 流媒体服务
+[[rulesets]]
+group = "Netflix"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/netflix.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Netflix"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/netflix.yaml"
+type = "clash-ipcidr"
+
+# 科技公司服务
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/googlefcm.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Google"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/google.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Google"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/google.yaml"
+type = "clash-ipcidr"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/microsoft.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "Proxy"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/gfw.yaml"
+type = "clash-domain"
+# 中国大陆直连
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/cn.yaml"
+type = "clash-domain"
+[[rulesets]]
+group = "DIRECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geoip/cn.yaml"
+type = "clash-ipcidr"
+# 广告拦截服务
+[[rulesets]]
+group = "REJECT"
+ruleset = "https://fastly.jsdelivr.net/gh/metacubex/meta-rules-dat@meta/geo/geosite/category-ads-all.yaml"
+type = "clash-domain"
+# 未匹配规则
+[[rulesets]]
+group = "Final"
+ruleset = "[]MATCH"

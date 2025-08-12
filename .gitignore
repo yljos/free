@@ -1,0 +1,8 @@
+**/__pycache__/
+/clash/outputs/*
+sing-box
+!sing-box/
+sing-box.exe
+mihomo
+!mihomo/
+mihomo.exe
