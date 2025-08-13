@@ -70,7 +70,7 @@ dns:
     "rule-set:pikpak-download": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam_fallback"
     "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
-    "rule-set:telegram": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
+    "rule-set:telegram-site": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
     "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US_fallback"
     "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US_fallback"
     "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok_fallback"
@@ -152,8 +152,8 @@ rule-providers:
   speedtest-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
   steam: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml}
-  telegram: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/telegram.yaml}
-  telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs}
+  telegram-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-site.yaml}
+  telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-ip.mrs}
   tiktok: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml}
   tmdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml}
   twitter: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml}
@@ -201,7 +201,7 @@ rules:
   - "RULE-SET,netflix,Netflix_fallback"
   - "RULE-SET,tiktok,TikTok_fallback"
   - "RULE-SET,tmdb,M_fallback"
-  - "RULE-SET,telegram,Telegram_fallback"
+  - "RULE-SET,telegram-site,Telegram_fallback"
   - "RULE-SET,twitter,US_fallback"
   - "RULE-SET,facebook,US_fallback"
   - "RULE-SET,reddit,M_fallback"
