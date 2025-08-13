@@ -65,7 +65,7 @@ dns:
   nameserver-policy:
     "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
     "rule-set:category-ads": "rcode://refused"
-    "rule-set:huawei": "rcode://refused"
+    "rule-set:huawei-site": "rcode://refused"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak-download": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam_fallback"
@@ -122,11 +122,11 @@ rule-providers:
   bilibili: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/bilibili.yaml}
   category-ads: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/category-ads-all.yaml}
   codeberg: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml}
-  cn: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/cn.yaml}
-  cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/cn.mrs}
+  cn-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-site.yaml}
+  cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs}
   docker: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml}
-  direct-cf: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-cf-site.yaml}
-  direct: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site.yaml}
+  direct-cf-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-cf-site.yaml}
+  direct-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site.yaml}
   direct-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs}
   mozilla: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml}
   gfw: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml}
@@ -134,7 +134,7 @@ rule-providers:
   google: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml}
   google-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs}
   googlefcm: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml}
-  huawei: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-site.yaml}
+  huawei-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-site.yaml}
   huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
   javdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
   jd: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
@@ -147,7 +147,7 @@ rule-providers:
   pikpak-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.yaml}
   pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
   pikpak-download: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.yaml}
-  proxy: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.yaml}
+  proxy-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.yaml}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
   speedtest-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
@@ -168,15 +168,15 @@ rule-providers:
   facebook-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs}
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
-  - "RULE-SET,huawei,REJECT"
+  - "RULE-SET,huawei-site,REJECT"
   - "RULE-SET,huawei-ip,REJECT"
   - "RULE-SET,category-ads,REJECT"
 
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
-  - "RULE-SET,direct,DIRECT"
-  - "RULE-SET,direct-cf,DIRECT"
+  - "RULE-SET,direct-site,DIRECT"
+  - "RULE-SET,direct-cf-site,DIRECT"
   - "RULE-SET,xiaomi,DIRECT"
   - "RULE-SET,bilibili,DIRECT"
   - "RULE-SET,unionpay,DIRECT"
@@ -187,7 +187,7 @@ rules:
   - "RULE-SET,jd,DIRECT"
   - "RULE-SET,tencent,DIRECT"
   - "RULE-SET,googlefcm,DIRECT"
-  - "RULE-SET,proxy,M_fallback"
+  - "RULE-SET,proxy-site,M_fallback"
   - "RULE-SET,github,GitHub_fallback"
   - "RULE-SET,codeberg,M_fallback"
   - "RULE-SET,docker,M_fallback"
@@ -214,7 +214,7 @@ rules:
   - "RULE-SET,spotify,M_fallback"
   - "RULE-SET,steam,Steam_fallback"
   - "RULE-SET,gfw,M_fallback"
-  - "RULE-SET,cn,DIRECT"
+  - "RULE-SET,cn-site,DIRECT"
 
   - "RULE-SET,direct-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
