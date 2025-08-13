@@ -93,7 +93,7 @@
       {"rule_set": "unionpay", "outbound": "D"},
       {"rule_set": "meituan", "outbound": "D"},
       {"rule_set": "jd", "outbound": "D"},
-      {"rule_set": ["huawei", "huawei-ip"], "outbound": "block"},
+      {"rule_set": "huawei", "outbound": "block"},
       {"rule_set": "xiaomi", "outbound": "D"},
       {"rule_set": "bilibili", "outbound": "D"},
       {"rule_set": "steam", "outbound": "Steam"},
@@ -114,6 +114,7 @@
       {"rule_set": "gfw", "outbound": "M"},
       {"rule_set": "cn", "outbound": "D"},
 
+      {"rule_set": "huawei-ip", "outbound": "block"},
       {"rule_set": "pikpak-ip", "outbound": "PikPak"},
       {"rule_set": "facebook-ip", "outbound": "FaceBook"},
       {"rule_set": "netflix-ip", "outbound": "Netflix"},
