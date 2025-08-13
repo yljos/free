@@ -138,6 +138,7 @@ rule-providers:
   huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
   javdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
   jd: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
+  local-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/local/local-ip.mrs}
   meituan: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/meituan.yaml}
   microsoft: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml}
   netflix: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml}
@@ -216,6 +217,7 @@ rules:
   - "RULE-SET,gfw,M_fallback"
   - "RULE-SET,cn-site,DIRECT"
 
+  - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
   - "RULE-SET,telegram-ip,Telegram_fallback"
