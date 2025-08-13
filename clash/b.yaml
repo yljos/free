@@ -78,7 +78,7 @@ dns:
     "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google_fallback"
     "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google_fallback"
     "rule-set:google": "https://cloudflare-dns.com/dns-query#Google_fallback"
-    "rule-set:speedtest": "https://cloudflare-dns.com/dns-query#SpeedTest"
+    "rule-set:speedtest-site": "https://cloudflare-dns.com/dns-query#SpeedTest"
 proxies: []
 proxy-groups:
   - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
@@ -148,7 +148,7 @@ rule-providers:
   pikpak-download: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.yaml}
   proxy: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.yaml}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
-  speedtest: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/speedtest.yaml}
+  speedtest-site: {<<: *classical, https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/speedtest-site.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
   steam: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml}
   telegram: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/telegram.yaml}
@@ -205,7 +205,7 @@ rules:
   - "RULE-SET,facebook,US_fallback"
   - "RULE-SET,reddit,M_fallback"
   - "RULE-SET,adguard,M_fallback"
-  - "RULE-SET,speedtest,SpeedTest"
+  - "RULE-SET,speedtest-site,SpeedTest"
   - "RULE-SET,wikimedia,M_fallback"
   - "RULE-SET,javdb,M_fallback"
   - "RULE-SET,apkpure,M_fallback"
