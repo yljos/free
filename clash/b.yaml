@@ -145,7 +145,7 @@ rule-providers:
   openai: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
   openwrt: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
   pikpak-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.yaml}
-  pikpak-ip: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.yaml}
+  pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
   pikpak-download: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.yaml}
   proxy: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.yaml}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
