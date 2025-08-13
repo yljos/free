@@ -144,7 +144,8 @@ rule-providers:
   netflix-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs}
   openai: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
   openwrt: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
-  pikpak: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/pikpak.yaml}
+  pikpak-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.yaml}
+  pikpak-ip: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.yaml}
   pikpak-download: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.yaml}
   proxy: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.yaml}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
@@ -180,7 +181,7 @@ rules:
   - "RULE-SET,bilibili,DIRECT"
   - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"
-  - "RULE-SET,pikpak,PikPak_fallback"
+  - "RULE-SET,pikpak-site,PikPak_fallback"
   - "RULE-SET,alibaba,DIRECT"
   - "RULE-SET,meituan,DIRECT"
   - "RULE-SET,jd,DIRECT"
@@ -216,6 +217,7 @@ rules:
   - "RULE-SET,cn,DIRECT"
 
   - "RULE-SET,direct-ip,DIRECT"
+  - "RULE-SET,pikpak-ip,PikPak_fallback"
   - "RULE-SET,telegram-ip,Telegram_fallback"
   - "RULE-SET,twitter-ip,US_fallback"
   - "RULE-SET,facebook-ip,US_fallback"
