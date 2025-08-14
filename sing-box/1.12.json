@@ -18,6 +18,7 @@
       {"rule_set": "unionpay", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "meituan", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "huawei-site", "action": "reject"},
+      {"rule_set": "ad-site", "action": "reject"},
       {"rule_set": "jd", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "xiaomi", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "bilibili-site", "strategy": "ipv4_only", "server": "dns_direct"},
@@ -64,6 +65,7 @@
   "route": {
     "rules": [
       {"protocol": "quic", "outbound": "block"},
+      {"rule_set": "ad-site", "outbound": "block"},
       {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "outbound": "dns_direct"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "outbound": "Microsoft"},
       {"domain_keyword": "googleapis", "outbound": "Google"},
@@ -73,8 +75,8 @@
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "outbound": "Microsoft"},
       {"domain_keyword": "googleapis", "outbound": "Google"},
       {"ip_is_private": true, "outbound": "D"},
-      {"rule_set": ["direct-site"], "outbound": "D"},
-      {"rule_set": ["direct-cf-site"], "outbound": "D"},
+      {"rule_set": "direct-site", "outbound": "D"},
+      {"rule_set": "direct-cf-site", "outbound": "D"},
       {"rule_set": "proxy-site", "outbound": "M"},
       {"rule_set": "openai", "outbound": "OpenAi"},
       {"rule_set": "pikpak-download-site", "outbound": "PikPak-Download"},
@@ -113,6 +115,7 @@
       {"rule_set": "tencent", "outbound": "D"},
       {"rule_set": "microsoft", "outbound": "Microsoft"},
       {"rule_set": "gfw", "outbound": "M"},
+      {"rule_set": "ad-ip", "outbound": "block"},
       {"rule_set": "cn-site", "outbound": "D"},
       {"rule_set": "direct-ip", "outbound": "D"},
       {"rule_set": "local-ip", "outbound": "D"},
@@ -127,6 +130,8 @@
       {"rule_set": "cn-ip", "outbound": "D"}
     ],
     "rule_set": [
+      {"tag": "ad-site", "type": "remote", "url": "https://github.com/yljos/rule-set/raw/refs/heads/main/sing-box/ad/ad-site.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
+      {"tag": "ad-ip", "type": "remote", "url": "https://github.com/yljos/rule-set/raw/refs/heads/main/sing-box/ad/ad-ip.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "adguard", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/adguard.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "alibaba", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/alibaba.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "apkpure", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/apkpure.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
