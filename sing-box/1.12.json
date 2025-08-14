@@ -113,7 +113,6 @@
       {"rule_set": "microsoft", "outbound": "Microsoft"},
       {"rule_set": "gfw", "outbound": "M"},
       {"rule_set": "cn-site", "outbound": "D"},
-
       {"rule_set": "direct-ip", "outbound": "D"},
       {"rule_set": "local-ip", "outbound": "D"},
       {"rule_set": "huawei-ip", "outbound": "block"},
