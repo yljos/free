@@ -163,7 +163,6 @@ rule-providers:
   twitter-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs}
   unionpay: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/unionpay.yaml}
   wikimedia: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/wikimedia.yaml}
-  xiaomi: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/xiaomi.yaml}
   youtube: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/youtube.yaml}
   f-droid: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/f-droid.yaml}
   tencent: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml}
@@ -181,7 +180,6 @@ rules:
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
   - "RULE-SET,direct-site,DIRECT"
   - "RULE-SET,direct-cf-site,DIRECT"
-  - "RULE-SET,xiaomi,DIRECT"
   - "RULE-SET,bilibili-site,DIRECT"
   - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"

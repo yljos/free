@@ -20,7 +20,6 @@
       {"rule_set": "huawei-site", "action": "reject"},
       {"rule_set": "ad-site", "action": "reject"},
       {"rule_set": "jd", "strategy": "ipv4_only", "server": "dns_direct"},
-      {"rule_set": "xiaomi", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "bilibili-site", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "alibaba", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "tencent", "strategy": "ipv4_only", "server": "dns_direct"},
@@ -97,7 +96,6 @@
       {"rule_set": "meituan", "outbound": "D"},
       {"rule_set": "jd", "outbound": "D"},
       {"rule_set": "huawei-site", "outbound": "block"},
-      {"rule_set": "xiaomi", "outbound": "D"},
       {"rule_set": "bilibili-site", "outbound": "D"},
       {"rule_set": "steam", "outbound": "Steam"},
       {"rule_set": "youtube", "outbound": "Google"},
@@ -182,7 +180,6 @@
       {"tag": "twitter-ip", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/twitter.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "unionpay", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/unionpay.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "wikimedia", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/wikimedia.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
-      {"tag": "xiaomi", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/xiaomi.srs", "download_detour": "SG", "update_interval": "12h0m0s"},
       {"tag": "youtube", "type": "remote", "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/youtube.srs", "download_detour": "SG", "update_interval": "12h0m0s"}
     ],
     "final": "Default",
