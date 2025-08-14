@@ -22,7 +22,7 @@ authentication: ["huai:password12138"]
 skip-auth-prefixes: [127.0.0.1/8, 192.168.0.0/16]
 external-ui: ui
 global-client-fingerprint: chrome
-external-ui-url: "https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/dist-cdn-fonts.zip"
+external-ui-url: "https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/dist.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, "8080-8880"], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
 hosts: {"homeassistant.local": 192.168.31.21, "nas.lan": 192.168.31.21, "openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "huai-PC.lan": 192.168.31.15}
