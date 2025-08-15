@@ -658,6 +658,10 @@
         "outbound": "block"
       },
       {
+        "rule_set": "alibaba-ip",
+        "outbound": "D"
+      },
+      {
         "rule_set": "pikpak-ip",
         "outbound": "PikPak"
       },
@@ -718,6 +722,13 @@
         "tag": "alibaba-site",
         "type": "remote",
         "url": "https://github.com/yljos/rule-set/raw/refs/heads/main/sing-box/alibaba/alibaba-site.srs",
+        "download_detour": "SG",
+        "update_interval": "12h0m0s"
+      },
+      {
+        "tag": "alibaba-ip",
+        "type": "remote",
+        "url": "https://github.com/yljos/rule-set/raw/refs/heads/main/sing-box/alibaba/alibaba-ip.srs",
         "download_detour": "SG",
         "update_interval": "12h0m0s"
       },
