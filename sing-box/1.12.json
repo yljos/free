@@ -104,7 +104,7 @@
         "server": "dns_direct"
       },
       {
-        "rule_set": "alibaba",
+        "rule_set": "alibaba-site",
         "strategy": "ipv4_only",
         "server": "dns_direct"
       },
@@ -448,6 +448,18 @@
   "route": {
     "rules": [
       {
+        "inbound": [
+          "tproxy-in",
+          "mixed-in"
+        ],
+        "action": "sniff",
+        "timeout": "300ms"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
         "protocol": "quic",
         "outbound": "block"
       },
@@ -472,37 +484,6 @@
       {
         "domain_keyword": "googleapis",
         "outbound": "Google"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "D"
-      },
-      {
-        "inbound": [
-          "tproxy-in",
-          "mixed-in"
-        ],
-        "action": "sniff",
-        "timeout": "300ms"
-      },
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
-        "domain_keyword": [
-          "msftconnecttest.com",
-          "msftncsi.com"
-        ],
-        "outbound": "Microsoft"
-      },
-      {
-        "domain_keyword": "googleapis",
-        "outbound": "Google"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "D"
       },
       {
         "rule_set": "direct-site",
@@ -641,7 +622,7 @@
         "outbound": "Google"
       },
       {
-        "rule_set": "alibaba",
+        "rule_set": "alibaba-site",
         "outbound": "D"
       },
       {
@@ -734,9 +715,9 @@
         "update_interval": "12h0m0s"
       },
       {
-        "tag": "alibaba",
+        "tag": "alibaba-site",
         "type": "remote",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/alibaba.srs",
+        "url": "https://github.com/yljos/rule-set/raw/refs/heads/main/sing-box/alibaba/alibaba-site.srs",
         "download_detour": "SG",
         "update_interval": "12h0m0s"
       },
