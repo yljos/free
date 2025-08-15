@@ -48,24 +48,39 @@ check_requirements() {
     done
 }
 
-# 检查路由表中是否已有本地路由
+
+# 检查IPv4路由表中是否已有本地路由
 check_local_route_exists() {
     ip route show table "$PROXY_ROUTE_TABLE" | grep -q "local" 2>/dev/null
     return $?
 }
+# 检查IPv6路由表中是否已有本地路由
+check_local_route6_exists() {
+    ip -6 route show table "$PROXY_ROUTE_TABLE" | grep -q "local" 2>/dev/null
+    return $?
+}
 
-# 创建路由表，如果不存在的话
+# 创建IPv4/IPv6路由表，如果不存在的话
 create_route_table_if_not_exists() {
     if ! check_local_route_exists; then
-        echo "创建本地路由表..."
-        # 修正：使用正确的本地路由语法
+        echo "创建本地IPv4路由表..."
         ip route add local 0.0.0.0/0 dev lo table "$PROXY_ROUTE_TABLE" || {
-            echo "创建路由表失败"
+            echo "创建IPv4路由表失败"
             exit 1
         }
-        echo "本地路由表创建成功"
+        echo "本地IPv4路由表创建成功"
     else
-        echo "本地路由表已存在，跳过创建"
+        echo "本地IPv4路由表已存在，跳过创建"
+    fi
+    if ! check_local_route6_exists; then
+        echo "创建本地IPv6路由表..."
+        ip -6 route add local ::/0 dev lo table "$PROXY_ROUTE_TABLE" || {
+            echo "创建IPv6路由表失败"
+            exit 1
+        }
+        echo "本地IPv6路由表创建成功"
+    else
+        echo "本地IPv6路由表已存在，跳过创建"
     fi
 }
 
@@ -85,27 +100,36 @@ wait_for_fib_table() {
     return 1
 }
 
-# 清理现有 sing-box 防火墙规则
+# 清理现有 sing-box 防火墙规则（含IPv6）
 clearSingboxRules() {
     echo "清理 sing-box 相关的防火墙规则..."
-    
+
     # 清理 nftables 规则
     if nft list table inet sing-box >/dev/null 2>&1; then
         nft delete table inet sing-box
         echo "已清理 nftables 规则"
     fi
-    
-    # 清理 IP 规则（可能有多条，循环删除）
+
+    # 清理 IPv4 IP 规则（可能有多条，循环删除）
     while ip rule del fwmark $PROXY_FWMARK lookup $PROXY_ROUTE_TABLE 2>/dev/null; do
-        echo "已删除 IP 规则"
+        echo "已删除 IPv4 IP 规则"
     done
-    
-    # 清理路由表内容
+    # 清理 IPv6 IP 规则（可能有多条，循环删除）
+    while ip -6 rule del fwmark $PROXY_FWMARK lookup $PROXY_ROUTE_TABLE 2>/dev/null; do
+        echo "已删除 IPv6 IP 规则"
+    done
+
+    # 清理 IPv4 路由表内容
     if ip route show table $PROXY_ROUTE_TABLE | grep -q "local"; then
         ip route flush table $PROXY_ROUTE_TABLE 2>/dev/null || true
-        echo "已清理路由表"
+        echo "已清理 IPv4 路由表"
     fi
-    
+    # 清理 IPv6 路由表内容
+    if ip -6 route show table $PROXY_ROUTE_TABLE | grep -q "local"; then
+        ip -6 route flush table $PROXY_ROUTE_TABLE 2>/dev/null || true
+        echo "已清理 IPv6 路由表"
+    fi
+
     echo "sing-box 相关的防火墙规则清理完成"
 }
 
@@ -176,9 +200,13 @@ main() {
             exit 1
         fi
 
-        # 设置 IP 规则（不再重复创建路由）
+        # 设置 IPv4/IPv6 IP 规则（不再重复创建路由）
         ip rule add fwmark $PROXY_FWMARK table $PROXY_ROUTE_TABLE || { 
-            echo "添加 IP 规则失败"
+            echo "添加 IPv4 IP 规则失败"
+            exit 1
+        }
+        ip -6 rule add fwmark $PROXY_FWMARK table $PROXY_ROUTE_TABLE || {
+            echo "添加 IPv6 IP 规则失败"
             exit 1
         }
         
