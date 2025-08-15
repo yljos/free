@@ -121,8 +121,6 @@ rule-providers:
   ad-ip: {<<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs}
   alibaba: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/alibaba.yaml}
   apkpure: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml}
-  bilibili-site: {<<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/bilibili/bilibili-site.yaml}
-  bilibili-ip: {<<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/bilibili/bilibili-ip.mrs}
   codeberg: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml}
   cn-site: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-site.yaml}
   cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs}
@@ -180,7 +178,6 @@ rules:
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
   - "RULE-SET,direct-site,DIRECT"
   - "RULE-SET,direct-cf-site,DIRECT"
-  - "RULE-SET,bilibili-site,DIRECT"
   - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"
   - "RULE-SET,pikpak-site,PikPak_fallback"
@@ -220,7 +217,6 @@ rules:
 
   - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
-  - "RULE-SET,bilibili-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
   - "RULE-SET,telegram-ip,Telegram_fallback"
   - "RULE-SET,twitter-ip,US_fallback"
