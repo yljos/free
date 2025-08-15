@@ -119,7 +119,8 @@ rule-providers:
   adguard: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml }
   ad-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
   ad-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs }
-  alibaba: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/alibaba.yaml }
+  alibaba-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-site.yaml }
+  alibaba-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-ip.mrs }
   apkpure: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml }
   codeberg: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml }
   cn-site: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-site.yaml }
@@ -181,7 +182,7 @@ rules:
   - "RULE-SET,unionpay,DIRECT"
   - "RULE-SET,pikpak-download,PikPak-Download"
   - "RULE-SET,pikpak-site,PikPak_fallback"
-  - "RULE-SET,alibaba,DIRECT"
+  - "RULE-SET,alibaba-site,DIRECT"
   - "RULE-SET,meituan,DIRECT"
   - "RULE-SET,jd,DIRECT"
   - "RULE-SET,tencent,DIRECT"
@@ -217,6 +218,7 @@ rules:
   # ipcidr
   - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
+  - "RULE-SET,alibaba-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
   - "RULE-SET,telegram-ip,Telegram_fallback"
   - "RULE-SET,twitter-ip,US_fallback"
