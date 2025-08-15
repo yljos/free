@@ -214,7 +214,7 @@ rules:
   - "RULE-SET,steam,Steam_fallback"
   - "RULE-SET,gfw,M_fallback"
   - "RULE-SET,cn-site,DIRECT"
-# ipcidr
+  # ipcidr
   - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
