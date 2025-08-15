@@ -34,8 +34,9 @@ if [ -z "$INTERFACE" ]; then
     exit 1
 fi
 
-# 保留 IP 地址集合
+# 保留 IPv4/IPv6 地址集合
 ReservedIP4='{ 127.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 198.51.100.0/24, 192.88.99.0/24, 192.168.0.0/16, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 }'
+ReservedIP6='{ ::1/128, fc00::/7, fe80::/10, ff00::/8 }'
 
 # 检查必要工具是否存在
 check_requirements() {
@@ -197,12 +198,21 @@ table inet sing-box {
         elements = $ReservedIP4
     }
 
-    set DIRECT_IPSET {
+
+    set DIRECT_IPSET4 {
         type ipv4_addr
         flags interval
         auto-merge
         elements = { 192.168.31.8 }
     }
+
+    set DIRECT_IPSET6 {
+        type ipv6_addr
+        flags interval
+        auto-merge
+        elements = { }
+    }
+
 
     chain prerouting_singbox {
         type filter hook prerouting priority mangle; policy accept;
@@ -212,25 +222,33 @@ table inet sing-box {
 
         # 确保 DHCP 数据包不被拦截 UDP 67/68
         udp dport { 67, 68 } accept comment "Allow DHCP traffic"
-        
+
+        # 放行 ICMPv6
+        icmpv6 accept comment "Allow ICMPv6"
+
         # 跳过到本机的流量
         fib daddr type local accept
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
+        ip6 daddr { $ReservedIP6 } accept
 
         # 直连设备绕过
-        ip saddr @DIRECT_IPSET accept comment "Allow direct connection for specific devices"
-        ip daddr @DIRECT_IPSET accept comment "Allow direct connection for specific devices"
+        ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
+        ip daddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
+        ip6 saddr @DIRECT_IPSET6 accept comment "Allow direct connection for specific devices"
+        ip6 daddr @DIRECT_IPSET6 accept comment "Allow direct connection for specific devices"
 
         # 放行所有经过 DNAT 的流量
         ct status dnat accept comment "Allow forwarded traffic"
 
         # DNS 请求重定向到本地 SingBox 端口
         meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT accept
+        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT ip6 accept
 
         # 重定向其他流量到 SingBox 端口并设置标记
         meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK
+        meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK ip6
     }
 
     chain output_singbox {
@@ -238,6 +256,9 @@ table inet sing-box {
 
         # 放行本地回环接口流量
         meta oifname "lo" accept
+
+        # 放行 ICMPv6
+        icmpv6 accept comment "Allow ICMPv6"
 
         # sing-box 发出的流量绕过
         meta mark $ROUTING_MARK accept
@@ -247,16 +268,20 @@ table inet sing-box {
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
+        ip6 daddr { $ReservedIP6 } accept
 
         # 直连设备绕过
-        ip saddr @DIRECT_IPSET accept comment "Allow direct connection for specific devices"
-        ip daddr @DIRECT_IPSET accept comment "Allow direct connection for specific devices"
+        ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
+        ip daddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
+        ip6 saddr @DIRECT_IPSET6 accept comment "Allow direct connection for specific devices"
+        ip6 daddr @DIRECT_IPSET6 accept comment "Allow direct connection for specific devices"
 
         # 绕过 NBNS 流量
         udp dport { netbios-ns, netbios-dgm, netbios-ssn } accept
 
         # 标记其他流量
         meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK
+        meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK ip6
     }
 }
 EOF
