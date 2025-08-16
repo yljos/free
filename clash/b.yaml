@@ -173,6 +173,7 @@ rules:
   - "RULE-SET,huawei-ip,REJECT"
   - "RULE-SET,ad-site,REJECT"
   - "RULE-SET,ad-ip,REJECT"
+  - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
 
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
   - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
@@ -226,5 +227,4 @@ rules:
   - "RULE-SET,netflix-ip,Netflix_fallback"
   - "RULE-SET,google-ip,Google_fallback"
   - "RULE-SET,cn-ip,DIRECT"
-  - "SRC-IP-CIDR,192.168.31.24/32,REJECT"
   - "MATCH,Default"
