@@ -226,7 +226,6 @@ table inet sing-box {
         elements = $ReservedIP4
     }
 
-
     set DIRECT_IPSET4 {
         type ipv4_addr
         flags interval
@@ -238,9 +237,8 @@ table inet sing-box {
         type ipv6_addr
         flags interval
         auto-merge
-        elements = { }
+        elements = { ::1/128, fe80::/10, fc00::/7 }
     }
-
 
     chain prerouting_singbox {
         type filter hook prerouting priority mangle; policy accept;
@@ -252,14 +250,14 @@ table inet sing-box {
         udp dport { 67, 68 } accept comment "Allow DHCP traffic"
 
         # 放行 ICMPv6
-        icmpv6 accept comment "Allow ICMPv6"
+        ip6 nexthdr icmpv6 accept comment "Allow ICMPv6"
 
         # 跳过到本机的流量
         fib daddr type local accept
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
-        ip6 daddr { $ReservedIP6 } accept
+        ip6 daddr { ::1/128, fc00::/7, fe80::/10, ff00::/8 } accept
 
         # 直连设备绕过
         ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
@@ -270,13 +268,11 @@ table inet sing-box {
         # 放行所有经过 DNAT 的流量
         ct status dnat accept comment "Allow forwarded traffic"
 
-        # DNS 请求重定向到本地 SingBox 端口
-        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT accept
-        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT ip6 accept
+        # DNS 透明代理
+        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT
 
-        # 重定向其他流量到 SingBox 端口并设置标记
+        # 其他流量透明代理并打标
         meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK
-        meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK ip6
     }
 
     chain output_singbox {
@@ -286,7 +282,7 @@ table inet sing-box {
         meta oifname "lo" accept
 
         # 放行 ICMPv6
-        icmpv6 accept comment "Allow ICMPv6"
+        ip6 nexthdr icmpv6 accept comment "Allow ICMPv6"
 
         # sing-box 发出的流量绕过
         meta mark $ROUTING_MARK accept
@@ -296,7 +292,7 @@ table inet sing-box {
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
-        ip6 daddr { $ReservedIP6 } accept
+        ip6 daddr { ::1/128, fc00::/7, fe80::/10, ff00::/8 } accept
 
         # 直连设备绕过
         ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
@@ -309,7 +305,6 @@ table inet sing-box {
 
         # 标记其他流量
         meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK
-        meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK ip6
     }
 }
 EOF
