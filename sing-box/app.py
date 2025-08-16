@@ -144,7 +144,7 @@ def process_nodes_from_path(url_path):
         if not nodes:
             return jsonify({'error': '所有节点解析都失败了', 'errors': errors, 'url': full_url}), 400
         # 合并到1.12.json并替换urltest的outbounds
-        config_path = os.path.join(os.path.dirname(__file__), '1.12_tun.json')
+        config_path = os.path.join(os.path.dirname(__file__), '1.12.json')
         with open(config_path, 'r', encoding='utf-8') as f:
             base_config = json.load(f)
         # 保留原有outbounds
