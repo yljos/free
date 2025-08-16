@@ -226,6 +226,13 @@ table inet sing-box {
         elements = $ReservedIP4
     }
 
+    set RESERVED_IPSET6 {
+        type ipv6_addr
+        flags interval
+        auto-merge
+        elements = $ReservedIP6
+   }
+
     set DIRECT_IPSET4 {
         type ipv4_addr
         flags interval
@@ -257,7 +264,7 @@ table inet sing-box {
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
-        ip6 daddr { ::1/128, fc00::/7, fe80::/10, ff00::/8 } accept
+        ip6 daddr @RESERVED_IPSET6 accept
 
         # 直连设备绕过
         ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
@@ -292,7 +299,7 @@ table inet sing-box {
 
         # 保留地址绕过
         ip daddr @RESERVED_IPSET accept
-        ip6 daddr { ::1/128, fc00::/7, fe80::/10, ff00::/8 } accept
+        ip6 daddr @RESERVED_IPSET6 accept
 
         # 直连设备绕过
         ip saddr @DIRECT_IPSET4 accept comment "Allow direct connection for specific devices"
