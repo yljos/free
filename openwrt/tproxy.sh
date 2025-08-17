@@ -251,7 +251,7 @@ table inet sing-box {
     chain prerouting_sing-box {
         type filter hook prerouting priority mangle; policy accept;
 
-        # 跳过本机发出的流量（避免循环）
+        # 跳过sing-box发出的流量
         meta mark $ROUTING_MARK accept
 
         # 确保 DHCP 数据包不被拦截 UDP 67/68
@@ -277,7 +277,7 @@ table inet sing-box {
         ct status dnat accept comment "Allow forwarded traffic"
 
         # DNS 透明代理
-        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT
+        meta l4proto { tcp, udp } th dport 53 tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK
 
         # 其他流量透明代理并打标
         meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK
@@ -295,6 +295,9 @@ table inet sing-box {
         # sing-box 发出的流量绕过
         meta mark $ROUTING_MARK accept
 
+        # 确保 DNS 查询正常
+        meta l4proto { tcp, udp } th dport 53 meta mark set $PROXY_FWMARK accept
+
         # 本地地址绕过
         fib daddr type local accept
 
@@ -311,8 +314,11 @@ table inet sing-box {
         # 绕过 NBNS 流量
         udp dport { netbios-ns, netbios-dgm, netbios-ssn } accept
 
+        #放行所有经过 DNAT 的流量
+        ct status dnat accept comment "Allow forwarded traffic"
+
         # 标记其他流量
-        meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK
+        meta l4proto { tcp, udp } meta mark set $PROXY_FWMARK accept
     }
 }
 EOF
