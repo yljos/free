@@ -64,7 +64,7 @@ check_local_route6_exists() {
 create_route_table_if_not_exists() {
     if ! check_local_route_exists; then
         echo "创建本地IPv4路由表..."
-        ip route add local 0.0.0.0/0 dev lo table "$PROXY_ROUTE_TABLE" || {
+        ip route add local default dev lo table "$PROXY_ROUTE_TABLE" || {
             echo "创建IPv4路由表失败"
             exit 1
         }
@@ -74,7 +74,7 @@ create_route_table_if_not_exists() {
     fi
     if ! check_local_route6_exists; then
         echo "创建本地IPv6路由表..."
-        ip -6 route add local ::/0 dev lo table "$PROXY_ROUTE_TABLE" || {
+        ip -6 route add local default dev lo table "$PROXY_ROUTE_TABLE" || {
             echo "创建IPv6路由表失败"
             exit 1
         }
@@ -211,13 +211,14 @@ main() {
         }
         
         # 确保目录存在
-        mkdir -p /etc/sing-box/nft
+        mkdir -p /etc/sing-box/
 
         # 手动创建 inet 表
         nft add table inet sing-box
 
         # 设置 SingBox 模式下的 nftables 规则
-        cat > /etc/sing-box/nft/nftables.conf <<EOF
+        cat > /etc/sing-box/sing-box.nft <<EOF
+#!/usr/sbin/nft -f
 table inet sing-box {
     set RESERVED_IPSET {
         type ipv4_addr
@@ -247,7 +248,7 @@ table inet sing-box {
         elements = { ::1/128, fe80::/10, fc00::/7 }
     }
 
-    chain prerouting_singbox {
+    chain prerouting_sing-box {
         type filter hook prerouting priority mangle; policy accept;
 
         # 跳过本机发出的流量（避免循环）
@@ -282,7 +283,7 @@ table inet sing-box {
         meta l4proto { tcp, udp } tproxy to :$SINGBOX_PORT meta mark set $PROXY_FWMARK
     }
 
-    chain output_singbox {
+    chain output_sing-box {
         type route hook output priority mangle; policy accept;
 
         # 放行本地回环接口流量
@@ -318,7 +319,7 @@ EOF
 
         # 应用防火墙规则和 IP 路由
         echo "正在应用 nftables 规则..."
-        if ! nft -f /etc/sing-box/nft/nftables.conf; then
+        if ! nft -f /etc/sing-box/sing-box.nft; then
             echo "错误: 应用 nftables 规则失败"
             exit 1
         fi
