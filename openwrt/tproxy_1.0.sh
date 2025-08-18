@@ -32,8 +32,8 @@ insert_singbox_jump_rule() {
 }
 # 删除 sing-box jump 规则
 delete_singbox_jump_rule() {
-	nft delete rule inet fw4 mangle_prerouting handle $(nft --handle list chain inet fw4 mangle_prerouting | awk '/jump prerouting_sing-box/ {print $(NF)}') 
-	nft delete rule inet fw4 mangle_output handle $(nft --handle list chain inet fw4 mangle_output | awk '/jump output_sing-box/ {print $(NF)}') 
+		nft delete rule inet fw4 mangle_prerouting handle $(nft --handle list chain inet fw4 mangle_prerouting | awk '/jump prerouting_sing-box/ {print $(NF)}') >/dev/null 2>&1
+		nft delete rule inet fw4 mangle_output handle $(nft --handle list chain inet fw4 mangle_output | awk '/jump output_sing-box/ {print $(NF)}') >/dev/null 2>&1
 }
 
 if [ $# -eq 0 ]; then
