@@ -27,12 +27,6 @@ ROUTING_MARK=666   # 与 sing-box 中定义的一致
 PROXY_FWMARK=1
 PROXY_ROUTE_TABLE=100
 
-# 获取默认接口，增加错误处理
-INTERFACE=$(ip route show default | awk '/default/ {print $5}')
-if [ -z "$INTERFACE" ]; then
-    echo "错误: 无法获取默认网络接口"
-    exit 1
-fi
 
 # 检查必要工具是否存在
 check_requirements() {
@@ -42,6 +36,10 @@ check_requirements() {
             exit 1
         fi
     done
+    if ! lsmod | grep -q 'nft_tproxy'; then
+        echo "错误: 未加载 kmod-nf-tproxy 相关内核模块，请安装 kmod-nf-tproxy"
+        exit 1
+    fi
 }
 
 

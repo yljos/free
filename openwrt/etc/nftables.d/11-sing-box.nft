@@ -1,0 +1,28 @@
+#!/usr/sbin/nft -f
+
+chain prerouting_sing-box {
+    meta mark 0x29a accept comment "Bypass sing-box marked traffic"
+    udp dport { 67, 68 } accept comment "Allow DHCP traffic"
+    ip6 nexthdr icmpv6 accept comment "Allow ICMPv6"
+    fib daddr type local accept comment "Bypass local destination"
+    ip saddr { 192.168.31.8 } accept comment "Bypass specific source device"
+    ip daddr { 127.0.0.0/8, 192.168.0.0/16 } accept comment "Bypass reserved IPv4"
+    ip6 daddr { ::1/128, fe80::/10, fc00::/7 } accept comment "Bypass reserved IPv6"
+    ct status dnat accept comment "Bypass DNATed traffic"
+    meta l4proto { tcp, udp } th dport 53 tproxy to :7893 meta mark set 0x1 comment "TProxy DNS traffic and mark"
+    meta l4proto { tcp, udp } tproxy to :7893 meta mark set 0x1 comment "TProxy other traffic and mark"
+}
+
+chain output_sing-box {
+    meta oifname "lo" accept comment "Allow loopback output"
+    ip6 nexthdr icmpv6 accept comment "Allow ICMPv6"
+    meta mark 0x29a accept comment "Bypass sing-box marked traffic"
+    meta l4proto { tcp, udp } th dport 53 meta mark set 0x1 accept comment "Mark and allow DNS output"
+    fib daddr type local accept comment "Bypass local destination"
+    ip saddr { 192.168.31.8 } accept comment "Bypass specific source device"
+    ip daddr { 127.0.0.0/8, 192.168.0.0/16 } accept comment "Bypass reserved IPv4"
+    ip6 daddr { ::1/128, fe80::/10, fc00::/7 } accept comment "Bypass reserved IPv6"
+    udp dport { netbios-ns, netbios-dgm, netbios-ssn } accept comment "Bypass NBNS traffic"
+    ct status dnat accept comment "Bypass DNATed traffic"
+    meta l4proto { tcp, udp } meta mark set 0x1 accept comment "Mark and allow other output traffic"
+}
