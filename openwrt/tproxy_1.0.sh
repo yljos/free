@@ -20,10 +20,10 @@ setup_tproxy_route() {
 }
 # 清理 tproxy 路由和策略规则
 cleanup_tproxy_route() {
-	ip route flush table 100
-	ip rule del fwmark 0x1 lookup 100
-	ip -6 route flush table 100
-	ip -6 rule del fwmark 0x1 lookup 100
+		ip route flush table 100 >/dev/null 2>&1
+		ip rule del fwmark 0x1 lookup 100 >/dev/null 2>&1
+		ip -6 route flush table 100 >/dev/null 2>&1
+		ip -6 rule del fwmark 0x1 lookup 100 >/dev/null 2>&1
 }
 # 插入 sing-box jump 规则
 insert_singbox_jump_rule() {
