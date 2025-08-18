@@ -1,4 +1,21 @@
+
 #!/bin/sh
+# 依赖检测与自动安装
+for cmd in curl unzip; do
+    if ! command -v $cmd >/dev/null 2>&1; then
+        echo "检测到缺少依赖: $cmd，尝试自动安装..."
+        if command -v opkg >/dev/null 2>&1; then
+            opkg update && opkg install $cmd
+            if ! command -v $cmd >/dev/null 2>&1; then
+                echo "$cmd 安装失败，请手动安装后重试。"
+                exit 1
+            fi
+        else
+            echo "未检测到 opkg，请手动安装 $cmd 后重试。"
+            exit 1
+        fi
+    fi
+done
 
 # 检查参数数量
 if [ $# -ne 2 ]; then
@@ -17,7 +34,7 @@ PASSWORD=$2
 temp_dir=$(mktemp -d)
 
 # 从远程下载zip文件
-if ! curl -s -o "$temp_dir/singbox.zip" "http://nas/singbox.zip"; then
+if ! curl -s -o "$temp_dir/singbox.zip" "http://192.168.31.21/singbox.zip"; then
     echo "错误：下载 singbox.zip 失败"
     rm -rf "$temp_dir"
     exit 1
