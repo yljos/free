@@ -46,8 +46,8 @@ if [ $# -eq 0 ]; then
 	exit 0
 else
 	# 有参数，执行启用
-	echo "[tproxy] 检查依赖..."
 	check_requirements
+    echo "[tproxy] 依赖检查通过"
 	echo "[tproxy] 设置 tproxy 路由和策略规则..."
 	setup_tproxy_route
 	echo "[tproxy] 插入 sing-box 跳转规则..."
