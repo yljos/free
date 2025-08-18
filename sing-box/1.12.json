@@ -2,7 +2,7 @@
   "log": {"level": "error", "timestamp": true},
   "dns": {
     "servers": [
-      {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
+      {"tag": "dns_resolver", "type": "https", "server": "223.5.5.5", "server_port": 443, "detour": "D"},
       {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "M"},
       {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Google"},
       {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Microsoft"},
