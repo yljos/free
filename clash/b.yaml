@@ -68,7 +68,7 @@ dns:
     "rule-set:huawei-site": "rcode://refused"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak-download": "https://cloudflare-dns.com/dns-query#PikPak-Download"
-    "rule-set:steam": "https://cloudflare-dns.com/dns-query#Steam_fallback"
+    "rule-set:steam-site": "https://cloudflare-dns.com/dns-query#Steam_fallback"
     "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
     "rule-set:telegram-site": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
     "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US_fallback"
@@ -153,7 +153,7 @@ rule-providers:
   reddit: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml }
   speedtest-site: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site.yaml }
   spotify: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml }
-  steam: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/steam.yaml }
+  steam-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/steam/steam-site.yaml }
   telegram-site: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-site.yaml }
   telegram-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-ip.mrs }
   tiktok: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml }
