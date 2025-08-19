@@ -119,8 +119,8 @@ rule-providers:
   adguard: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml }
 #  ad-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
 #  ad-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs }
-  alibaba-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-site.yaml }
-  alibaba-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-ip.mrs }
+  alibaba-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-site.yaml }
+  alibaba-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-ip.mrs }
   apkpure: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml }
   codeberg: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml }
   cn-site: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-site.yaml }
