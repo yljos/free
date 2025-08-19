@@ -213,7 +213,7 @@ rules:
   - "RULE-SET,apkpure,M_fallback"
   - "RULE-SET,f-droid,M_fallback"
   - "RULE-SET,spotify,M_fallback"
-  - "RULE-SET,steam,Steam_fallback"
+  - "RULE-SET,steam-site,Steam_fallback"
   - "RULE-SET,gfw,M_fallback"
   - "RULE-SET,cn-site,DIRECT"
   # ipcidr
