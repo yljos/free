@@ -64,7 +64,7 @@ dns:
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
     "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
-    "rule-set:ad-site": "rcode://refused"
+#    "rule-set:ad-site": "rcode://refused"
     "rule-set:huawei-site": "rcode://refused"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak-download": "https://cloudflare-dns.com/dns-query#PikPak-Download"
@@ -117,8 +117,8 @@ proxy-groups:
 rule-providers:
   archlinux: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml }
   adguard: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml }
-  ad-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
-  ad-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs }
+#  ad-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
+#  ad-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs }
   alibaba-site: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-site.yaml }
   alibaba-ip: { <<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ailbaba/alibaba-ip.mrs }
   apkpure: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml }
@@ -171,8 +171,8 @@ rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei-site,REJECT"
   - "RULE-SET,huawei-ip,REJECT"
-  - "RULE-SET,ad-site,REJECT"
-  - "RULE-SET,ad-ip,REJECT"
+#  - "RULE-SET,ad-site,REJECT"
+#  - "RULE-SET,ad-ip,REJECT"
   - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
 
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
