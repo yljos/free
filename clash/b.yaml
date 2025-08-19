@@ -127,7 +127,7 @@ rule-providers:
   cn-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs }
   docker: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml }
   direct-cf-site-classical: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-cf-site-classical.yaml }
-  direct-site-classical: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site-classiical.yaml }
+  direct-site-classical: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site-classical.yaml }
   direct-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs }
   mozilla: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml }
   gfw: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml }
