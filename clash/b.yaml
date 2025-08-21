@@ -130,7 +130,7 @@ rule-providers:
   direct-site-classical: { <<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site-classical.yaml }
   direct-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs }
   mozilla: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml }
-  gfw: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/gfw.yaml }
+  gfw-site: { <<: *domain, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/gfw/gfw-site.mrs }
   github: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml }
   google: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml }
   google-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs }
@@ -210,7 +210,7 @@ rules:
   - "RULE-SET,f-droid,M_fallback"
   - "RULE-SET,spotify,M_fallback"
   - "RULE-SET,steam-site-classical,Steam_fallback"
-  - "RULE-SET,gfw,M_fallback"
+  - "RULE-SET,gfw-site,M_fallback"
   - "RULE-SET,cn-site,DIRECT"
   # ipcidr
   - "RULE-SET,local-ip,DIRECT"
