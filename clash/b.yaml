@@ -65,7 +65,7 @@ dns:
   nameserver-policy:
     "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
 #    "rule-set:ad-site-classical": "rcode://refused"
-    "rule-set:huawei-site-classical": "rcode://refused"
+    "rule-set:huawei-site-classical": "rcode://name_error"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak-download-site-classical": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam_fallback"
@@ -169,8 +169,8 @@ rule-providers:
   facebook-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs }
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
-  - "RULE-SET,huawei-site-classical,REJECT"
-  - "RULE-SET,huawei-ip,REJECT"
+  - "RULE-SET,huawei-site-classical,REJECT-DROP"
+  - "RULE-SET,huawei-ip,REJECT-DROP"
 #  - "RULE-SET,ad-site-classical,REJECT"
 #  - "RULE-SET,ad-ip,REJECT"
   - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
