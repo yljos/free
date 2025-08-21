@@ -140,7 +140,6 @@ rule-providers:
   javdb: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml }
   jd: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml }
   local-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/local/local-ip.mrs }
-  meituan: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/meituan.yaml }
   microsoft: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml }
   netflix: { <<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml }
   netflix-ip: { <<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs }
@@ -182,7 +181,6 @@ rules:
   - "RULE-SET,pikpak-download-site-classical,PikPak-Download"
   - "RULE-SET,pikpak-site-classical,PikPak_fallback"
   - "RULE-SET,alibaba-site-classical,DIRECT"
-  - "RULE-SET,meituan,DIRECT"
   - "RULE-SET,jd,DIRECT"
   - "RULE-SET,tencent,DIRECT"
   - "RULE-SET,googlefcm,DIRECT"
