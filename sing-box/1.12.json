@@ -49,7 +49,7 @@
     {"tag": "Netflix", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
     {"tag": "PikPak", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
     {"tag": "GitHub", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
-    {"tag": "Microsoft", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "HK"},
+    {"tag": "Microsoft", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
     {"tag": "PikPak-Download", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "D"},
     {"tag": "Default", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
     {"tag": "HK", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(hk|香港|hongkong))(?!.*(小众)).*$"]}]},
