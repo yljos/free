@@ -215,8 +215,8 @@ rules:
   # ipcidr
   - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
-  - "RULE-SET,alibaba-ip,DIRECT"
   - "RULE-SET,pikpak-ip,PikPak_fallback"
+  - "RULE-SET,alibaba-ip,DIRECT"
   - "RULE-SET,telegram-ip,Telegram_fallback"
   - "RULE-SET,twitter-ip,US_fallback"
   - "RULE-SET,facebook-ip,US_fallback"
