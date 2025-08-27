@@ -644,12 +644,12 @@
         "outbound": "D"
       },
       {
-        "rule_set": "alibaba-ip",
-        "outbound": "D"
-      },
-      {
         "rule_set": "pikpak-ip",
         "outbound": "PikPak"
+      },
+      {
+        "rule_set": "alibaba-ip",
+        "outbound": "D"
       },
       {
         "rule_set": "facebook-ip",
