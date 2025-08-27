@@ -1,1049 +1,178 @@
 {
-  "log": {
-    "disabled": true,
-    "level": "error",
-    "timestamp": true
-  },
+  "log": {"disabled": true, "level": "error", "timestamp": true},
   "dns": {
     "servers": [
-      {
-        "tag": "dns_resolver",
-        "type": "udp",
-        "server": "223.5.5.5",
-        "server_port": 53,
-        "detour": "D"
-      },
-      {
-        "tag": "dns_proxy",
-        "type": "https",
-        "server": "cloudflare-dns.com",
-        "server_port": 443,
-        "detour": "M"
-      },
-      {
-        "tag": "dns_google",
-        "type": "https",
-        "server": "cloudflare-dns.com",
-        "server_port": 443,
-        "detour": "Google"
-      },
-      {
-        "tag": "dns_microsoft",
-        "type": "https",
-        "server": "cloudflare-dns.com",
-        "server_port": 443,
-        "detour": "Microsoft"
-      },
-      {
-        "tag": "dns_direct",
-        "type": "https",
-        "server": "dns.alidns.com",
-        "server_port": 443,
-        "domain_resolver": "dns_resolver",
-        "detour": "D"
-      },
-      {
-        "tag": "dns_fakeip",
-        "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
-      }
+      {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
+      {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "M"},
+      {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Google"},
+      {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Microsoft"},
+      {"tag": "dns_direct", "type": "https", "server": "dns.alidns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "D"},
+      {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
     "rules": [
-      {
-        "domain_suffix": [
-          "jsdmirror.com",
-          "ddns-link-b5.uk",
-          "dexlos.com"
-        ],
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "domain_keyword": [
-          "msftconnecttest.com",
-          "msftncsi.com"
-        ],
-        "strategy": "ipv4_only",
-        "server": "dns_microsoft"
-      },
-      {
-        "domain_keyword": "googleapis",
-        "strategy": "ipv4_only",
-        "server": "dns_google"
-      },
-      {
-        "rule_set": "direct-site",
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": "direct-cf-site",
-        "strategy": "ipv4_only",
-        "server": "dns_proxy"
-      },
-      {
-        "rule_set": "huawei-site",
-        "action": "reject"
-      },
-      {
-        "rule_set": "ad-site",
-        "action": "reject"
-      },
-      {
-        "rule_set": "jd",
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": "alibaba-site",
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": "tencent",
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "rule_set": "googlefcm",
-        "strategy": "ipv4_only",
-        "server": "dns_google"
-      },
-      {
-        "rule_set": "google",
-        "strategy": "ipv4_only",
-        "server": "dns_google"
-      },
-      {
-        "rule_set": "youtube",
-        "strategy": "ipv4_only",
-        "server": "dns_google"
-      },
-      {
-        "rule_set": "microsoft",
-        "strategy": "ipv4_only",
-        "server": "dns_microsoft"
-      },
-      {
-        "rule_set": "cn-site",
-        "strategy": "ipv4_only",
-        "server": "dns_direct"
-      },
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "dns_fakeip",
-        "disable_cache": true
-      }
+      {"domain_suffix": ["jsdmirror.com", "ddns-link-b5.uk", "dexlos.com"], "strategy": "ipv4_only", "server": "dns_direct"},
+      {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "strategy": "ipv4_only", "server": "dns_microsoft"},
+      {"domain_keyword": "googleapis", "strategy": "ipv4_only", "server": "dns_google"},
+      {"rule_set": "direct-site", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"rule_set": "direct-cf-site", "strategy": "ipv4_only", "server": "dns_proxy"},
+      {"rule_set": "huawei-site", "action": "reject"},
+      {"rule_set": "ad-site", "action": "reject"},
+      {"rule_set": "jd", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"rule_set": "alibaba-site", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"rule_set": "tencent", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"rule_set": "googlefcm", "strategy": "ipv4_only", "server": "dns_google"},
+      {"rule_set": "google", "strategy": "ipv4_only", "server": "dns_google"},
+      {"rule_set": "youtube", "strategy": "ipv4_only", "server": "dns_google"},
+      {"rule_set": "microsoft", "strategy": "ipv4_only", "server": "dns_microsoft"},
+      {"rule_set": "cn-site", "strategy": "ipv4_only", "server": "dns_direct"},
+      {"query_type": ["A", "AAAA"], "server": "dns_fakeip", "disable_cache": true}
     ],
     "final": "dns_proxy",
     "strategy": "ipv4_only",
     "disable_cache": true
   },
   "inbounds": [
-    {
-      "type": "tproxy",
-      "tag": "tproxy-in",
-      "listen": "::",
-      "listen_port": 7893
-    },
-    {
-      "type": "mixed",
-      "tag": "mixed-in",
-      "users": [
-        {
-          "Username": "huai",
-          "Password": "password12138"
-        }
-      ],
-      "listen": "::",
-      "listen_port": 12138
-    }
+    {"type": "tproxy", "tag": "tproxy-in", "listen": "::", "listen_port": 7893},
+    {"type": "mixed", "tag": "mixed-in", "users": [{"Username": "huai", "Password": "password12138"}], "listen": "::", "listen_port": 12138}
   ],
   "outbounds": [
-    {
-      "tag": "D",
-      "type": "direct",
-      "domain_resolver": "dns_direct"
-    },
-    {
-      "tag": "M",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "Google",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "US"
-    },
-    {
-      "tag": "OpenAi",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "Steam",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "HK"
-    },
-    {
-      "tag": "Telegram",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "Twitter",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "US"
-    },
-    {
-      "tag": "FaceBook",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "US"
-    },
-    {
-      "tag": "TikTok",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "JP"
-    },
-    {
-      "tag": "Netflix",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "PikPak",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "GitHub",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "Microsoft",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "PikPak-Download",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "Default",
-      "type": "selector",
-      "outbounds": [
-        "HK",
-        "SG",
-        "JP",
-        "US",
-        "D",
-        "TW"
-      ],
-      "default": "SG"
-    },
-    {
-      "tag": "HK",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "https://cp.cloudflare.com",
-      "interval": "1m0s",
-      "tolerance": 300,
-      "filter": [
-        {
-          "action": "match",
-          "regex": [
-            "(?i)^(?=.*(hk|香港|hongkong))(?!.*(小众)).*$"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "SG",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "https://cp.cloudflare.com",
-      "interval": "1m0s",
-      "tolerance": 300,
-      "filter": [
-        {
-          "action": "match",
-          "regex": [
-            "(?i)^(?=.*(新加坡|sg|singapore))(?!.*(小众)).*$"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "JP",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "https://cp.cloudflare.com",
-      "interval": "1m0s",
-      "tolerance": 300,
-      "filter": [
-        {
-          "action": "match",
-          "regex": [
-            "(?i)^(?=.*(jp|日本|japan))(?!.*(小众)).*$"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "US",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "https://cp.cloudflare.com",
-      "interval": "1m0s",
-      "tolerance": 300,
-      "filter": [
-        {
-          "action": "match",
-          "regex": [
-            "(?i)^(?=.*(us|美国|united states|america))(?!.*(小众)).*$"
-          ]
-        }
-      ]
-    },
-    {
-      "tag": "TW",
-      "type": "urltest",
-      "outbounds": [
-        "{all}"
-      ],
-      "url": "https://cp.cloudflare.com",
-      "interval": "1m0s",
-      "tolerance": 300,
-      "filter": [
-        {
-          "action": "match",
-          "regex": [
-            "(?i)^(?=.*(tw|台湾|taiwan))(?!.*(小众)).*$"
-          ]
-        }
-      ]
-    }
+    {"tag": "D", "type": "direct", "domain_resolver": "dns_direct"},
+    {"tag": "M", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
+    {"tag": "Google", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "US"},
+    {"tag": "OpenAi", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
+    {"tag": "Steam", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "HK"},
+    {"tag": "Telegram", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
+    {"tag": "Twitter", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "US"},
+    {"tag": "FaceBook", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "US"},
+    {"tag": "TikTok", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "JP"},
+    {"tag": "Netflix", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
+    {"tag": "PikPak", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "TW"], "default": "SG"},
+    {"tag": "GitHub", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
+    {"tag": "Microsoft", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
+    {"tag": "PikPak-Download", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
+    {"tag": "Default", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D", "TW"], "default": "SG"},
+    {"tag": "HK", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(hk|香港|hongkong))(?!.*(小众)).*$"]}]},
+    {"tag": "SG", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(小众)).*$"]}]},
+    {"tag": "JP", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(jp|日本|japan))(?!.*(小众)).*$"]}]},
+    {"tag": "US", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(us|美国|united states|america))(?!.*(小众)).*$"]}]},
+    {"tag": "TW", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(tw|台湾|taiwan))(?!.*(小众)).*$"]}]}
   ],
   "route": {
     "rules": [
-      {
-        "inbound": [
-          "tproxy-in",
-          "mixed-in"
-        ],
-        "action": "sniff",
-        "timeout": "300ms"
-      },
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      },
-      {
-        "protocol": "quic",
-        "action": "reject"
-      },
-      {
-        "rule_set": "ad-site",
-        "action": "reject"
-      },
-      {
-        "rule_set": "ad-ip",
-        "action": "reject"
-      },
-      {
-        "rule_set": "huawei-site",
-        "action": "reject"
-      },
-      {
-        "rule_set": "huawei-ip",
-        "action": "reject"
-      },
-      {
-        "source_ip_cidr": [
-          "192.168.31.24/32"
-        ],
-        "outbound": "D"
-      },
-      {
-        "domain_suffix": [
-          "ddns-link-b5.uk",
-          "dexlos.com"
-        ],
-        "outbound": "dns_direct"
-      },
-      {
-        "domain_keyword": [
-          "msftconnecttest.com",
-          "msftncsi.com"
-        ],
-        "outbound": "Microsoft"
-      },
-      {
-        "domain_keyword": "googleapis",
-        "outbound": "Google"
-      },
-      {
-        "rule_set": "direct-site",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "direct-cf-site",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "proxy-site",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "openai",
-        "outbound": "OpenAi"
-      },
-      {
-        "rule_set": "pikpak-download-site",
-        "outbound": "PikPak-Download"
-      },
-      {
-        "rule_set": "pikpak-site",
-        "outbound": "PikPak"
-      },
-      {
-        "rule_set": "javdb",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "tmdb",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "speedtest-site",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "codeberg",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "fdroid",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "apkpure",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "adguard",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "openwrt",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "docker",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "archlinux",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "spotify",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "reddit",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "jd",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "steam-site",
-        "outbound": "Steam"
-      },
-      {
-        "rule_set": "youtube",
-        "outbound": "Google"
-      },
-      {
-        "rule_set": "tiktok",
-        "outbound": "TikTok"
-      },
-      {
-        "rule_set": "github",
-        "outbound": "GitHub"
-      },
-      {
-        "rule_set": "mozilla",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "wikimedia",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "googlefcm",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "telegram-site",
-        "outbound": "Telegram"
-      },
-      {
-        "rule_set": "twitter",
-        "outbound": "Twitter"
-      },
-      {
-        "rule_set": "netflix",
-        "outbound": "Netflix"
-      },
-      {
-        "rule_set": "facebook",
-        "outbound": "FaceBook"
-      },
-      {
-        "rule_set": "google",
-        "outbound": "Google"
-      },
-      {
-        "rule_set": "alibaba-site",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "tencent",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "microsoft",
-        "outbound": "Microsoft"
-      },
-      {
-        "rule_set": "gfw-site",
-        "outbound": "M"
-      },
-      {
-        "rule_set": "cn-site",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "direct-ip",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "local-ip",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "pikpak-ip",
-        "outbound": "PikPak"
-      },
-      {
-        "rule_set": "alibaba-ip",
-        "outbound": "D"
-      },
-      {
-        "rule_set": "facebook-ip",
-        "outbound": "FaceBook"
-      },
-      {
-        "rule_set": "netflix-ip",
-        "outbound": "Netflix"
-      },
-      {
-        "rule_set": "twitter-ip",
-        "outbound": "Twitter"
-      },
-      {
-        "rule_set": "telegram-ip",
-        "outbound": "Telegram"
-      },
-      {
-        "rule_set": "google-ip",
-        "outbound": "Google"
-      },
-      {
-        "rule_set": "cn-ip",
-        "outbound": "D"
-      }
+      {"inbound": ["tproxy-in", "mixed-in"], "action": "sniff", "timeout": "300ms"},
+      {"protocol": "dns", "action": "hijack-dns"},
+      {"protocol": "quic", "action": "reject"},
+      {"rule_set": "ad-site", "action": "reject"},
+      {"rule_set": "ad-ip", "action": "reject"},
+      {"rule_set": "huawei-site", "action": "reject"},
+      {"rule_set": "huawei-ip", "action": "reject"},
+      {"source_ip_cidr": ["192.168.31.24/32"], "outbound": "D"},
+      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "outbound": "dns_direct"},
+      {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "outbound": "Microsoft"},
+      {"domain_keyword": "googleapis", "outbound": "Google"},
+      {"rule_set": "direct-site", "outbound": "D"},
+      {"rule_set": "direct-cf-site", "outbound": "D"},
+      {"rule_set": "proxy-site", "outbound": "M"},
+      {"rule_set": "openai", "outbound": "OpenAi"},
+      {"rule_set": "pikpak-download-site", "outbound": "PikPak-Download"},
+      {"rule_set": "pikpak-site", "outbound": "PikPak"},
+      {"rule_set": "javdb", "outbound": "M"},
+      {"rule_set": "tmdb", "outbound": "M"},
+      {"rule_set": "speedtest-site", "outbound": "M"},
+      {"rule_set": "codeberg", "outbound": "M"},
+      {"rule_set": "fdroid", "outbound": "M"},
+      {"rule_set": "apkpure", "outbound": "M"},
+      {"rule_set": "adguard", "outbound": "M"},
+      {"rule_set": "openwrt", "outbound": "M"},
+      {"rule_set": "docker", "outbound": "M"},
+      {"rule_set": "archlinux", "outbound": "M"},
+      {"rule_set": "spotify", "outbound": "M"},
+      {"rule_set": "reddit", "outbound": "M"},
+      {"rule_set": "jd", "outbound": "D"},
+      {"rule_set": "steam-site", "outbound": "Steam"},
+      {"rule_set": "youtube", "outbound": "Google"},
+      {"rule_set": "tiktok", "outbound": "TikTok"},
+      {"rule_set": "github", "outbound": "GitHub"},
+      {"rule_set": "mozilla", "outbound": "M"},
+      {"rule_set": "wikimedia", "outbound": "M"},
+      {"rule_set": "googlefcm", "outbound": "D"},
+      {"rule_set": "telegram-site", "outbound": "Telegram"},
+      {"rule_set": "twitter", "outbound": "Twitter"},
+      {"rule_set": "netflix", "outbound": "Netflix"},
+      {"rule_set": "facebook", "outbound": "FaceBook"},
+      {"rule_set": "google", "outbound": "Google"},
+      {"rule_set": "alibaba-site", "outbound": "D"},
+      {"rule_set": "tencent", "outbound": "D"},
+      {"rule_set": "microsoft", "outbound": "Microsoft"},
+      {"rule_set": "gfw-site", "outbound": "M"},
+      {"rule_set": "cn-site", "outbound": "D"},
+      {"rule_set": "direct-ip", "outbound": "D"},
+      {"rule_set": "local-ip", "outbound": "D"},
+      {"rule_set": "pikpak-ip", "outbound": "PikPak"},
+      {"rule_set": "alibaba-ip", "outbound": "D"},
+      {"rule_set": "facebook-ip", "outbound": "FaceBook"},
+      {"rule_set": "netflix-ip", "outbound": "Netflix"},
+      {"rule_set": "twitter-ip", "outbound": "Twitter"},
+      {"rule_set": "telegram-ip", "outbound": "Telegram"},
+      {"rule_set": "google-ip", "outbound": "Google"},
+      {"rule_set": "cn-ip", "outbound": "D"}
     ],
     "rule_set": [
-      {
-        "tag": "ad-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/ad/ad-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "ad-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/ad/ad-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "adguard",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/adguard.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "alibaba-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/alibaba/alibaba-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "alibaba-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/alibaba/alibaba-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "apkpure",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apkpure.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "archlinux",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/archlinux.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "cn-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/cn/cn-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "cn-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/cn/cn-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "codeberg",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/codeberg.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "direct-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/direct/direct-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "direct-cf-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/direct/direct-cf-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "direct-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box//direct/direct-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "docker",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/docker.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "fdroid",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/f-droid.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "facebook",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "facebook-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/facebook.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "gfw-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/gfw/gfw-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "github",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "google",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "google-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "googlefcm",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/googlefcm.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "huawei-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/huawei/huawei-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "huawei-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/huawei/huawei-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "javdb",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/javdb.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "jd",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/jd.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "local-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/local/local-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "microsoft",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "mozilla",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/mozilla.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "netflix",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "netflix-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "openai",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "openwrt",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openwrt.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "pikpak-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak/pikpak-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "pikpak-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak/pikpak-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "pikpak-download-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak-download/pikpak-download-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "proxy-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/proxy/proxy-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "reddit",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/reddit.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "speedtest-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/speedtest/speedtest-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "spotify",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "steam-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/steam/steam-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "tencent",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tencent.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "telegram-site",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/telegram/telegram-site.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "telegram-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/telegram/telegram-ip.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "tiktok",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "tmdb",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tmdb.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "twitter",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "twitter-ip",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/twitter.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "wikimedia",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/wikimedia.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      },
-      {
-        "tag": "youtube",
-        "type": "remote",
-        "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
-        "download_detour": "D",
-        "update_interval": "12h0m0s"
-      }
+      {"tag": "ad-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/ad/ad-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "ad-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/ad/ad-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "adguard", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/adguard.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "alibaba-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/alibaba/alibaba-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "alibaba-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/alibaba/alibaba-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "apkpure", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apkpure.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "archlinux", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/archlinux.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "cn-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/cn/cn-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "cn-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/cn/cn-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "codeberg", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/codeberg.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "direct-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/direct/direct-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "direct-cf-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/direct/direct-cf-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "direct-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box//direct/direct-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "docker", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/docker.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "fdroid", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/f-droid.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "facebook", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "facebook-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/facebook.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "gfw-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/gfw/gfw-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "github", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "google", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "google-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "googlefcm", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/googlefcm.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "huawei-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/huawei/huawei-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "huawei-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/huawei/huawei-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "javdb", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/javdb.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "jd", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/jd.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "local-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/local/local-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "microsoft", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "mozilla", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/mozilla.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "netflix", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "netflix-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "openai", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "openwrt", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openwrt.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "pikpak-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak/pikpak-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "pikpak-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak/pikpak-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "pikpak-download-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/pikpak-download/pikpak-download-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "proxy-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/proxy/proxy-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "reddit", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/reddit.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "speedtest-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/speedtest/speedtest-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "spotify", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "steam-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/steam/steam-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "tencent", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tencent.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "telegram-site", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/telegram/telegram-site.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "telegram-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/sing-box/telegram/telegram-ip.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "tiktok", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "tmdb", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tmdb.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "twitter", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/twitter.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "twitter-ip", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/twitter.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "wikimedia", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/wikimedia.srs", "download_detour": "D", "update_interval": "12h0m0s"},
+      {"tag": "youtube", "type": "remote", "url": "https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs", "download_detour": "D", "update_interval": "12h0m0s"}
     ],
     "final": "Default",
     "auto_detect_interface": true,
     "default_mark": "0x29a",
-    "default_domain_resolver": {
-      "server": "dns_direct",
-      "rewrite_ttl": 10
-    }
+    "default_domain_resolver": {"server": "dns_direct", "rewrite_ttl": 10}
   },
-  "experimental": {
-    "clash_api": {
-      "external_controller": "0.0.0.0:9090",
-      "external_ui": "ui",
-      "secret": "101300",
-      "external_ui_download_url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/dist.zip",
-      "external_ui_download_detour": "D",
-      "default_mode": "rule"
-    }
-  }
+  "experimental": {"clash_api": {"external_controller": "0.0.0.0:9090", "external_ui": "ui", "secret": "101300", "external_ui_download_url": "https://cdn.jsdmirror.com/gh/litepower/rule-set@main/dist.zip", "external_ui_download_detour": "D", "default_mode": "rule"}}
 }
