@@ -169,10 +169,6 @@
       "domain_resolver": "dns_direct"
     },
     {
-      "tag": "block",
-      "type": "block"
-    },
-    {
       "tag": "M",
       "type": "selector",
       "outbounds": [
@@ -452,23 +448,23 @@
       },
       {
         "protocol": "quic",
-        "outbound": "block"
+        "action": "reject"
       },
       {
         "rule_set": "ad-site",
-        "outbound": "block"
+        "action": "reject"
       },
       {
         "rule_set": "ad-ip",
-        "outbound": "block"
+        "action": "reject"
       },
       {
         "rule_set": "huawei-site",
-        "outbound": "block"
+        "action": "reject"
       },
       {
         "rule_set": "huawei-ip",
-        "outbound": "block"
+        "action": "reject"
       },
       {
         "source_ip_cidr": [
