@@ -67,7 +67,7 @@ dns:
     # "rule-set:ad-site-classical": "rcode://refused"
     "rule-set:huawei-site-classical": "rcode://name_error"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
-    "rule-set:pikpak-download-site-classical": "https://cloudflare-dns.com/dns-query#PikPak-Download"
+    "rule-set:pikpak-download-site": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam_fallback"
     "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
     "rule-set:telegram-site-classical": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
@@ -145,10 +145,10 @@ rule-providers:
   netflix-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs}
   openai: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
   openwrt: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
-  pikpak-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site-classical.yaml}
+  pikpak-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.mrs}
   pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
-  pikpak-download-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site-classical.yaml}
-  proxy-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/proxy/proxy-site-classical.yaml}
+  pikpak-download-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.mrs}
+  proxy-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/proxy/proxy-site.mrs}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
   speedtest-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site-classical.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
@@ -178,13 +178,13 @@ rules:
   - "DOMAIN-KEYWORD,googleapis,Google_fallback"
   - "RULE-SET,direct-site-classical,DIRECT"
   - "RULE-SET,direct-cf-site-classical,DIRECT"
-  - "RULE-SET,pikpak-site-classical,PikPak_fallback"
-  - "RULE-SET,pikpak-download-site-classical,PikPak-Download"
+  - "RULE-SET,pikpak-site,PikPak_fallback"
+  - "RULE-SET,pikpak-download-site,PikPak-Download"
   - "RULE-SET,alibaba-site,DIRECT"
   - "RULE-SET,jd,DIRECT"
   - "RULE-SET,tencent,DIRECT"
   - "RULE-SET,googlefcm,DIRECT"
-  - "RULE-SET,proxy-site-classical,M_fallback"
+  - "RULE-SET,proxy-site,M_fallback"
   - "RULE-SET,github,GitHub_fallback"
   - "RULE-SET,codeberg,M_fallback"
   - "RULE-SET,docker,M_fallback"
