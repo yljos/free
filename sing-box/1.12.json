@@ -66,7 +66,7 @@
       {"rule_set": "huawei-site", "action": "reject"},
       {"rule_set": "huawei-ip", "action": "reject"},
       {"source_ip_cidr": ["192.168.31.24/32"], "outbound": "D"},
-      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com"], "outbound": "dns_direct"},
+      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com","jsdmirror.com"], "outbound": "dns_direct"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "outbound": "Microsoft"},
       {"domain_keyword": "googleapis", "outbound": "Google"},
       {"rule_set": "direct-site", "outbound": "D"},
