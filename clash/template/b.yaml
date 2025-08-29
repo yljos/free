@@ -1,0 +1,226 @@
+select: &select {type: select, filter: "(?i)^(?!.*(Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
+fallback: &fallback {type: fallback, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+domain: &domain {proxy: M_fallback, interval: 86400, type: http, format: mrs, behavior: domain}
+ipcidr: &ipcidr {proxy: M_fallback, interval: 86400, type: http, format: mrs, behavior: ipcidr}
+classical: &classical {proxy: M_fallback, type: http, interval: 86400, behavior: classical, format: yaml}
+mixed-port: 12138
+redir-port: 7892
+tproxy-port: 7893
+allow-lan: true
+bind-address: "*"
+find-process-mode: off # always, strict, off
+log-level: error # info, warning, error, debug
+ipv6: true
+udp: true
+unified-delay: true
+tcp-concurrent: true
+profile: {store-selected: true, store-fake-ip: true}
+external-controller: "0.0.0.0:9090"
+secret: "101300"
+authentication: ["huai:password12138"]
+skip-auth-prefixes: [127.0.0.1/8, 192.168.0.0/16]
+external-ui: ui
+global-client-fingerprint: chrome
+external-ui-url: "https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/dist.zip"
+sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, "8080-8880"], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
+tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
+hosts: {"homeassistant.local": 192.168.31.21, "nas.lan": 192.168.31.21, "openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "huai-PC.lan": 192.168.31.15}
+dns:
+  enable: true
+  prefer-h3: false
+  listen: "0.0.0.0:1053"
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "localhost.ptlogin2.qq.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.googleapis.com"
+    - "+.googleapis.cn"
+    - "alt7-mtalk.google.com"
+    - "alt8-mtalk.google.com"
+    - "mtalk-dev.google.com"
+    - "mtalk-staging.google.com"
+    - "mtalk4.google.com"
+    - "alt1-mtalk.google.com"
+    - "alt2-mtalk.google.com"
+    - "alt3-mtalk.google.com"
+    - "alt4-mtalk.google.com"
+    - "alt5-mtalk.google.com"
+    - "alt6-mtalk.google.com"
+    - "mtalk.google.com"
+    - "ntp.aliyun.com"
+    - "+.082500.xyz"
+    - "+.202309.xyz"
+  use-hosts: true
+  default-nameserver: ["[2400:3200::1]#DIRECT", "223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
+  proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
+  nameserver: ["https://cloudflare-dns.com/dns-query#M_fallback"]
+  direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
+  nameserver-policy:
+    "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
+    # "rule-set:ad-site-classical": "rcode://refused"
+    "rule-set:huawei-site-classical": "rcode://name_error"
+    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
+    "rule-set:pikpak-download-site": "https://cloudflare-dns.com/dns-query#PikPak-Download"
+    "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam_fallback"
+    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
+    "rule-set:telegram-site-classical": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US_fallback"
+    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US_fallback"
+    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok_fallback"
+    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix_fallback"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:speedtest-site-classical": "https://cloudflare-dns.com/dns-query#SpeedTest"
+proxies: []
+proxy-groups:
+  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: M_fallback, proxies: [M, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback, DIRECT]}
+  - {<<: *select, name: Google, proxies: [US_fallback, SG_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: Google_fallback, proxies: [Google, US_fallback, SG_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: OpenAi, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: OpenAi_fallback, proxies: [OpenAi, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: Telegram, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: Telegram_fallback, proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: Netflix, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: Netflix_fallback, proxies: [Netflix, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: TikTok, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]}
+  - {<<: *fallback, name: TikTok_fallback, proxies: [TikTok, JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]}
+  - {<<: *select, name: Steam, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: Steam_fallback, proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback, DIRECT]}
+  - {<<: *select, name: PikPak, proxies: [SG_fallback, HK_fallback, US_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: PikPak_fallback, proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: PikPak-Download, type: select, proxies: [SG_loadbalance, DIRECT, HK_loadbalance, JP_loadbalance, US_loadbalance]}
+  - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]}
+  - {<<: *select, name: GitHub, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback, DIRECT]}
+  - {<<: *fallback, name: GitHub_fallback, proxies: [GitHub, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *select, name: Microsoft, proxies: [SG_fallback, DIRECT, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: Microsoft_fallback, proxies: [Microsoft, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
+  - {<<: *fallback, name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: SG_fallback, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: TW_fallback, filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: HK_loadbalance, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: JP_loadbalance, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: US_loadbalance, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: SG_loadbalance, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: TW_loadbalance, filter: "(?i)(台湾|taiwan|tw)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+rule-providers:
+  archlinux: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml}
+  adguard: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml}
+  # ad-site-classical: { <<: *classical, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
+  ad-ip: {<<: *ipcidr, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs}
+  alibaba-site: {<<: *domain, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-site.mrs}
+  alibaba-ip: {<<: *ipcidr, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-ip.mrs}
+  apkpure: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml}
+  codeberg: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml}
+  cn-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/cn/cn-site.mrs}
+  cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs}
+  docker: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml}
+  direct-cf-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/direct/direct-cf-site-classical.yaml}
+  direct-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/direct/direct-site-classical.yaml}
+  direct-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs}
+  mozilla: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml}
+  gfw-site: {<<: *domain, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/gfw/gfw-site.mrs}
+  github: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml}
+  google: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml}
+  google-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs}
+  googlefcm: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml}
+  huawei-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/huawei/huawei-site-classical.yaml}
+  huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
+  javdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
+  jd: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
+  local-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/local/local-ip.mrs}
+  microsoft: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml}
+  netflix: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml}
+  netflix-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs}
+  openai: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
+  openwrt: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
+  pikpak-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.mrs}
+  pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
+  pikpak-download-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.mrs}
+  proxy-site: {<<: *domain, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/proxy/proxy-site.mrs}
+  reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
+  speedtest-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site-classical.yaml}
+  spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
+  steam-site-classical: {<<: *classical, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/steam/steam-site-classical.yaml}
+  telegram-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/telegram/telegram-site-classical.yaml}
+  telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/mihomo/telegram/telegram-ip.mrs}
+  tiktok: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml}
+  tmdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml}
+  twitter: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml}
+  twitter-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/twitter.mrs}
+  wikimedia: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/wikimedia.yaml}
+  youtube: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/youtube.yaml}
+  f-droid: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/f-droid.yaml}
+  tencent: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tencent.yaml}
+  facebook: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/facebook.yaml}
+  facebook-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs}
+rules:
+  - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
+  - "RULE-SET,huawei-site-classical,REJECT-DROP"
+  - "RULE-SET,huawei-ip,REJECT-DROP"
+  # - "RULE-SET,ad-site-classical,REJECT"
+  - "RULE-SET,ad-ip,REJECT-DROP"
+  - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
+
+  - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
+  - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
+  - "DOMAIN-KEYWORD,googleapis,Google_fallback"
+  - "RULE-SET,direct-site-classical,DIRECT"
+  - "RULE-SET,direct-cf-site-classical,DIRECT"
+  - "RULE-SET,pikpak-site,PikPak_fallback"
+  - "RULE-SET,pikpak-download-site,PikPak-Download"
+  - "RULE-SET,alibaba-site,DIRECT"
+  - "RULE-SET,jd,DIRECT"
+  - "RULE-SET,tencent,DIRECT"
+  - "RULE-SET,googlefcm,DIRECT"
+  - "RULE-SET,proxy-site,M_fallback"
+  - "RULE-SET,github,GitHub_fallback"
+  - "RULE-SET,codeberg,M_fallback"
+  - "RULE-SET,docker,M_fallback"
+  - "RULE-SET,archlinux,M_fallback"
+  - "RULE-SET,openwrt,M_fallback"
+  - "RULE-SET,mozilla,M_fallback"
+  - "RULE-SET,microsoft,Microsoft_fallback"
+  - "RULE-SET,openai,OpenAi_fallback"
+  - "RULE-SET,youtube,Google_fallback"
+  - "RULE-SET,google,Google_fallback"
+  - "RULE-SET,netflix,Netflix_fallback"
+  - "RULE-SET,tiktok,TikTok_fallback"
+  - "RULE-SET,tmdb,M_fallback"
+  - "RULE-SET,telegram-site-classical,Telegram_fallback"
+  - "RULE-SET,twitter,US_fallback"
+  - "RULE-SET,facebook,US_fallback"
+  - "RULE-SET,reddit,M_fallback"
+  - "RULE-SET,adguard,M_fallback"
+  - "RULE-SET,speedtest-site-classical,SpeedTest"
+  - "RULE-SET,wikimedia,M_fallback"
+  - "RULE-SET,javdb,M_fallback"
+  - "RULE-SET,apkpure,M_fallback"
+  - "RULE-SET,f-droid,M_fallback"
+  - "RULE-SET,spotify,M_fallback"
+  - "RULE-SET,steam-site-classical,Steam_fallback"
+  - "RULE-SET,gfw-site,M_fallback"
+  - "RULE-SET,cn-site,DIRECT"
+  # ipcidr
+  - "RULE-SET,local-ip,DIRECT"
+  - "RULE-SET,direct-ip,DIRECT"
+  - "RULE-SET,pikpak-ip,PikPak_fallback"
+  - "RULE-SET,alibaba-ip,DIRECT"
+  - "RULE-SET,telegram-ip,Telegram_fallback"
+  - "RULE-SET,twitter-ip,US_fallback"
+  - "RULE-SET,facebook-ip,US_fallback"
+  - "RULE-SET,netflix-ip,Netflix_fallback"
+  - "RULE-SET,google-ip,Google_fallback"
+  - "RULE-SET,cn-ip,DIRECT"
+  - "MATCH,Default"
