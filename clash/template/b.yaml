@@ -92,8 +92,7 @@ proxy-groups:
   - {<<: *fallback, name: Telegram_fallback, proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
   - {<<: *select, name: Netflix, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
   - {<<: *fallback, name: Netflix_fallback, proxies: [Netflix, SG_fallback, US_fallback, HK_fallback, JP_fallback, TW_fallback]}
-  - {<<: *select, name: TikTok, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]}
-  - {<<: *fallback, name: TikTok_fallback, proxies: [TikTok, JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]}
+  - {<<: *fallback, name: TikTok_fallback, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback, TW_fallback]}
   - {<<: *select, name: Steam, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback]}
   - {<<: *fallback, name: Steam_fallback, proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback, TW_fallback, DIRECT]}
   - {<<: *select, name: PikPak, proxies: [SG_fallback, HK_fallback, US_fallback, JP_fallback, TW_fallback]}
