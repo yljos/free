@@ -114,7 +114,7 @@ proxy-groups:
 rule-providers:
   archlinux: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml}
   adguard: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml}
-  # ad-site-classical: { <<: *classical, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/ad/ad-site.yaml }
+  # ad-site-classical: { <<: *classical, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/ad/ad-site-classical.yaml }
   ad-ip: {<<: *ipcidr, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs}
   alibaba-site: {<<: *domain, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-site.mrs}
   alibaba-ip: {<<: *ipcidr, url: https://github.com/litepower/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-ip.mrs}
@@ -166,7 +166,7 @@ rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   - "RULE-SET,huawei-site-classical,REJECT-DROP"
   - "RULE-SET,huawei-ip,REJECT-DROP"
-  # - "RULE-SET,ad-site-classical,REJECT"
+  # - "RULE-SET,ad-site-classical,REJECT-DROP"
   - "RULE-SET,ad-ip,REJECT-DROP"
   - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
 
