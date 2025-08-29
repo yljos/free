@@ -24,7 +24,7 @@ external-ui: ui
 global-client-fingerprint: chrome
 external-ui-url: "https://raw.githubusercontent.com/litepower/rule-set/refs/heads/main/dist.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, "8080-8880"], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
-tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 1500, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
+tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
 hosts: {"homeassistant.local": 192.168.31.21, "nas.lan": 192.168.31.21, "openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "huai-PC.lan": 192.168.31.15}
 dns:
   enable: true
@@ -34,31 +34,9 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter:
-    - "+.lan"
-    - "+.local"
-    - "localhost.ptlogin2.qq.com"
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-    - "+.googleapis.com"
-    - "+.googleapis.cn"
-    - "alt7-mtalk.google.com"
-    - "alt8-mtalk.google.com"
-    - "mtalk-dev.google.com"
-    - "mtalk-staging.google.com"
-    - "mtalk4.google.com"
-    - "alt1-mtalk.google.com"
-    - "alt2-mtalk.google.com"
-    - "alt3-mtalk.google.com"
-    - "alt4-mtalk.google.com"
-    - "alt5-mtalk.google.com"
-    - "alt6-mtalk.google.com"
-    - "mtalk.google.com"
-    - "ntp.aliyun.com"
-    - "+.082500.xyz"
-    - "+.202309.xyz"
+  fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt7-mtalk.google.com", "alt8-mtalk.google.com", "mtalk-dev.google.com", "mtalk-staging.google.com", "mtalk4.google.com", "alt1-mtalk.google.com", "alt2-mtalk.google.com", "alt3-mtalk.google.com", "alt4-mtalk.google.com", "alt5-mtalk.google.com", "alt6-mtalk.google.com", "mtalk.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
   use-hosts: true
-  default-nameserver: ["[2400:3200::1]#DIRECT", "223.5.5.5#DIRECT", "114.114.114.114#DIRECT"]
+  default-nameserver: ["[2400:3200::1]#DIRECT", "223.5.5.5#DIRECT"]
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver: ["https://cloudflare-dns.com/dns-query#M_fallback"]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
