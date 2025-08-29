@@ -81,28 +81,28 @@ dns:
     "rule-set:speedtest-site-classical": "https://cloudflare-dns.com/dns-query#SpeedTest"
 proxies: []
 proxy-groups:
-  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: M_fallback, proxies: [M, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *select, name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, HK_fallback, JP_fallback,  DIRECT]}
-  - {<<: *select, name: Google, proxies: [US_fallback, SG_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: Google_fallback, proxies: [Google, US_fallback, SG_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *select, name: OpenAi, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: OpenAi_fallback, proxies: [OpenAi, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *select, name: Telegram, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: Telegram_fallback, proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *select, name: Netflix, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: Netflix_fallback, proxies: [Netflix, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: TikTok_fallback, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback, ]}
-  - {<<: *select, name: Steam, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: Steam_fallback, proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback,  DIRECT]}
-  - {<<: *select, name: PikPak, proxies: [SG_fallback, HK_fallback, US_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: PikPak_fallback, proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback, ]}
+  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: M_fallback, proxies: [M, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *select, name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, HK_fallback, JP_fallback, DIRECT]}
+  - {<<: *select, name: Google, proxies: [US_fallback, SG_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: Google_fallback, proxies: [Google, US_fallback, SG_fallback, HK_fallback, JP_fallback]}
+  - {<<: *select, name: OpenAi, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: OpenAi_fallback, proxies: [OpenAi, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *select, name: Telegram, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: Telegram_fallback, proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *select, name: Netflix, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: Netflix_fallback, proxies: [Netflix, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: TikTok_fallback, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback]}
+  - {<<: *select, name: Steam, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback]}
+  - {<<: *fallback, name: Steam_fallback, proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback, DIRECT]}
+  - {<<: *select, name: PikPak, proxies: [SG_fallback, HK_fallback, US_fallback, JP_fallback]}
+  - {<<: *fallback, name: PikPak_fallback, proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]}
   - {<<: *select, name: PikPak-Download, type: select, proxies: [SG_loadbalance, DIRECT, HK_loadbalance, JP_loadbalance, US_loadbalance]}
   - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]}
-  - {<<: *select, name: GitHub, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback,  DIRECT]}
-  - {<<: *fallback, name: GitHub_fallback, proxies: [GitHub, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *select, name: Microsoft, proxies: [SG_fallback, DIRECT, US_fallback, HK_fallback, JP_fallback, ]}
-  - {<<: *fallback, name: Microsoft_fallback, proxies: [Microsoft, SG_fallback, US_fallback, HK_fallback, JP_fallback, ]}
+  - {<<: *select, name: GitHub, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, DIRECT]}
+  - {<<: *fallback, name: GitHub_fallback, proxies: [GitHub, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *select, name: Microsoft, proxies: [SG_fallback, DIRECT, US_fallback, HK_fallback, JP_fallback]}
+  - {<<: *fallback, name: Microsoft_fallback, proxies: [Microsoft, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
   - {<<: *fallback, name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *fallback, name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *fallback, name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
