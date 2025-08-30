@@ -3,9 +3,9 @@
   "dns": {
     "servers": [
       {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
-      {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "M"},
-      {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Google"},
-      {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "detour": "Microsoft"},
+      {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "M"},
+      {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Google"},
+      {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Microsoft"},
       {"tag": "dns_direct", "type": "https", "server": "dns.alidns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "D"},
       {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
     ],
@@ -64,7 +64,7 @@
       {"rule_set": "huawei-site", "action": "reject"},
       {"rule_set": "huawei-ip", "action": "reject"},
       {"source_ip_cidr": ["192.168.31.24/32"], "outbound": "D"},
-      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com","jsdmirror.com"], "outbound": "dns_direct"},
+      {"domain_suffix": ["ddns-link-b5.uk", "dexlos.com", "jsdmirror.com"], "outbound": "dns_direct"},
       {"domain_keyword": ["msftconnecttest.com", "msftncsi.com"], "outbound": "Microsoft"},
       {"domain_keyword": "googleapis", "outbound": "Google"},
       {"rule_set": "direct-site", "outbound": "D"},
