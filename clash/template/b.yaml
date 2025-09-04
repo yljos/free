@@ -43,7 +43,7 @@ dns:
   nameserver-policy:
     "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
     # "rule-set:ad-site-classical": "rcode://refused"
-    "rule-set:huawei-site-classical": "rcode://name_error"
+    "rule-set:huawei-site": "rcode://name_error"
     "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
     "rule-set:pikpak-download-site": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam_fallback"
@@ -110,7 +110,8 @@ rule-providers:
   google: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml}
   google-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs}
   googlefcm: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml}
-  huawei-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-site-classical.yaml}
+  huawei-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-site.mrs}
+  huawei-direct-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-direct-site.mrs}
   huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
   javdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
   jd: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
@@ -142,10 +143,11 @@ rule-providers:
   facebook-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/facebook.mrs}
 rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
-  - "RULE-SET,huawei-site-classical,REJECT-DROP"
-  - "RULE-SET,huawei-ip,REJECT-DROP"
   # - "RULE-SET,ad-site-classical,REJECT-DROP"
   - "RULE-SET,ad-ip,REJECT-DROP"
+  - "RULE-SET,huawei-direct-site,DIRECT"  
+  - "RULE-SET,huawei-site,REJECT-DROP"
+  - "RULE-SET,huawei-ip,REJECT-DROP"
   - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
 
   - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
