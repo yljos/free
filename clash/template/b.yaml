@@ -22,7 +22,7 @@ authentication: ["huai:password12138"]
 skip-auth-prefixes: [127.0.0.1/8, 192.168.0.0/16]
 external-ui: ui
 global-client-fingerprint: chrome
-external-ui-url: "https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/dist.zip"
+external-ui-url: "https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/dist.zip"
 sniffer: {enable: true, force-dns-mapping: true, parse-pure-ip: true, override-destination: true, sniff: {QUIC: {ports: [443, 8443]}, TLS: {ports: [443, 8443]}, HTTP: {ports: [80, "8080-8880"], override-destination: true}}, skip-domain: ["Mijia Cloud", "dlg.io.mi.com"]}
 tun: {enable: true, device: mihomo, stack: system, dns-hijack: [0.0.0.0:53], auto-route: true, udp-timeout: 60, mtu: 9000, auto-detect-interface: true, auto-redirect: true, strict-route: true, endpoint-independent-nat: true}
 hosts: {"homeassistant.local": 192.168.31.21, "nas.lan": 192.168.31.21, "openwrt.lan": 192.168.31.1, "ax6s.lan": 192.168.31.2, "huai-PC.lan": 192.168.31.15}
@@ -92,45 +92,45 @@ proxy-groups:
 rule-providers:
   archlinux: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml}
   adguard: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml}
-  # ad-site-classical: { <<: *classical, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/ad/ad-site-classical.yaml }
-  ad-ip: {<<: *ipcidr, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs}
-  alibaba-site: {<<: *domain, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-site.mrs}
-  alibaba-ip: {<<: *ipcidr, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-ip.mrs}
+  # ad-site-classical: { <<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-site-classical.yaml }
+  ad-ip: {<<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/ad/ad-ip.mrs}
+  alibaba-site: {<<: *domain, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-site.mrs}
+  alibaba-ip: {<<: *ipcidr, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/alibaba/alibaba-ip.mrs}
   apkpure: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/apkpure.yaml}
   codeberg: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/codeberg.yaml}
-  cn-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/cn/cn-site.mrs}
-  cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs}
+  cn-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-site.mrs}
+  cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/cn/cn-ip.mrs}
   docker: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml}
-  direct-cf-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/direct/direct-cf-site-classical.yaml}
-  direct-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/direct/direct-site-classical.yaml}
-  direct-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs}
+  direct-cf-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-cf-site-classical.yaml}
+  direct-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-site-classical.yaml}
+  direct-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/direct/direct-ip.mrs}
   mozilla: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml}
-  gfw-site: {<<: *domain, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/gfw/gfw-site.mrs}
+  gfw-site: {<<: *domain, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/gfw/gfw-site.mrs}
   github: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/github.yaml}
   google: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/google.yaml}
   google-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/google.mrs}
   googlefcm: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/googlefcm.yaml}
-  huawei-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-site.mrs}
-  huawei-direct-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-direct-site.mrs}
-  huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
+  huawei-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-site.mrs}
+  huawei-direct-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-direct-site.mrs}
+  huawei-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/huawei/huawei-ip.mrs}
   javdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/javdb.yaml}
   jd: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/jd.yaml}
-  local-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/local/local-ip.mrs}
+  local-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/local/local-ip.mrs}
   microsoft: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/microsoft.yaml}
   netflix: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/netflix.yaml}
   netflix-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/netflix.mrs}
   openai: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openai.yaml}
   openwrt: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/openwrt.yaml}
-  pikpak-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.mrs}
-  pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
-  pikpak-download-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.mrs}
-  proxy-site: {<<: *domain, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/proxy/proxy-site.mrs}
+  pikpak-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo//pikpak/pikpak-site.mrs}
+  pikpak-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak/pikpak-ip.mrs}
+  pikpak-download-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/pikpak-download/pikpak-download-site.mrs}
+  proxy-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/proxy/proxy-site.mrs}
   reddit: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/reddit.yaml}
-  speedtest-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site-classical.yaml}
+  speedtest-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/speedtest/speedtest-site-classical.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
-  steam-site-classical: {<<: *classical, url: https://github.com/bitarc/rule-set/raw/refs/heads/main/mihomo/steam/steam-site-classical.yaml}
-  telegram-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/telegram/telegram-site-classical.yaml}
-  telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/bitarc/rule-set/refs/heads/main/mihomo/telegram/telegram-ip.mrs}
+  steam-site-classical: {<<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/mihomo/steam/steam-site-classical.yaml}
+  telegram-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-site-classical.yaml}
+  telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/mihomo/telegram/telegram-ip.mrs}
   tiktok: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml}
   tmdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml}
   twitter: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/twitter.yaml}
