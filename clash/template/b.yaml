@@ -1,9 +1,9 @@
 select: &select {type: select, filter: "(?i)^(?!.*(Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
 fallback: &fallback {type: fallback, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
 load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-domain: &domain {proxy: M_fallback, interval: 86400, type: http, format: mrs, behavior: domain}
-ipcidr: &ipcidr {proxy: M_fallback, interval: 86400, type: http, format: mrs, behavior: ipcidr}
-classical: &classical {proxy: M_fallback, type: http, interval: 86400, behavior: classical, format: yaml}
+domain: &domain {proxy: M, interval: 86400, type: http, format: mrs, behavior: domain}
+ipcidr: &ipcidr {proxy: M, interval: 86400, type: http, format: mrs, behavior: ipcidr}
+classical: &classical {proxy: M, type: http, interval: 86400, behavior: classical, format: yaml}
 mixed-port: 12138
 redir-port: 7892
 tproxy-port: 7893
@@ -38,53 +38,44 @@ dns:
   use-hosts: true
   default-nameserver: ["[2400:3200::1]#DIRECT", "223.5.5.5#DIRECT"]
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
-  nameserver: ["https://cloudflare-dns.com/dns-query#M_fallback"]
+  nameserver: ["https://cloudflare-dns.com/dns-query#M"]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver-policy:
-    "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft_fallback"
+    "rule-set:microsoft": "https://cloudflare-dns.com/dns-query#Microsoft"
     # "rule-set:ad-site-classical": "rcode://refused"
     "rule-set:huawei-site": "rcode://name_error"
-    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi_fallback"
+    "rule-set:openai": "https://cloudflare-dns.com/dns-query#OpenAi"
     "rule-set:pikpak-download-site": "https://cloudflare-dns.com/dns-query#PikPak-Download"
-    "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam_fallback"
-    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub_fallback"
-    "rule-set:telegram-site-classical": "https://cloudflare-dns.com/dns-query#Telegram_fallback"
-    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US_fallback"
-    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US_fallback"
-    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok_fallback"
-    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix_fallback"
-    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google_fallback"
-    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google_fallback"
-    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google_fallback"
+    "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam"
+    "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub"
+    "rule-set:telegram-site-classical": "https://cloudflare-dns.com/dns-query#Telegram"
+    "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US"
+    "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US"
+    "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
+    "rule-set:netflix": "https://cloudflare-dns.com/dns-query#Netflix"
+    "rule-set:youtube": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:googlefcm": "https://cloudflare-dns.com/dns-query#Google"
+    "rule-set:google": "https://cloudflare-dns.com/dns-query#Google"
     "rule-set:speedtest-site-classical": "https://cloudflare-dns.com/dns-query#SpeedTest"
 proxies: []
 proxy-groups:
-  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: M_fallback, proxies: [M, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *select, name: Default, type: select, proxies: [M_fallback, SG_fallback, US_fallback, HK_fallback, JP_fallback, DIRECT]}
-  - {<<: *select, name: Google, proxies: [US_fallback, SG_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: Google_fallback, proxies: [Google, US_fallback, SG_fallback, HK_fallback, JP_fallback]}
-  - {<<: *select, name: OpenAi, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: OpenAi_fallback, proxies: [OpenAi, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *select, name: Telegram, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: Telegram_fallback, proxies: [Telegram, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *select, name: Netflix, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: Netflix_fallback, proxies: [Netflix, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: TikTok_fallback, proxies: [JP_fallback, SG_fallback, US_fallback, HK_fallback]}
-  - {<<: *select, name: Steam, proxies: [HK_fallback, SG_fallback, US_fallback, JP_fallback]}
-  - {<<: *fallback, name: Steam_fallback, proxies: [Steam, HK_fallback, SG_fallback, US_fallback, JP_fallback, DIRECT]}
-  - {<<: *select, name: PikPak, proxies: [SG_fallback, HK_fallback, US_fallback, JP_fallback]}
-  - {<<: *fallback, name: PikPak_fallback, proxies: [PikPak, HK_fallback, SG_fallback, US_fallback, JP_fallback]}
+  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG, US, HK, JP]}
+  - {<<: *select, name: Default, type: select, proxies: [M, SG, US, HK, JP, DIRECT]}
+  - {<<: *select, name: Google, proxies: [US, SG, HK, JP]}
+  - {<<: *select, name: OpenAi, proxies: [SG, US, HK, JP]}
+  - {<<: *select, name: Telegram, proxies: [SG, US, HK, JP]}
+  - {<<: *select, name: Netflix, proxies: [SG, US, HK, JP]}
+  - {<<: *fallback, name: TikTok, proxies: [JP, SG, US, HK]}
+  - {<<: *select, name: Steam, proxies: [HK, SG, US, JP]}
+  - {<<: *select, name: PikPak, proxies: [SG, HK, US, JP]}
   - {<<: *select, name: PikPak-Download, type: select, proxies: [SG_loadbalance, DIRECT, HK_loadbalance, JP_loadbalance, US_loadbalance]}
-  - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG_fallback, US_fallback, JP_fallback, HK_fallback, DIRECT]}
-  - {<<: *select, name: GitHub, proxies: [SG_fallback, US_fallback, HK_fallback, JP_fallback, DIRECT]}
-  - {<<: *fallback, name: GitHub_fallback, proxies: [GitHub, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *select, name: Microsoft, proxies: [SG_fallback, DIRECT, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: Microsoft_fallback, proxies: [Microsoft, SG_fallback, US_fallback, HK_fallback, JP_fallback]}
-  - {<<: *fallback, name: HK_fallback, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *fallback, name: JP_fallback, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *fallback, name: US_fallback, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *fallback, name: SG_fallback, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG, US, JP, HK, DIRECT]}
+  - {<<: *select, name: GitHub, proxies: [SG, US, HK, JP, DIRECT]}
+  - {<<: *select, name: Microsoft, proxies: [SG, DIRECT, US, HK, JP]}
+  - {<<: *fallback, name: HK, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: JP, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: US, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *fallback, name: SG, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *load-balance, name: HK_loadbalance, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *load-balance, name: JP_loadbalance, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *load-balance, name: US_loadbalance, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
@@ -145,59 +136,59 @@ rules:
   - "AND,((DST-PORT,443),(NETWORK,UDP)),REJECT"
   # - "RULE-SET,ad-site-classical,REJECT-DROP"
   - "RULE-SET,ad-ip,REJECT-DROP"
-  - "RULE-SET,huawei-direct-site,DIRECT"  
+  - "RULE-SET,huawei-direct-site,DIRECT"
   - "RULE-SET,huawei-site,REJECT-DROP"
   - "RULE-SET,huawei-ip,REJECT-DROP"
   - "SRC-IP-CIDR,192.168.31.24/32,DIRECT"
 
-  - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft_fallback"
-  - "DOMAIN-KEYWORD,msftncsi.com,Microsoft_fallback"
-  - "DOMAIN-KEYWORD,googleapis,Google_fallback"
+  - "DOMAIN-KEYWORD,msftconnecttest.com,Microsoft"
+  - "DOMAIN-KEYWORD,msftncsi.com,Microsoft"
+  - "DOMAIN-KEYWORD,googleapis,Google"
   - "RULE-SET,direct-site-classical,DIRECT"
   - "RULE-SET,direct-cf-site-classical,DIRECT"
-  - "RULE-SET,pikpak-site,PikPak_fallback"
+  - "RULE-SET,pikpak-site,PikPak"
   - "RULE-SET,pikpak-download-site,PikPak-Download"
   - "RULE-SET,alibaba-site,DIRECT"
   - "RULE-SET,jd,DIRECT"
   - "RULE-SET,tencent,DIRECT"
   - "RULE-SET,googlefcm,DIRECT"
-  - "RULE-SET,proxy-site,M_fallback"
-  - "RULE-SET,github,GitHub_fallback"
-  - "RULE-SET,codeberg,M_fallback"
-  - "RULE-SET,docker,M_fallback"
-  - "RULE-SET,archlinux,M_fallback"
-  - "RULE-SET,openwrt,M_fallback"
-  - "RULE-SET,mozilla,M_fallback"
-  - "RULE-SET,microsoft,Microsoft_fallback"
-  - "RULE-SET,openai,OpenAi_fallback"
-  - "RULE-SET,youtube,Google_fallback"
-  - "RULE-SET,google,Google_fallback"
-  - "RULE-SET,netflix,Netflix_fallback"
-  - "RULE-SET,tiktok,TikTok_fallback"
-  - "RULE-SET,tmdb,M_fallback"
-  - "RULE-SET,telegram-site-classical,Telegram_fallback"
-  - "RULE-SET,twitter,US_fallback"
-  - "RULE-SET,facebook,US_fallback"
-  - "RULE-SET,reddit,M_fallback"
-  - "RULE-SET,adguard,M_fallback"
+  - "RULE-SET,proxy-site,M"
+  - "RULE-SET,github,GitHub"
+  - "RULE-SET,codeberg,M"
+  - "RULE-SET,docker,M"
+  - "RULE-SET,archlinux,M"
+  - "RULE-SET,openwrt,M"
+  - "RULE-SET,mozilla,M"
+  - "RULE-SET,microsoft,Microsoft"
+  - "RULE-SET,openai,OpenAi"
+  - "RULE-SET,youtube,Google"
+  - "RULE-SET,google,Google"
+  - "RULE-SET,netflix,Netflix"
+  - "RULE-SET,tiktok,TikTok"
+  - "RULE-SET,tmdb,M"
+  - "RULE-SET,telegram-site-classical,Telegram"
+  - "RULE-SET,twitter,US"
+  - "RULE-SET,facebook,US"
+  - "RULE-SET,reddit,M"
+  - "RULE-SET,adguard,M"
   - "RULE-SET,speedtest-site-classical,SpeedTest"
-  - "RULE-SET,wikimedia,M_fallback"
-  - "RULE-SET,javdb,M_fallback"
-  - "RULE-SET,apkpure,M_fallback"
-  - "RULE-SET,f-droid,M_fallback"
-  - "RULE-SET,spotify,M_fallback"
-  - "RULE-SET,steam-site-classical,Steam_fallback"
-  - "RULE-SET,gfw-site,M_fallback"
+  - "RULE-SET,wikimedia,M"
+  - "RULE-SET,javdb,M"
+  - "RULE-SET,apkpure,M"
+  - "RULE-SET,f-droid,M"
+  - "RULE-SET,spotify,M"
+  - "RULE-SET,steam-site-classical,Steam"
+  - "RULE-SET,gfw-site,M"
   - "RULE-SET,cn-site,DIRECT"
   # ipcidr
   - "RULE-SET,local-ip,DIRECT"
   - "RULE-SET,direct-ip,DIRECT"
-  - "RULE-SET,pikpak-ip,PikPak_fallback"
+  - "RULE-SET,pikpak-ip,PikPak"
   - "RULE-SET,alibaba-ip,DIRECT"
-  - "RULE-SET,telegram-ip,Telegram_fallback"
-  - "RULE-SET,twitter-ip,US_fallback"
-  - "RULE-SET,facebook-ip,US_fallback"
-  - "RULE-SET,netflix-ip,Netflix_fallback"
-  - "RULE-SET,google-ip,Google_fallback"
+  - "RULE-SET,telegram-ip,Telegram"
+  - "RULE-SET,twitter-ip,US"
+  - "RULE-SET,facebook-ip,US"
+  - "RULE-SET,netflix-ip,Netflix"
+  - "RULE-SET,google-ip,Google"
   - "RULE-SET,cn-ip,DIRECT"
   - "MATCH,Default"
