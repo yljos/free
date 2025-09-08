@@ -1,6 +1,7 @@
 select: &select {type: select, filter: "(?i)^(?!.*(Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
 fallback: &fallback {type: fallback, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
 load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
+url-test: &url-test {type: url-test, url: "https://cp.cloudflare.com", interval: 60, tolerance: 300, hidden: true}
 domain: &domain {proxy: M, interval: 86400, type: http, format: mrs, behavior: domain}
 ipcidr: &ipcidr {proxy: M, interval: 86400, type: http, format: mrs, behavior: ipcidr}
 classical: &classical {proxy: M, type: http, interval: 86400, behavior: classical, format: yaml}
@@ -59,7 +60,7 @@ dns:
     "rule-set:speedtest-site-classical": "https://cloudflare-dns.com/dns-query#SpeedTest"
 proxies: []
 proxy-groups:
-  - {<<: *select, name: M, proxies: [SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG, US, HK, JP]}
+  - {<<: *select, name: M, proxies: [SG_LB, HK_LB, JP_LB, US_LB, SG, US, HK, JP]}
   - {<<: *select, name: Default, type: select, proxies: [M, SG, US, HK, JP, DIRECT]}
   - {<<: *select, name: Google, proxies: [US, SG, HK, JP]}
   - {<<: *select, name: OpenAi, proxies: [SG, US, HK, JP]}
@@ -68,18 +69,18 @@ proxy-groups:
   - {<<: *fallback, name: TikTok, proxies: [JP, SG, US, HK]}
   - {<<: *select, name: Steam, proxies: [HK, SG, US, JP]}
   - {<<: *select, name: PikPak, proxies: [SG, HK, US, JP]}
-  - {<<: *select, name: PikPak-Download, type: select, proxies: [SG_loadbalance, DIRECT, HK_loadbalance, JP_loadbalance, US_loadbalance]}
-  - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_loadbalance, HK_loadbalance, JP_loadbalance, US_loadbalance, SG, US, JP, HK, DIRECT]}
+  - {<<: *select, name: PikPak-Download, type: select, proxies: [SG_LB, DIRECT, HK_LB, JP_LB, US_LB]}
+  - {<<: *select, name: SpeedTest, type: select, proxies: [M, SG_LB, HK_LB, JP_LB, US_LB, SG, US, JP, HK, DIRECT]}
   - {<<: *select, name: GitHub, proxies: [SG, US, HK, JP, DIRECT]}
   - {<<: *select, name: Microsoft, proxies: [SG, DIRECT, US, HK, JP]}
   - {<<: *fallback, name: HK, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *fallback, name: JP, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *fallback, name: US, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
   - {<<: *fallback, name: SG, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *load-balance, name: HK_loadbalance, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *load-balance, name: JP_loadbalance, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *load-balance, name: US_loadbalance, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
-  - {<<: *load-balance, name: SG_loadbalance, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: HK_LB, filter: "(?i)(香港|HK|hong)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: JP_LB, filter: "(?i)(日本|jp|japan)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: US_LB, filter: "(?i)(美国|us|united|america)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
+  - {<<: *load-balance, name: SG_LB, filter: "(?i)(新加坡|sg|singapore)(?!.*(家宽|isp|小众|低倍率))", include-all-proxies: true}
 rule-providers:
   archlinux: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/archlinux.yaml}
   adguard: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/adguard.yaml}
