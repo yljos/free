@@ -1,7 +1,7 @@
 select: &select {type: select, filter: "(?i)^(?!.*(Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
-fallback: &fallback {type: fallback, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://cp.cloudflare.com", interval: 60, hidden: true}
-url-test: &url-test {type: url-test, url: "https://cp.cloudflare.com", interval: 60, tolerance: 300, hidden: true}
+fallback: &fallback {type: fallback, url: "https://cp.cloudflare.com", interval: 60, hidden: true, timeout: 700, max-failed-times: 3}
+load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://cp.cloudflare.com", interval: 60, hidden: true, timeout: 700, max-failed-times: 3}
+url-test: &url-test {type: url-test, url: "https://cp.cloudflare.com", interval: 60, tolerance: 300, hidden: true, timeout: 700, max-failed-times: 3}
 domain: &domain {proxy: M, interval: 86400, type: http, format: mrs, behavior: domain}
 ipcidr: &ipcidr {proxy: M, interval: 86400, type: http, format: mrs, behavior: ipcidr}
 classical: &classical {proxy: M, type: http, interval: 86400, behavior: classical, format: yaml}
