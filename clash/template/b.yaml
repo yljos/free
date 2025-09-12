@@ -89,8 +89,8 @@ rule-providers:
   cn-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/cn/cn-site.mrs}
   cn-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/cn/cn-ip.mrs}
   docker: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/docker.yaml}
-  direct-cf-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/direct/direct-cf-site-classical.yaml}
-  direct-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/direct/direct-site-classical.yaml}
+  direct-cf-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/direct/direct-cf-site.mrs}
+  direct-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/direct/direct-site.mrs}
   direct-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/direct/direct-ip.mrs}
   mozilla: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/mozilla.yaml}
   gfw-site: {<<: *domain, url: https://github.com/yljos/rule-set/raw/refs/heads/main/clash/gfw/gfw-site.mrs}

@@ -15,7 +15,7 @@
       {"domain_keyword": "googleapis", "strategy": "ipv4_only", "server": "dns_google"},
       {"rule_set": "direct-site", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "direct-cf-site", "strategy": "ipv4_only", "server": "dns_proxy"},
-      {"rule_set": "huawei-direct-site", "strategy": "ipv4_only", "server": "dns_direct"},      
+      {"rule_set": "huawei-direct-site", "strategy": "ipv4_only", "server": "dns_direct"},
       {"rule_set": "huawei-site", "action": "reject"},
       {"rule_set": "ad-site", "action": "reject"},
       {"rule_set": "jd", "strategy": "ipv4_only", "server": "dns_direct"},
