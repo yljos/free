@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 检查并安装 dos2unix 如果它尚未安装
 if ! command -v dos2unix &> /dev/null; then
