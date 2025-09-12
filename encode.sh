@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 检查参数
 [ $# -ne 2 ] && { echo "用法: <解压密码> <压缩密码>"; exit 1; }

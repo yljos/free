@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 使用 find 命令递归查找所有 .sh 文件
 find . -type f -name "*.sh" | while read -r file; do
