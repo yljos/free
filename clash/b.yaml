@@ -12,7 +12,7 @@ allow-lan: true
 bind-address: "*"
 find-process-mode: off # always, strict, off
 log-level: error # info, warning, error, debug
-ipv6: true
+ipv6: false
 udp: true
 unified-delay: true
 tcp-concurrent: true
@@ -31,13 +31,13 @@ dns:
   enable: true
   prefer-h3: false
   listen: "0.0.0.0:1053"
-  ipv6: true
+  ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter: ["+.lan", "+.local", "localhost.ptlogin2.qq.com", "+.msftconnecttest.com", "+.msftncsi.com", "+.googleapis.com", "+.googleapis.cn", "alt7-mtalk.google.com", "alt8-mtalk.google.com", "mtalk-dev.google.com", "mtalk-staging.google.com", "mtalk4.google.com", "alt1-mtalk.google.com", "alt2-mtalk.google.com", "alt3-mtalk.google.com", "alt4-mtalk.google.com", "alt5-mtalk.google.com", "alt6-mtalk.google.com", "mtalk.google.com", "ntp.aliyun.com", "+.082500.xyz", "+.202309.xyz"]
   use-hosts: true
-  default-nameserver: ["[2400:3200::1]#DIRECT", "223.5.5.5#DIRECT"]
+  default-nameserver: ["223.5.5.5#DIRECT"]
   proxy-server-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
   nameserver: ["https://cloudflare-dns.com/dns-query#M"]
   direct-nameserver: ["https://dns.alidns.com/dns-query#DIRECT"]
