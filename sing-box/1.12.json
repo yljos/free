@@ -4,7 +4,7 @@
     "servers": [
       {"tag": "dns_resolver", "type": "udp", "server": "223.5.5.5", "server_port": 53, "detour": "D"},
       {"tag": "dns_proxy", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "M"},
-      {"tag": "dns_google", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Google"},
+      {"tag": "dns_google", "type": "https", "server": "dns.google", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Google"},
       {"tag": "dns_microsoft", "type": "https", "server": "cloudflare-dns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "Microsoft"},
       {"tag": "dns_direct", "type": "https", "server": "dns.alidns.com", "server_port": 443, "domain_resolver": "dns_resolver", "detour": "D"},
       {"tag": "dns_fakeip", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"}
@@ -50,10 +50,10 @@
     {"tag": "GitHub", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D"], "default": "SG"},
     {"tag": "Microsoft", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D"], "default": "SG"},
     {"tag": "PikPak-Download", "type": "selector", "outbounds": ["HK", "SG", "JP", "US", "D"], "default": "SG"},
-    {"tag": "HK", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(hk|香港|hongkong))(?!.*(小众)).*$"]}]},
-    {"tag": "SG", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(小众)).*$"]}]},
-    {"tag": "JP", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(jp|日本|japan))(?!.*(小众)).*$"]}]},
-    {"tag": "US", "type": "urltest", "outbounds": ["{all}"], "url": "https://cp.cloudflare.com", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(us|美国|united states|america))(?!.*(小众)).*$"]}]}
+    {"tag": "HK", "type": "urltest", "outbounds": ["{all}"], "url": "https://www.gstatic.com/generate_204", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(hk|香港|hongkong))(?!.*(小众)).*$"]}]},
+    {"tag": "SG", "type": "urltest", "outbounds": ["{all}"], "url": "https://www.gstatic.com/generate_204", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(新加坡|sg|singapore))(?!.*(小众)).*$"]}]},
+    {"tag": "JP", "type": "urltest", "outbounds": ["{all}"], "url": "https://www.gstatic.com/generate_204", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(jp|日本|japan))(?!.*(小众)).*$"]}]},
+    {"tag": "US", "type": "urltest", "outbounds": ["{all}"], "url": "https://www.gstatic.com/generate_204", "interval": "1m0s", "tolerance": 300, "filter": [{"action": "match", "regex": ["(?i)^(?=.*(us|美国|united states|america))(?!.*(小众)).*$"]}]}
   ],
   "route": {
     "rules": [
