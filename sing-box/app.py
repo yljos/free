@@ -12,6 +12,7 @@ import json
 import re
 import os
 import sys
+
 # 导入 Union 以支持多种返回类型
 from typing import Any, Dict, List, Tuple, Union
 from flask import Flask, request, jsonify, send_file, after_this_request, Response
@@ -46,6 +47,7 @@ def create_cleanup_callback(temp_files: List[str], exclude_files: List[str] = No
                 cleanup_files(exclude_files)
 
         import time
+
         cleanup_thread = threading.Thread(target=delayed_cleanup, daemon=True)
         cleanup_thread.start()
         return response
@@ -135,11 +137,20 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
         decoded_content, _ = fetch_content_from_url(full_url)
         node_urls = extract_urls_from_text(decoded_content)
         if not node_urls:
-            return jsonify({
-                "error": "未找到有效的节点URL",
-                "decoded_content": (decoded_content[:500] + "..." if len(decoded_content) > 500 else decoded_content),
-                "url": full_url,
-            }), 400
+            return (
+                jsonify(
+                    {
+                        "error": "未找到有效的节点URL",
+                        "decoded_content": (
+                            decoded_content[:500] + "..."
+                            if len(decoded_content) > 500
+                            else decoded_content
+                        ),
+                        "url": full_url,
+                    }
+                ),
+                400,
+            )
 
         nodes, errors = [], []
         for i, url in enumerate(node_urls):
@@ -152,7 +163,12 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
                 errors.append(f"节点 {i + 1} 解析失败: {str(e)}")
 
         if not nodes:
-            return jsonify({"error": "所有节点解析都失败了", "errors": errors, "url": full_url}), 400
+            return (
+                jsonify(
+                    {"error": "所有节点解析都失败了", "errors": errors, "url": full_url}
+                ),
+                400,
+            )
 
         config_path = os.path.join(os.path.dirname(__file__), "1.12.json")
         with open(config_path, "r", encoding="utf-8") as f:
@@ -160,13 +176,19 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
 
         outbounds = base_config.get("outbounds", [])
         existing_tags = {o.get("tag") for o in outbounds}
-        new_nodes = [n for n in nodes if n.get("tag") and n.get("tag") not in existing_tags]
+        new_nodes = [
+            n for n in nodes if n.get("tag") and n.get("tag") not in existing_tags
+        ]
 
         outbounds.extend(new_nodes)
 
         for outbound in outbounds:
             if outbound.get("type") == "urltest" and "filter" in outbound:
-                regex_list = [reg for f in outbound.get("filter", []) for reg in f.get("regex", [])]
+                regex_list = [
+                    reg
+                    for f in outbound.get("filter", [])
+                    for reg in f.get("regex", [])
+                ]
                 if not regex_list:
                     del outbound["filter"]
                     continue
@@ -174,9 +196,16 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
                 pattern = "|".join(regex_list)
                 try:
                     compiled = re.compile(pattern, re.IGNORECASE)
-                    all_node_tags = [o.get("tag") for o in outbounds if
-                                     o.get("tag") and o.get("type") not in ["urltest", "selector", "direct", "block"]]
-                    matched_tags = [tag for tag in all_node_tags if compiled.search(tag)]
+                    all_node_tags = [
+                        o.get("tag")
+                        for o in outbounds
+                        if o.get("tag")
+                        and o.get("type")
+                        not in ["urltest", "selector", "direct", "block"]
+                    ]
+                    matched_tags = [
+                        tag for tag in all_node_tags if compiled.search(tag)
+                    ]
 
                     if matched_tags:
                         outbound["outbounds"] = matched_tags
@@ -189,7 +218,9 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
         base_config["outbounds"] = outbounds
         json_str = json.dumps(base_config, ensure_ascii=False, separators=(",", ":"))
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", delete=False, encoding="utf-8"
+        ) as f:
             f.write(json_str)
             temp_file_path = f.name
         TEMP_FILES.add(temp_file_path)
@@ -204,10 +235,15 @@ def process_nodes_from_path(url_path: str) -> Union[Response, Tuple[Response, in
         )
     except Exception as e:
         # This now correctly matches the Union type hint
-        return jsonify({
-            "error": f"处理过程中发生错误: {str(e)}",
-            "url": full_url,
-        }), 500
+        return (
+            jsonify(
+                {
+                    "error": f"处理过程中发生错误: {str(e)}",
+                    "url": full_url,
+                }
+            ),
+            500,
+        )
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@ from ruamel.yaml import YAML
 # --------- 临时文件清理工具 ---------
 def cleanup_files(file_list):
     import os, sys
+
     for f in file_list:
         try:
             os.remove(f)
@@ -29,6 +30,7 @@ def create_cleanup_callback(temp_files, exclude_files=None):
     def cleanup_callback(response):
         import threading
         import time
+
         def delayed_cleanup():
             time.sleep(2)  # 等待2秒确保文件传输完成
             files_to_clean = temp_files.copy()
@@ -163,11 +165,20 @@ def process_nodes_from_path(url_path):
         # 提取节点URL
         node_urls = extract_urls_from_text(decoded_content)
         if not node_urls:
-            return jsonify({
-                "error": "未找到有效的节点URL",
-                "decoded_content": (decoded_content[:500] + "..." if len(decoded_content) > 500 else decoded_content),
-                "url": full_url,
-            }), 400
+            return (
+                jsonify(
+                    {
+                        "error": "未找到有效的节点URL",
+                        "decoded_content": (
+                            decoded_content[:500] + "..."
+                            if len(decoded_content) > 500
+                            else decoded_content
+                        ),
+                        "url": full_url,
+                    }
+                ),
+                400,
+            )
 
         # 解析所有节点
         nodes, errors = [], []
@@ -180,21 +191,31 @@ def process_nodes_from_path(url_path):
                 errors.append(f"节点 {idx + 1} 解析失败: {str(e)}")
 
         if not nodes:
-            return jsonify({"error": "所有节点解析都失败了", "errors": errors, "url": full_url}), 400
+            return (
+                jsonify(
+                    {"error": "所有节点解析都失败了", "errors": errors, "url": full_url}
+                ),
+                400,
+            )
 
         # 合并到b.yaml
         b_yaml_path = os.path.join(os.path.dirname(__file__), "b.yaml")
         yaml_ruamel = YAML()
         yaml_ruamel.preserve_quotes = True
-        base_config = yaml_ruamel.load(open(b_yaml_path, "r", encoding="utf-8")) if os.path.exists(
-            b_yaml_path) else yaml_ruamel.load("{}")
+        base_config = (
+            yaml_ruamel.load(open(b_yaml_path, "r", encoding="utf-8"))
+            if os.path.exists(b_yaml_path)
+            else yaml_ruamel.load("{}")
+        )
 
         proxies = list(base_config.get("proxies", []))
         proxies.extend(nodes)
 
         from ruamel.yaml.comments import CommentedSeq, CommentedMap
+
         def dict_to_flow_map(d):
-            if not isinstance(d, dict): return d
+            if not isinstance(d, dict):
+                return d
             m = CommentedMap()
             for k, v in d.items():
                 if isinstance(v, bool):
@@ -202,23 +223,34 @@ def process_nodes_from_path(url_path):
                 elif isinstance(v, dict):
                     m[k] = dict_to_flow_map(v)
                 elif isinstance(v, list):
-                    m[k] = CommentedSeq([dict_to_flow_map(i) if isinstance(i, dict) else i for i in v])
+                    m[k] = CommentedSeq(
+                        [dict_to_flow_map(i) if isinstance(i, dict) else i for i in v]
+                    )
                     m[k].fa.set_flow_style()
                 else:
                     m[k] = v
             m.fa.set_flow_style()
             return m
 
-        proxies_flow = [dict_to_flow_map(p) if isinstance(p, dict) else p for p in proxies]
+        proxies_flow = [
+            dict_to_flow_map(p) if isinstance(p, dict) else p for p in proxies
+        ]
         base_config["proxies"] = CommentedSeq(proxies_flow)
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False, encoding="utf-8") as f:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".yaml", delete=False, encoding="utf-8"
+        ) as f:
             yaml_ruamel.width = 4096
             yaml_ruamel.dump(base_config, f)
             temp_file_path = f.name
 
         create_cleanup_callback([temp_file_path])
-        response = send_file(temp_file_path, as_attachment=True, download_name="config.yaml", mimetype="text/yaml")
+        response = send_file(
+            temp_file_path,
+            as_attachment=True,
+            download_name="config.yaml",
+            mimetype="text/yaml",
+        )
 
         if subscription_userinfo:
             response.headers["Subscription-Userinfo"] = subscription_userinfo
