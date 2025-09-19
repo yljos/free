@@ -1,4 +1,0 @@
-flask
-requests
-pyyaml
-ruamel.yaml
