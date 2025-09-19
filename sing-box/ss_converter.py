@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
 """
-Shadowsocks URL to YAML converter
-转换为包含默认参数的Clash配置格式
+Shadowsocks URL to JSON converter for Sing-box compatible format
 """
 
 import json
 import base64
+import binascii  # 导入 binascii 模块
 from urllib.parse import urlparse, parse_qs, unquote
 import urllib.parse
+from typing import Any, Dict
+
+# 这些属性可以从外部设置，以应用于所有解析的URL
+# 例如: parse_shadowsocks_url.udp_over_tcp = True
+UDP_OVER_TCP = False
+MULTIPLEX = False
 
 
-def parse_shadowsocks_url(url):
+def parse_shadowsocks_url(url: str) -> Dict[str, Any]:
     """
-    解析Shadowsocks URL，返回配置字典
-    包含必要的默认参数，与Clash配置格式保持一致
+    解析Shadowsocks URL，返回适配Sing-box格式的配置字典
     """
     # 解析URL
     parsed = urlparse(url)
@@ -39,7 +44,8 @@ def parse_shadowsocks_url(url):
             method, password = decoded_user.split(":", 1)
         else:
             raise ValueError("解码后的用户信息格式不正确")
-    except Exception as e:
+    # FIX: 捕获更具体的异常，不再需要未使用的变量 'e'
+    except (ValueError, TypeError, binascii.Error):
         # 如果base64解码失败，尝试直接分割
         if ":" in user_info:
             method, password = user_info.split(":", 1)
@@ -53,8 +59,8 @@ def parse_shadowsocks_url(url):
     if not server or not port:
         raise ValueError(f"URL缺少必要信息: server={server}, port={port}")
 
-    # 目标结构
-    config = {
+    # FIX: 明确 config 字典的值可以为任意类型
+    config: Dict[str, Any] = {
         "type": "shadowsocks",
         "tag": node_name,
         "server": server,
@@ -62,6 +68,7 @@ def parse_shadowsocks_url(url):
         "method": method,
         "password": password,
     }
+
     # 处理插件参数
     query_params = parse_qs(parsed.query)
     if "plugin" in query_params:
@@ -87,11 +94,11 @@ def parse_shadowsocks_url(url):
             if plugin_opts_str:
                 config["plugin_opts"] = plugin_opts_str
         else:
-            config["plugin"] = plugin_info
             # 解析v2ray-plugin等其它插件
             if "v2ray-plugin" in plugin_info:
+                config["plugin"] = "v2ray-plugin"
                 plugin_parts = plugin_info.split(";")
-                v2ray_opts = {}
+                v2ray_opts: Dict[str, Any] = {}
                 for part in plugin_parts:
                     if part.startswith("mode="):
                         v2ray_opts["mode"] = part.split("=", 1)[1]
@@ -102,19 +109,21 @@ def parse_shadowsocks_url(url):
                     elif part == "tls":
                         v2ray_opts["tls"] = True
                 if v2ray_opts:
+                    # 此处赋值字典不再导致类型错误
                     config["plugin_opts"] = v2ray_opts
-    # 仅当udp_over_tcp和multiplex不为空时才写入
-    if (
-        hasattr(parse_shadowsocks_url, "udp_over_tcp")
-        and parse_shadowsocks_url.udp_over_tcp
-    ):
-        config["udp_over_tcp"] = parse_shadowsocks_url.udp_over_tcp
-    if hasattr(parse_shadowsocks_url, "multiplex") and parse_shadowsocks_url.multiplex:
-        config["multiplex"] = parse_shadowsocks_url.multiplex
+            else:
+                config["plugin"] = plugin_info
+
+    # 仅当全局设置不为空时才写入
+    if UDP_OVER_TCP:
+        config["udp_over_tcp"] = True
+    if MULTIPLEX:
+        config["multiplex"] = True
+
     return config
 
 
-def convert_url_to_json(url):
+def convert_url_to_json(url: str) -> str:
     """
     将Shadowsocks URL转换为JSON字符串
     """
@@ -122,7 +131,7 @@ def convert_url_to_json(url):
     return json.dumps(config, ensure_ascii=False, indent=2)
 
 
-def main(url):
+def main(url: str) -> Dict[str, Any]:
     """主函数 - 直接转换URL"""
     return parse_shadowsocks_url(url)
 
