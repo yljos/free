@@ -1,4 +1,4 @@
-select: &select {type: select, filter: "(?i)^(?!.*(Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
+select: &select {type: select, filter: "(?i)^(?!.*(kr|tw|Traffic|Expire|官网|0\\.[0-9]|剩余|到期)).*$", include-all-proxies: true}
 fallback: &fallback {type: fallback, url: "https://www.gstatic.com/generate_204", interval: 30, hidden: true, timeout: 600, max-failed-times: 3}
 load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: "https://www.gstatic.com/generate_204", interval: 30, hidden: true, timeout: 600, max-failed-times: 3}
 url-test: &url-test {type: url-test, url: "https://www.gstatic.com/generate_204", interval: 30, tolerance: 300, hidden: true, timeout: 600, max-failed-times: 3}
