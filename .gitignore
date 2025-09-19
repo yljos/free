@@ -2,6 +2,8 @@
 /clash/outputs/*
 /clash/.idea/
 /sing-box/.idea/
+/clash/.venv/
+/sing-box/.venv
 sing-box
 !sing-box/
 sing-box.exe
