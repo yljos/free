@@ -49,7 +49,7 @@ dns:
     "rule-set:pikpak-download-site": "https://cloudflare-dns.com/dns-query#PikPak-Download"
     "rule-set:steam-site-classical": "https://cloudflare-dns.com/dns-query#Steam"
     "rule-set:github": "https://cloudflare-dns.com/dns-query#GitHub"
-    "rule-set:telegram-site-classical": "https://cloudflare-dns.com/dns-query#Telegram"
+    "rule-set:telegram-site": "https://cloudflare-dns.com/dns-query#Telegram"
     "rule-set:twitter": "https://cloudflare-dns.com/dns-query#US"
     "rule-set:facebook": "https://cloudflare-dns.com/dns-query#US"
     "rule-set:tiktok": "https://cloudflare-dns.com/dns-query#TikTok"
@@ -117,7 +117,7 @@ rule-providers:
   speedtest-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/speedtest/speedtest-site-classical.yaml}
   spotify: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/spotify.yaml}
   steam-site-classical: {<<: *classical, url: https://github.com/yljos/rule-set/raw/refs/heads/main/clash/steam/steam-site-classical.yaml}
-  telegram-site-classical: {<<: *classical, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/telegram/telegram-site-classical.yaml}
+  telegram-site: {<<: *domain, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/telegram/telegram-site.mrs}
   telegram-ip: {<<: *ipcidr, url: https://raw.githubusercontent.com/yljos/rule-set/refs/heads/main/clash/telegram/telegram-ip.mrs}
   tiktok: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tiktok.yaml}
   tmdb: {<<: *classical, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/classical/tmdb.yaml}
@@ -163,7 +163,7 @@ rules:
   - "RULE-SET,netflix,Netflix"
   - "RULE-SET,tiktok,TikTok"
   - "RULE-SET,tmdb,M"
-  - "RULE-SET,telegram-site-classical,Telegram"
+  - "RULE-SET,telegram-site,Telegram"
   - "RULE-SET,twitter,US"
   - "RULE-SET,facebook,US"
   - "RULE-SET,reddit,M"
