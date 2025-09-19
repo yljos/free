@@ -1,8 +1,8 @@
 **/__pycache__/
 /clash/outputs/*
 /clash/.idea/
-/sing-box/.idea/
-/clash/.venv/
+**/.idea/
+**/.venv/
 /sing-box/.venv
 sing-box
 !sing-box/
