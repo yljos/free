@@ -7,9 +7,11 @@ VLESS URL to YAML converter
 import yaml
 from urllib.parse import urlparse, parse_qs
 import urllib.parse
+# 导入类型提示所需的模块
+from typing import Any, Dict
 
 
-def parse_vless_url(url):
+def parse_vless_url(url: str) -> Dict[str, Any]:
     """
     解析VLESS URL，返回配置字典
     包含必要的默认参数，与Clash配置格式保持一致
@@ -33,8 +35,8 @@ def parse_vless_url(url):
             f"URL缺少必要信息: server={parsed.hostname}, port={parsed.port}, uuid={parsed.username}"
         )
 
-    # 基础配置 - 包含必要的默认参数
-    config = {
+    # 基础配置 - 使用 Dict[str, Any] 明确指定值的类型可以为任意类型
+    config: Dict[str, Any] = {
         "name": node_name,
         "type": "vless",
         "server": parsed.hostname,
@@ -60,7 +62,7 @@ def parse_vless_url(url):
 
     # 处理Reality配置
     if security == "reality":
-        reality_opts = {}
+        reality_opts: Dict[str, Any] = {}
         if "pbk" in query and query["pbk"][0]:
             reality_opts["public-key"] = query["pbk"][0]
         if "sid" in query and query["sid"][0]:
@@ -74,7 +76,7 @@ def parse_vless_url(url):
     config["network"] = network_type
 
     if network_type == "grpc":
-        grpc_opts = {}
+        grpc_opts: Dict[str, Any] = {}
         if "serviceName" in query and query["serviceName"][0]:
             grpc_opts["grpc-service-name"] = query["serviceName"][0]
 
@@ -82,11 +84,11 @@ def parse_vless_url(url):
             config["grpc-opts"] = grpc_opts
 
     elif network_type == "ws":
-        ws_opts = {}
+        ws_opts: Dict[str, Any] = {}
         if "path" in query and query["path"][0]:
             ws_opts["path"] = query["path"][0]
 
-        headers = {}
+        headers: Dict[str, Any] = {}
         if "host" in query and query["host"][0]:
             headers["Host"] = query["host"][0]
 
@@ -98,17 +100,20 @@ def parse_vless_url(url):
 
     elif network_type == "tcp":
         if query.get("headerType", [""])[0] == "http":
-            http_opts = {"method": "GET"}
+            # 明确 http_opts 的值可以为任意类型，解决第一个错误
+            http_opts: Dict[str, Any] = {"method": "GET"}
             if "path" in query and query["path"][0]:
+                # 此处赋值为 list[str]，现在是允许的
                 http_opts["path"] = query["path"][0].split(",")
 
-            headers = {}
+            headers: Dict[str, Any] = {}
             if "host" in query and query["host"][0]:
                 headers["Host"] = query["host"][0].split(",")
 
             if headers:
                 http_opts["headers"] = headers
 
+            # 此处赋值为 dict，因为 config 的值类型已声明为 Any，所以不再报错
             config["http-opts"] = http_opts
 
     # 处理flow参数
@@ -120,7 +125,7 @@ def parse_vless_url(url):
         config["client-fingerprint"] = query["fp"][0]
 
     # 清理空值和无效配置
-    cleaned_config = {}
+    cleaned_config: Dict[str, Any] = {}
     for key, value in config.items():
         if value is not None and value != "" and value != {}:
             if isinstance(value, dict):
@@ -136,7 +141,7 @@ def parse_vless_url(url):
     return cleaned_config
 
 
-def convert_url_to_yaml(url):
+def convert_url_to_yaml(url: str) -> str:
     """
     将VLESS URL转换为YAML字符串
     """
@@ -152,7 +157,7 @@ def convert_url_to_yaml(url):
     )
 
 
-def main(url):
+def main(url: str) -> Dict[str, Any]:
     """主函数 - 直接转换URL"""
     return parse_vless_url(url)
 

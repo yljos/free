@@ -1,5 +1,6 @@
 **/__pycache__/
 /clash/outputs/*
+/clash/.idea/
 sing-box
 !sing-box/
 sing-box.exe

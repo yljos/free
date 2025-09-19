@@ -6,11 +6,13 @@ Shadowsocks URL to YAML converter
 
 import yaml
 import base64
+import binascii  # 导入 binascii 模块
 from urllib.parse import urlparse, parse_qs, unquote
 import urllib.parse
+from typing import Any, Dict
 
 
-def parse_shadowsocks_url(url):
+def parse_shadowsocks_url(url: str) -> Dict[str, Any]:
     """
     解析Shadowsocks URL，返回配置字典
     包含必要的默认参数，与Clash配置格式保持一致
@@ -39,7 +41,8 @@ def parse_shadowsocks_url(url):
             method, password = decoded_user.split(":", 1)
         else:
             raise ValueError("解码后的用户信息格式不正确")
-    except Exception as e:
+    # 捕获更具体的异常，并直接使用 binascii.Error
+    except (ValueError, TypeError, binascii.Error):
         # 如果base64解码失败，尝试直接分割
         if ":" in user_info:
             method, password = user_info.split(":", 1)
@@ -53,8 +56,8 @@ def parse_shadowsocks_url(url):
     if not server or not port:
         raise ValueError(f"URL缺少必要信息: server={server}, port={port}")
 
-    # 基础配置 - 包含必要的默认参数
-    config = {
+    # 明确 config 字典的值可以为任意类型
+    config: Dict[str, Any] = {
         "name": node_name,
         "type": "ss",
         "server": server,
@@ -83,16 +86,15 @@ def parse_shadowsocks_url(url):
 
             if obfs_mode:
                 config["plugin"] = "obfs"
-                plugin_opts = {"mode": obfs_mode}
+                plugin_opts: Dict[str, str] = {"mode": obfs_mode}
                 if obfs_host:
                     plugin_opts["host"] = obfs_host
-
                 config["plugin-opts"] = plugin_opts
 
         elif "v2ray-plugin" in plugin_info:
             # 处理v2ray-plugin
             plugin_parts = plugin_info.split(";")
-            v2ray_opts = {}
+            v2ray_opts: Dict[str, Any] = {}
 
             for part in plugin_parts:
                 if part.startswith("mode="):
@@ -111,7 +113,7 @@ def parse_shadowsocks_url(url):
     return config
 
 
-def convert_url_to_yaml(url):
+def convert_url_to_yaml(url: str) -> str:
     """
     将Shadowsocks URL转换为YAML字符串
     """
@@ -127,7 +129,7 @@ def convert_url_to_yaml(url):
     )
 
 
-def main(url):
+def main(url: str) -> Dict[str, Any]:
     """主函数 - 直接转换URL"""
     return parse_shadowsocks_url(url)
 
